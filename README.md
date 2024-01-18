@@ -1,6 +1,7 @@
 # Microneurography-Toolbox
 
 OVERVIEW
+
 The program is a comprehensive MATLAB-based toolkit developed for the analysis of microneurographic signals. It provides a user-friendly interface for processing and interpreting data related to peripheric nerve activity.
 _____________________________________
 
