@@ -41,11 +41,11 @@ This project is supported by the following grants:
 
 i) Tuscany Region through TUNE-BEAM (Tuscany Network for BioElectronic Approaches in Medicine: AI-based predictive algorithms for fine-tuning of electroceutical treatments in neurological, cardiovascular and endocrinological diseases) project, code H14I20000300002; 
 
-ii) PNNR through MNESYS (A multiscale integrated approach to the study of the nervous system in health and disease) project, code PE0000006; 
+ii) PNRR through MNESYS (A multiscale integrated approach to the study of the nervous system in health and disease) project, code PE0000006; 
 
 iii) PNRR through THE (Toscany Health Ecosystem) project, code 00000017; 
 
-iv) PNNR through BRIEF (Biorobotics Research and Innovation Engineering Facilities) project, code IR0000036. 
+iv) PNRR through BRIEF (Biorobotics Research and Innovation Engineering Facilities) project, code IR0000036. 
 
 Plan of National Recovery and Resilience (PNRR) is funded by the European Union – NextGenerationEU.
 
