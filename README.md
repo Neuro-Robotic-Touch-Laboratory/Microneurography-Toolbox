@@ -50,6 +50,8 @@ iv) PNRR through BRIEF (Biorobotics Research and Innovation Engineering Faciliti
 
 Plan of National Recovery and Resilience (PNRR) is funded by the European Union – NextGenerationEU.
 
+v) Italian Ministry of Universities and Research via the PRO3 project CRONO-Lab
+
 _____________________________________
 
 DISCLAIMER
