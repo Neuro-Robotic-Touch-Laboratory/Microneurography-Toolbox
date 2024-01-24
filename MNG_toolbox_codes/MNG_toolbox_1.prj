@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="E:\mng toolbox slim\MNG_toolbox_1.prj" location="E:\mng toolbox slim" name="MNG_toolbox_1" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration file="D:\sssa\mng toolbox slim\MNG_toolbox_1.prj" location="D:\sssa\mng toolbox slim" name="MNG_toolbox_1" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>MNG_toolbox</param.appname>
     <param.icon>${PROJECT_ROOT}\MNG_toolbox_1_resources\icon.ico</param.icon>
     <param.icons>
@@ -14,17 +14,17 @@
     <param.company>Neuro Touch Lab - Sant Anna Pisa</param.company>
     <param.summary />
     <param.description />
-    <param.screenshot>${PROJECT_ROOT}\pics\thumbnail_NRT_Lab_GitHub.png</param.screenshot>
+    <param.screenshot>${PROJECT_ROOT}\pics\Logo_w - Software_400x400px.png</param.screenshot>
     <param.guid />
     <param.installpath.string>\Neuro Touch Lab - Sant Anna Pisa\MNG_toolbox\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
-    <param.logo>${PROJECT_ROOT}\pics\thumbnail_NRT_Lab_GitHub.png</param.logo>
+    <param.logo>${PROJECT_ROOT}\pics\Logo_w - Software_200x400px.png</param.logo>
     <param.install.notes />
     <param.target.install.notes />
-    <param.intermediate>E:\output\for_testing</param.intermediate>
-    <param.files.only>E:\output\for_redistribution_files_only</param.files.only>
-    <param.output>E:\output\for_redistribution</param.output>
-    <param.logdir>E:\output</param.logdir>
+    <param.intermediate>${PROJECT_ROOT}\compiled\desktop\for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}\compiled\desktop\for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}\compiled\desktop\for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}\compiled\desktop</param.logdir>
     <param.enable.clean.build>false</param.enable.clean.build>
     <param.user.defined.mcr.options />
     <param.target.type>subtarget.standalone</param.target.type>
@@ -121,7 +121,9 @@
       <file>${PROJECT_ROOT}\find_xls.m</file>
       <file>${PROJECT_ROOT}\formatts.m</file>
       <file>${PROJECT_ROOT}\Get_spikes.m</file>
+      <file>${PROJECT_ROOT}\Get_spikes_folder.m</file>
       <file>${PROJECT_ROOT}\getINDEXES.m</file>
+      <file>${PROJECT_ROOT}\GetWritableFolder.m</file>
       <file>${PROJECT_ROOT}\hb_det_2.m</file>
       <file>${PROJECT_ROOT}\hr_fix.mlapp</file>
       <file>${PROJECT_ROOT}\HRV.m</file>
@@ -179,6 +181,8 @@
       <file>${PROJECT_ROOT}\tableEq5.mat</file>
       <file>${PROJECT_ROOT}\tableEq6.mat</file>
       <file>${PROJECT_ROOT}\tableEq7.mat</file>
+      <file>${PROJECT_ROOT}\temp_spikes.mat</file>
+      <file>${PROJECT_ROOT}\templ_name.mat</file>
       <file>${PROJECT_ROOT}\template_app.mlapp</file>
       <file>${PROJECT_ROOT}\transduction_analysis.m</file>
       <file>${PROJECT_ROOT}\transduction_calc.m</file>
@@ -208,8 +212,6 @@
     </fileset.resources>
     <fileset.package />
     <fileset.depfun>
-      <file>${PROJECT_ROOT}\Get_spikes_folder.m</file>
-      <file>${PROJECT_ROOT}\GetWritableFolder.m</file>
       <file>${PROJECT_ROOT}\pics\biorobotics research et innovation engineering facilities.png</file>
       <file>${PROJECT_ROOT}\pics\IT Finanziato dall Unione europea_POS.jpg</file>
       <file>${PROJECT_ROOT}\pics\italia-domani-tracciato copia.jpg</file>
@@ -219,17 +221,16 @@
       <file>${PROJECT_ROOT}\pics\tuscany heaalth ecosystem.png</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="E:\output\for_testing" name="splash.png" optional="false">E:\output\for_testing\splash.png</file>
-      <file location="E:\output\for_testing" name="MNG_toolbox.exe" optional="false">E:\output\for_testing\MNG_toolbox.exe</file>
-      <file location="E:\output\for_testing" name="readme.txt" optional="true">E:\output\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="MNG_toolbox.exe" optional="false">D:\sssa\mng toolbox slim\compiled\desktop\for_testing\MNG_toolbox.exe</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="readme.txt" optional="true">D:\sssa\mng toolbox slim\compiled\desktop\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="splash.png" optional="false">D:\sssa\mng toolbox slim\compiled\desktop\for_testing\splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2022b</root>
+      <root>D:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -241,11 +242,6 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

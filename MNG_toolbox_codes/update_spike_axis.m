@@ -192,8 +192,8 @@ plot(app.ax_last_phase,[0 0],[-1 1],'--','Color',[0.2 0.2 0.2])                 
 dummyh = line(app.ax_last_phase,nan, nan, 'Marker', 'none', 'Color', 'b');
 legend(app.ax_last_phase,dummyh, ['PLV= ' num2str(mean(r))], 'Location','best')
 % title(app.ax_last_phase,'FIRST Spike Phase:' );
-app.lbl_all_phase_lin.Text = ['linear = ' num2str(mean(app.spike_res.spike(int_idx).totXrad_min{sel_cluster})) ' rad'];
-app.lbl_all_phase_circ.Text = [ 'circular = ' num2str(mean(phi)) ' rad'];
+app.lbl_last_phase_lin.Text = ['linear = ' num2str(mean(app.spike_res.spike(int_idx).totXrad_min{sel_cluster})) ' rad'];
+app.lbl_last_phase_circ.Text = [ 'circular = ' num2str(mean(phi)) ' rad'];
 % subtitle(app.ax_last_phase,['linear=' num2str(mean(app.spike_res.spike(int_idx).totXrad_min{sel_cluster})) ' rad' '           circular= ' num2str(mean(phi)) ' rad'])
 set(app.ax_last_phase,'XColor', 'none','YColor','none')
 hold(app.ax_last_phase,'off')

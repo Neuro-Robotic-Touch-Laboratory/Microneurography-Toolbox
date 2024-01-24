@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="1598045018" file="E:\mng toolbox slim\MNG_toolbox.prj" location="E:\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="1445507499" file="D:\sssa\mng toolbox slim\MNG_toolbox.prj" location="D:\sssa\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
@@ -12,7 +12,7 @@
     </param.icons>
     <param.summary />
     <param.description />
-    <param.screenshot>${PROJECT_ROOT}\pics\thumbnail_NRT_Lab_GitHub.png</param.screenshot>
+    <param.screenshot>${PROJECT_ROOT}\pics\Logo_w - Software_400x400px.png</param.screenshot>
     <param.version>1.0</param.version>
     <param.products.name>
       <item>Curve Fitting Toolbox</item>
@@ -47,7 +47,7 @@
     <param.platforms>
       <item>win64</item>
     </param.platforms>
-    <param.output>E:\output</param.output>
+    <param.output>${PROJECT_ROOT}\compiled</param.output>
     <param.guid>f6712898-5746-4d9a-8243-e0eade75ef9b</param.guid>
     <unset>
       <param.summary />
@@ -129,6 +129,7 @@
       <file>${PROJECT_ROOT}\OPanalysis.m</file>
       <file>${PROJECT_ROOT}\opdPE.m</file>
       <file>${PROJECT_ROOT}\packages</file>
+      <file>${PROJECT_ROOT}\packages\+adi\private</file>
       <file>${PROJECT_ROOT}\parseArgs.m</file>
       <file>${PROJECT_ROOT}\PE.m</file>
       <file>${PROJECT_ROOT}\phaseplot.m</file>
@@ -173,6 +174,8 @@
       <file>${PROJECT_ROOT}\tableEq5.mat</file>
       <file>${PROJECT_ROOT}\tableEq6.mat</file>
       <file>${PROJECT_ROOT}\tableEq7.mat</file>
+      <file>${PROJECT_ROOT}\temp_spikes.mat</file>
+      <file>${PROJECT_ROOT}\templ_name.mat</file>
       <file>${PROJECT_ROOT}\template_app.mlapp</file>
       <file>${PROJECT_ROOT}\transduction_analysis.m</file>
       <file>${PROJECT_ROOT}\transduction_calc.m</file>
@@ -202,15 +205,14 @@
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
-      <file location="E:\" name="output" optional="false">E:\output</file>
+      <file location="${PROJECT_ROOT}" name="compiled" optional="false">D:\sssa\mng toolbox slim\compiled</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2022b</root>
+      <root>D:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -222,11 +224,6 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

@@ -96,11 +96,11 @@ for i = 1:length(int_idxs)
     for j = 1 : length(form_idxs)
         switch form_idxs(j)
             case 1
-                savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_transduction_' app.popup_int_transduction.Items{int_idxs(i)} '.fig'])
+                savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_transduction_' simple_name(app.popup_int_transduction.Items{int_idxs(i)}) '.fig'])
             case 2
-                saveas(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_transduction_' app.popup_int_transduction.Items{int_idxs(i)} '.jpeg'])
+                saveas(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_transduction_' simple_name(app.popup_int_transduction.Items{int_idxs(i)}) '.jpeg'])
             case 3
-                saveas(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_transduction_' app.popup_int_transduction.Items{int_idxs(i)} '.epsc'])
+                saveas(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_transduction_' simple_name(app.popup_int_transduction.Items{int_idxs(i)}) '.epsc'])
         end
     end
     close(h)

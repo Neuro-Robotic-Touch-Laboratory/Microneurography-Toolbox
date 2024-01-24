@@ -36,8 +36,8 @@ lag2 = app.edt_lag2.Value;
 lag3 = app.edt_lag3.Value;
 
 if app.chkbx_detrend.Value
-    data1(:,1) = detrend(data1(:,1));
-    data2(:,1) = detrend(data2(:,1));
+    data1(:,2) = detrend(data1(:,2));
+    data2(:,2) = detrend(data2(:,2));
 end
 
 seriesname={name1, name2};

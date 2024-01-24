@@ -108,11 +108,11 @@ for i = 1: length(int_idxs)
     for j = 1 : length(form_idxs)
         switch form_idxs(j)
             case 1
-                savefig(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_overview_' simple_name(int_names{i}) '.fig'])
+                savefig(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_overview_' simple_name(int_names{int_idxs(i)}) '.fig'])
             case 2
-                saveas(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_overview_' simple_name(int_names{i}) '.jpeg'])
+                saveas(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_overview_' simple_name(int_names{int_idxs(i)}) '.jpeg'])
             case 3
-                saveas(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_overview_' simple_name(int_names{i}) '.epsc'])
+                saveas(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_overview_' simple_name(int_names{int_idxs(i)}) '.epsc'])
         end
     end
     close(h)
@@ -141,7 +141,12 @@ for i = 1: length(int_idxs)
         title(['MSNA ' int_names{int_idxs(i)} ' unit: ' num2str(j)])
         yyaxis right 
         hold off
-        plot((1:length(m))*app.data(app.settings.channel_idx.msna).ts(1)*20,m,'Color',[0 0.7 0],'LineWidth',1.4,'Marker','none');
+        
+spikemap = zeros(length(data),1);                                   %% check
+spikemap(app.spike_res.spike_idx(app.spike_res.cluster == j)) = 1;  %% check
+m = downsample(movsum(spikemap, 5000),20);                          %% check
+        
+        plot((1:length(m))*app.data(app.settings.channel_idx.msna).ts(1)*20,m,'LineWidth',1.4,'Marker','none');%,'Color',[0 0.7 0]
         xlim(xl)
         ylim([min(m) max(m)])
 
@@ -282,11 +287,11 @@ for i = 1: length(int_idxs)
         for k = 1 : length(form_idxs)
             switch form_idxs(k)
                 case 1
-                    savefig(h2,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_unit_' num_str '_' simple_name(int_names{i}) '.fig'])
+                    savefig(h2,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_unit_' num_str '_' simple_name(int_names{int_idxs(i)}) '.fig'])
                 case 2
-                    saveas(h2,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_unit_' num_str '_' simple_name(int_names{i}) '.jpeg'])
+                    saveas(h2,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_unit_' num_str '_' simple_name(int_names{int_idxs(i)}) '.jpeg'])
                 case 3
-                    saveas(h2,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_unit_' num_str '_' simple_name(int_names{i}) '.epsc'])
+                    saveas(h2,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_unit_' num_str '_' simple_name(int_names{int_idxs(i)}) '.epsc'])
             end
         end
     close(h2)

@@ -4,7 +4,8 @@ function auto_derived(app)
 if ~isempty(app.data)
     if isempty(app.burst_ints)
         [~,  idx] = max(vertcat(app.data.tic_multipl));
-        bords = [app.data(idx).ts(1), app.data(idx).ts(2)];
+        [~,ts,~, ~] = current_signal(app, idx);
+        bords = [ts(1), ts(2)-ts(1)];
         app.burst_ints = struct('name','autofull','type', 1, 'parent', 'none', 'borders', bords);
         app.btn_sel_int.BackgroundColor = [0,1,0];
     end

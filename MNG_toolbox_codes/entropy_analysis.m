@@ -46,33 +46,22 @@ end
 cfg.order      = app.edt_order.Value;    % ordinal pattens of order 3 (4-points ordinal patterns)
 cfg.delay      = app.edt_delay.Value;    % delay 2 between points in ordinal patterns              % (one point between successive points in ordinal patterns)
 cfg.windowSize = app.edt_window_size.Value;  % window size = 512 time steps
-% cfg.plot       = false;
+
 cfg.units      = 'seconds';
-% cfg.units       = unit;
-%cfg.time       = t_msna; % OPTIONAL time axis for plotting
-% cfg.units      = 'seconds';         % OPTIONAL units of time for plotting
+
 
 entropy_res = struct('outdata',[],'cfg',[],'int_name',[],'signal_name',[]);
-% entropy_fix_res = struct('outdata',[],'cfg',[],'int_name',[],'signal_name',[]);
+
 for i = 1: size(borders,1)
     cfg.time = data(borders(i,1):borders(i,2),2)';
-%     try
+
     entropy_res(i).outdata = OPanalysis( cfg, data(borders(i,1):borders(i,2),1)' );
-%     catch
-%         entropy_res(i).outdata = nan;
-%     end
-    %entropy_res(i).outdata = OPanalysis_fixed( cfg, data(borders(i,1):borders(i,2),1)' );
+
     entropy_res(i).cfg = cfg;
     entropy_res(i).int_name = int_name{i};
     entropy_res(i).signal_name = name;
     entropy_res(i).channel_idx = channel_idx;
     
-%     entropy_fix_res(i).outdata = OPanalysis( cfg, data(borders(i,1):borders(i,2),1)' );
-%     %entropy_res(i).outdata = OPanalysis_fixed( cfg, data(borders(i,1):borders(i,2),1)' );
-%     entropy_fix_res(i).cfg = cfg;
-%     entropy_fix_res(i).int_name = int_name{i};
-%     entropy_fix_res(i).signal_name = name;
-%     entropy_fix_res(i).channel_idx = channel_idx;
     app.lbl_working.Text = [num2str(round((100*i)/size(borders,1))) '% done'];
     pause(0.01)
 end

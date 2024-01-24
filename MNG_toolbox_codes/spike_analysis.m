@@ -4,8 +4,7 @@ function spike_res = spike_analysis(app)
 
 
 MIN_CLUSTER=10;
-% MSNA = app.data(app.settings.channel_idx.msna).data;
-% data = app.data(app.settings.channel_idx.msna).data(app.settings.interval(1,1)/app.data(app.settings.channel_idx.msna).ts(1):app.settings.interval(1,2)/app.data(app.settings.channel_idx.msna).ts(1));
+
 
 calc_flag = true;
 
@@ -27,22 +26,14 @@ end
 
 if calc_flag
     data = app.data(app.settings.channel_idx.msna).data(app.settings.interval(1,1)/app.data(app.settings.channel_idx.msna).ts(1):app.settings.interval(1,2)/app.data(app.settings.channel_idx.msna).ts(1));
-%     [data,ts,name, unit] = current_signal(app, app.settings.channel_idx.msna);
+
     
     data = data';
     writable_folder = GetWritableFolder;
     save ([writable_folder '\temp.mat'], "data") %save ('temp.mat', "data")
-    % for i=1%:length(NNNxxx)
-    % %     try
-    %    namefileXXX= NNNxxx{i};
-    % 
-    % 
-    % thre=3.5;
-    % MIN_CLUSTER=10;
+    
     SimpleSpikesSorting = app.chkbx_spike_sorting.Value;
-    % param.sr = 1/app.data(app.settings.channel_idx.msna).ts(1); % give the
-    % proper sampling rate to wave clus
-    % Get_spikes('temp.mat','par',param)
+    
     Get_spikes_folder([writable_folder '\temp.mat'])% Get_spikes([writable_folder '\temp.mat']) % add sample rate
     spikes=load([writable_folder '\temp_spikes.mat'],'spikes','index','threshold');
     
@@ -160,9 +151,6 @@ if ~spike_res.analysis.spike
 
             end      
             
-            % BP_FR=[bpValues(AAAt_footIndex(2:end))' FR_cycle(1:length(AAAt_footIndex)-1)' DTcycle(1:length(AAAt_footIndex)-1)'];
-%             bp =app.data(app.settings.channel_idx.bldp).data(app.bp_res.foot_idx(app.hb_res.use_beats(1:end-1,k)));
-%             bp_fr_base{i} = [bp(1:length(tmp_spk_num)), tmp_spk_num'./dt_cycle, dt_cycle];
             
             r = circ_r(totXrad_min{i});
             phi = circ_mean(totXrad_min{i});
@@ -191,29 +179,7 @@ if ~spike_res.analysis.spike
             phase2first{i} = [FR_tot, mean(totXrad_mean{i}), mean(totXrad_min{i}), mean(totXrad_max{i}), circAVG, circFIRST, circLAST, plvAVG, plvFIRST, plvLAST];
 
         end
-%         [~,SpikeTimeX_all, ~, ~] = computeRadFiring(app.hb_res.t_events(app.hb_res.use_beats(:,k)),spike_res.spike_ts(:, spike_res.use_spikes(:,k)')/1000);
-%         dt_cycle = nan(3,length (SpikeTimeX_all));
-%         for j = 1 : length (SpikeTimeX_all)
-%             if ~isempty(SpikeTimeX_all{1,j})
-%                 dt_cycle(1,j) = SpikeTimeX_all{1,j}(1);
-%                 dt_cycle(2,j) = mean(SpikeTimeX_all{1,j});
-%                 dt_cycle(3,j) = SpikeTimeX_all{1,j}(end);
-%             end
-%         end
-%         dt_cycle = [nan(3,10), dt_cycle, nan(3,10)];
-% 
-%         firstx10_all = calcmat(:,1:10)+dt_cycle(1,:)';
-%         firstx10_all(:,11:20) = calcmat(:,11:20)-dt_cycle(1,:)';
-%         firstx10_all(end-9:end,:) = [];
-%         firstx10_all(1:10,:) = [];
-%         avgx10_all = calcmat(:,1:10)+dt_cycle(2,:)';
-%         avgx10_all(:,11:20) = calcmat(:,11:20)-dt_cycle(2,:)';
-%         avgx10_all(end-9:end,:) = [];
-%         avgx10_all(1:10,:) = [];
-%         lastx10_all = calcmat(:,1:10)+dt_cycle(3,:)';
-%         lastx10_all(:,11:20) = calcmat(:,11:20)-dt_cycle(3,:)';
-%         lastx10_all(end-9:end,:) = [];
-%         lastx10_all(1:10,:) = [];
+
 
         spike_res.spike(k).radX = radX;
         spike_res.spike(k).SpikeTimeX = SpikeTimeX; 

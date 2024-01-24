@@ -26,8 +26,9 @@ Run the executable to launch the application.
 
 MATLAB App Version:
 Clone the repository or download the source code.
-Open MATLAB and navigate to the toolbox directory.
-Run MNG_toolbox to start the MATLAB app.
+Use the MNG_toolbox_MATLAB.mlappinstall to add the toolbox to the app section of Matlab.
+Open MATLAB and navigate to the toolbox directory. 
+Go to Apps. Run MNG_toolbox from my apps to run the toolbox. 
 _____________________________________
 
 DATA INPUT
@@ -48,6 +49,8 @@ iii) PNRR through THE (Toscany Health Ecosystem) project, code 00000017;
 iv) PNRR through BRIEF (Biorobotics Research and Innovation Engineering Facilities) project, code IR0000036. 
 
 Plan of National Recovery and Resilience (PNRR) is funded by the European Union – NextGenerationEU.
+
+v) Italian Ministry of Universities and Research via the PRO3 project CRONO-Lab
 
 _____________________________________
 

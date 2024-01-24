@@ -9,7 +9,7 @@ cla(app.ax_xwt3)
 
 [form_idxs,~] = listdlg('PromptString',{'Please select fileformat ',...
     ''},...
-    'SelectionMode','multiple','ListString',{'.fig','.jpg','.eps'});
+    'SelectionMode','multiple','ListString',{'.fig','.jpg'}); % ,'ListString',{'.fig','.jpg','.eps'}
 path = app.settings.output_dir;
 
 tmp(1) = find(app.settings.file_path == '\',1,'last');
@@ -48,8 +48,8 @@ lag2 = app.edt_lag2.Value;
 lag3 = app.edt_lag3.Value;
 
 if app.chkbx_detrend.Value
-    data1(:,1) = detrend(data1(:,1));
-    data2(:,1) = detrend(data2(:,1));
+    data1(:,2) = detrend(data1(:,2));
+    data2(:,2) = detrend(data2(:,2));
 end
 
 dsf = [int16(.01 / mean(diff(data1(:,1)))), int16(.01 / mean(diff(data2(:,1)))) ];
@@ -226,8 +226,8 @@ for j = 1 : length(form_idxs)
             savefig(f1,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.fig'])
         case 2
             saveas(f1,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.jpeg'])
-        case 3
-            saveas(f1,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.epsc'])
+%         case 3
+%             saveas(f1,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.epsc'])
     end
 end
 end
