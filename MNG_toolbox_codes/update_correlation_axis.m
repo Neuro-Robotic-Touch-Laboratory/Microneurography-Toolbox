@@ -49,9 +49,37 @@ else
         data_1(1:idx-1,:) = [];
     end
     
-    data_1_ds = [downsample(data_1(:,1), .01/ts_1(1)),downsample(data_1(:,2), .01/ts_1(1))];
+    go = true;
+    fkt_1 = 1;
+    tmp1 = ts_1(1);
+    tmp2 = 0.01;
+    while go
+        fkt_1 = fkt_1*10;
+        if isequal(double(tmp1*fkt_1),int32(tmp1*fkt_1)) && isequal(double(tmp2*fkt_1),int32(tmp2*fkt_1))
+            go = false;
+        end
+    end
+    go = true;
+    fkt_2 = 1;
+    tmp1 = ts_2(1);
+    tmp2 = 0.01;
+    while go
+        fkt_2 = fkt_2*10;
+        
+        if isequal(double(tmp1*fkt_2),int32(tmp1*fkt_2)) && isequal(double(tmp2*fkt_2),int32(tmp2*fkt_2))
+            go = false;
+        end
+    end
+    [data_1_ds, tsds_1] = resample(data_1(:,1),data_1(:,2),100,'linear');
+    [data_2_ds, tsds_2] = resample(data_2(:,1),data_2(:,2),100,'linear');
     
-    data_2_ds = [downsample(data_2(:,1), .01/ts_2(1)),downsample(data_2(:,2), .01/ts_2(1))];
+    data_1_ds(:,2) = tsds_1;
+    data_2_ds(:,2) = tsds_2;
+
+
+%     data_1_ds = [downsample(data_1(:,1), .01/ts_1(1)),downsample(data_1(:,2), .01/ts_1(1))];
+%     
+%     data_2_ds = [downsample(data_2(:,1), .01/ts_2(1)),downsample(data_2(:,2), .01/ts_2(1))];
     
     % data_2_ds(:,2) = data_1_ds(:,2);
     
@@ -126,37 +154,46 @@ else
     lags = [app.edt_corre_lag1.Value, app.edt_corre_lag2.Value, app.edt_corre_lag3.Value];
 
     for i = 1:3
-        lbls(i,3).Text = ['Lag' num2str(i) ': ' num2str(lags(i))];
-        histogram(axs(1,1,i), lagdata(i).ax11.Data ,lagdata(i).ax11.BinEdges,'FaceColor',[0,0,1],'EdgeColor',[0,1,1])
-        xlim(axs(1,1,i), lagdata(i).ax11.XLim)
-        ylim(axs(1,1,i), lagdata(i).ax11.YLim)
-        set(axs(1,1,i),'xtick',[],'ytick',[],'xgrid','off','ygrid','off','Toolbar',[]);
-        
-        plot(axs(1,2,i), lagdata(i).ax12.line2.XData, lagdata(i).ax12.line2.YData, 'ob', 'MarkerSize', 2, 'MarkerFaceColor', 'none')
-        set(axs(1,2,i),'xlimmode','auto','ylimmode','auto','xgrid','off','ygrid','off','xtick',[]);
-        hold(axs(1,2,i), 'on')
-        plot(axs(1,2,i), lagdata(i).ax12.line1.XData, lagdata(i).ax12.line1.YData,'-m', 'LineWidth', 0.5000)
-        lbls(i,1).Text = lagdata(i).ax12.text.String;
-        xlim(axs(1,2,i), lagdata(i).ax12.XLim)
-        ylim(axs(1,2,i), lagdata(i).ax12.YLim)
-        set(axs(1,2,i),'xtick',[],'ytick',[],'xgrid','off','ygrid','off','Toolbar',[]);
-        hold(axs(1,2,i), 'off')
-
-        plot(axs(2,1,i), lagdata(i).ax21.line2.XData, lagdata(i).ax21.line2.YData, 'ob', 'MarkerSize', 2, 'MarkerFaceColor', 'none')
-        set(axs(2,1,i),'xlimmode','auto','ylimmode','auto','xgrid','off','ygrid','off','xtick',[]);
-        hold(axs(2,1,i), 'on')
-        plot(axs(2,1,i), lagdata(i).ax21.line1.XData, lagdata(i).ax21.line1.YData,'-m', 'LineWidth', 0.5000)
-        lbls(i,2).Text = lagdata(i).ax21.text.String;
-        xlim(axs(2,1,i), lagdata(i).ax21.XLim)
-        ylim(axs(2,1,i), lagdata(i).ax21.YLim)
-        set(axs(2,1,i),'xtick',[],'ytick',[],'xgrid','off','ygrid','off','Toolbar',[]);
-        hold(axs(2,1,i), 'off')
-        
-        histogram(axs(2,2,i), lagdata(i).ax22.Data ,lagdata(i).ax22.BinEdges,'FaceColor',[0,0,1],'EdgeColor',[0,1,1])
-        xlim(axs(2,2,i), lagdata(i).ax22.XLim)
-        ylim(axs(2,2,i), lagdata(i).ax22.YLim)
-        set(axs(2,2,i),'xtick',[],'ytick',[],'xgrid','off','ygrid','off','Toolbar',[]);
-
+        if ~isnan(lagdata(i).r)
+            lbls(i,3).Text = ['Lag' num2str(i) ': ' num2str(lags(i))];
+            histogram(axs(1,1,i), lagdata(i).ax11.Data ,lagdata(i).ax11.BinEdges,'FaceColor',[0,0,1],'EdgeColor',[0,1,1])
+            xlim(axs(1,1,i), lagdata(i).ax11.XLim)
+            ylim(axs(1,1,i), lagdata(i).ax11.YLim)
+            set(axs(1,1,i),'xtick',[],'ytick',[],'xgrid','off','ygrid','off','Toolbar',[]);
+            
+            plot(axs(1,2,i), lagdata(i).ax12.line2.XData, lagdata(i).ax12.line2.YData, 'ob', 'MarkerSize', 2, 'MarkerFaceColor', 'none')
+            set(axs(1,2,i),'xlimmode','auto','ylimmode','auto','xgrid','off','ygrid','off','xtick',[]);
+            hold(axs(1,2,i), 'on')
+            plot(axs(1,2,i), lagdata(i).ax12.line1.XData, lagdata(i).ax12.line1.YData,'-m', 'LineWidth', 0.5000)
+            lbls(i,1).Text = lagdata(i).ax12.text.String;
+            xlim(axs(1,2,i), lagdata(i).ax12.XLim)
+            ylim(axs(1,2,i), lagdata(i).ax12.YLim)
+            set(axs(1,2,i),'xtick',[],'ytick',[],'xgrid','off','ygrid','off','Toolbar',[]);
+            hold(axs(1,2,i), 'off')
+    
+            plot(axs(2,1,i), lagdata(i).ax21.line2.XData, lagdata(i).ax21.line2.YData, 'ob', 'MarkerSize', 2, 'MarkerFaceColor', 'none')
+            set(axs(2,1,i),'xlimmode','auto','ylimmode','auto','xgrid','off','ygrid','off','xtick',[]);
+            hold(axs(2,1,i), 'on')
+            plot(axs(2,1,i), lagdata(i).ax21.line1.XData, lagdata(i).ax21.line1.YData,'-m', 'LineWidth', 0.5000)
+            lbls(i,2).Text = lagdata(i).ax21.text.String;
+            xlim(axs(2,1,i), lagdata(i).ax21.XLim)
+            ylim(axs(2,1,i), lagdata(i).ax21.YLim)
+            set(axs(2,1,i),'xtick',[],'ytick',[],'xgrid','off','ygrid','off','Toolbar',[]);
+            hold(axs(2,1,i), 'off')
+            
+            histogram(axs(2,2,i), lagdata(i).ax22.Data ,lagdata(i).ax22.BinEdges,'FaceColor',[0,0,1],'EdgeColor',[0,1,1])
+            xlim(axs(2,2,i), lagdata(i).ax22.XLim)
+            ylim(axs(2,2,i), lagdata(i).ax22.YLim)
+            set(axs(2,2,i),'xtick',[],'ytick',[],'xgrid','off','ygrid','off','Toolbar',[]);
+        else
+            lbls(i,3).Text = 'subinterval too short - calculation failed';
+            lbls(i,2).Text = '';
+            lbls(i,1).Text = '';
+            cla(axs(1,1,i))
+            cla(axs(1,2,i))
+            cla(axs(2,1,i))
+            cla(axs(2,2,i))
+        end
     end
 
    

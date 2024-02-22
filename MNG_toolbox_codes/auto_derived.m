@@ -9,6 +9,7 @@ if ~isempty(app.data)
         app.burst_ints = struct('name','autofull','type', 1, 'parent', 'none', 'borders', bords);
         app.btn_sel_int.BackgroundColor = [0,1,0];
     end
+    
     auto_bp(app)
     auto_hb(app)
     auto_resp(app)

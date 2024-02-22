@@ -2,6 +2,10 @@ function save_spec_res(app)
 %UNTITLED save spectral analysis results
 %   Detailed explanation goes here
 
+cols = {[0 0.4470 0.7410],[0.8500 0.3250 0.0980];...
+        [0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560];...
+        [0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330]};
+
 [int_idxs,~] = listdlg('PromptString',{'Please select intervals ',...
     'to be plotted/saved.',''},...
     'SelectionMode','multiple','ListString',app.popup_int_spect.Items);
@@ -34,7 +38,7 @@ end
 
 
 for i = 1:length(int_idxs)
-    h = figure('Position', get(0, 'Screensize'),'Visible','off');
+    h = figure('Position', get(0, 'Screensize'),'Visible','on');
     set(h, 'NumberTitle', 'off', ...
     'Name', int_names{int_idxs(i)});
     
@@ -44,8 +48,12 @@ for i = 1:length(int_idxs)
     title([name ' - ' int_names{1,i}])
     ylabel(unit)
     xlabel('time [s]')
-    for j = [app.edt_ds1.Value, app.edt_ds2.Value]
-        plot (downsample(data(borders(1):borders(2),2),j),downsample(data(borders(1):borders(2),1),j))
+%     for j = [app.edt_ds1.Value, app.edt_ds2.Value]
+%         plot (downsample(data(borders(1):borders(2),2),j),downsample(data(borders(1):borders(2),1),j))
+%     end
+    ds = [app.edt_ds1.Value, app.edt_ds2.Value];
+    for j = 1:2 
+        plot (downsample(data(borders(int_idxs(i),1):borders(int_idxs(i),2),2),ds(j)),downsample(data(borders(int_idxs(i),1):borders(int_idxs(i),2),1),ds(j)),'Color',cols{1,j})
     end
     hold off 
     legend (labels)
@@ -54,10 +62,11 @@ for i = 1:length(int_idxs)
     leg_str_2_1 ={[]};
     leg_str_3_1 ={[]};
     leg_str_4_1 ={[]};
-    leg_str_1_2 ={[]};
-    leg_str_2_2 ={[]};
-    leg_str_3_2 ={[]};
-    leg_str_4_2 ={[]};
+    leg_str_1_2 ={[],[],[],[],[],[]};
+    leg_str_2_2 ={[],[],[],[],[],[]};
+    leg_str_3_2 ={[],[],[],[],[],[]};
+    leg_str_4_2 ={[],[],[],[],[],[]};
+    rem_idx = [];
     mx = nan(4,1);
     for j = 1 : 2
         subplot(5,2,3)
@@ -107,53 +116,74 @@ for i = 1:length(int_idxs)
             legend (leg_str_4_1) 
         end
         hold off
-
+        
         for k = 1:3
-            plot_idx = k+(j-1)*3;
-
-            subplot(5,2,4)
-            hold on
-            tmp_dt = mean(diff(app.spec_res.x_1_2{plot_idx,int_idxs(i)}));
-            lim= [round(app.edt_min_frq.Value/tmp_dt)  round(app.edt_max_frq.Value/tmp_dt)];
-            plot(app.spec_res.x_1_2{plot_idx,int_idxs(i)}(lim(1):lim(2)), app.spec_res.y_1_2{plot_idx,int_idxs(i)}(lim(1):lim(2)))
-            leg_str_1_2{plot_idx} = char(string(app.spec_res.lbl_1_2{plot_idx,int_idxs(i)}));
-            if j ==2
-                legend (leg_str_1_2) 
+            switch k
+                case 1
+                    do_plot = app.chkbx_show_o1.Value;
+                case 2
+                    do_plot = app.chkbx_show_o2.Value;
+                case 3
+                    do_plot = app.chkbx_show_o3.Value;
             end
-            hold off
+            if do_plot
             
-            subplot(5,2,6)
-            hold on
-            tmp_dt = mean(diff(app.spec_res.x_2_2{plot_idx,int_idxs(i)}));
-            lim= [round(app.edt_min_frq.Value/tmp_dt)  round(app.edt_max_frq.Value/tmp_dt)];
-            plot(app.spec_res.x_2_2{plot_idx,int_idxs(i)}(lim(1):lim(2)), app.spec_res.y_2_2{plot_idx,int_idxs(i)}(lim(1):lim(2)))
-            leg_str_2_2{plot_idx} = char(string(app.spec_res.lbl_2_2{plot_idx,int_idxs(i)}));
-            if j ==2
-                legend (leg_str_2_2) 
+                plot_idx = k+(j-1)*3;
+    
+                subplot(5,2,4)
+                hold on
+                tmp_dt = mean(diff(app.spec_res.x_1_2{plot_idx,int_idxs(i)}));
+                lim= [round(app.edt_min_frq.Value/tmp_dt)  round(app.edt_max_frq.Value/tmp_dt)];
+                plot(app.spec_res.x_1_2{plot_idx,int_idxs(i)}(lim(1):lim(2)), app.spec_res.y_1_2{plot_idx,int_idxs(i)}(lim(1):lim(2)))
+                leg_str_1_2{plot_idx} = char(string(app.spec_res.lbl_1_2{plot_idx,int_idxs(i)}));
+                if j ==2
+                    leg_str_1_2(rem_idx) = [];
+                    legend (leg_str_1_2) 
+                end
+                hold off
+                
+                subplot(5,2,6)
+                hold on
+                tmp_dt = mean(diff(app.spec_res.x_2_2{plot_idx,int_idxs(i)}));
+                lim= [round(app.edt_min_frq.Value/tmp_dt)  round(app.edt_max_frq.Value/tmp_dt)];
+                plot(app.spec_res.x_2_2{plot_idx,int_idxs(i)}(lim(1):lim(2)), app.spec_res.y_2_2{plot_idx,int_idxs(i)}(lim(1):lim(2)))
+                leg_str_2_2{plot_idx} = char(string(app.spec_res.lbl_2_2{plot_idx,int_idxs(i)}));
+                if j ==2
+                    leg_str_2_2(rem_idx) = [];
+                    legend (leg_str_2_2) 
+                end
+                hold off
+    
+                subplot(5,2,8)
+                hold on 
+                tmp_dt = mean(diff(app.spec_res.x_3_2{plot_idx,int_idxs(i)}));
+                lim= [round(app.edt_min_frq.Value/tmp_dt)  round(app.edt_max_frq.Value/tmp_dt)];
+                plot(app.spec_res.x_3_2{plot_idx,int_idxs(i)}(lim(1):lim(2)), app.spec_res.y_3_2{plot_idx,int_idxs(i)}(lim(1):lim(2)))
+                leg_str_3_2{plot_idx} = char(string(app.spec_res.lbl_3_2{plot_idx,int_idxs(i)}));
+                if j ==2
+                    leg_str_3_2(rem_idx) = [];
+                    legend (leg_str_3_2) 
+                end
+                hold off
+    
+                subplot(5,2,10)
+                hold on 
+                tmp_dt = mean(diff(app.spec_res.x_4_2{plot_idx,int_idxs(i)}));
+                lim= [round(app.edt_min_frq.Value/tmp_dt)  round(app.edt_max_frq.Value/tmp_dt)];
+                plot(app.spec_res.x_4_2{plot_idx,int_idxs(i)}(lim(1):lim(2)), app.spec_res.y_4_2{plot_idx,int_idxs(i)}(lim(1):lim(2)))
+                leg_str_4_2{plot_idx} = char(string(app.spec_res.lbl_4_2{plot_idx,int_idxs(i)}));
+                if j ==2
+                    leg_str_4_2(rem_idx) = [];
+                    legend (leg_str_4_2) 
+                end
+                hold off
+            else
+                disp 'else case' 
+                if j == 1
+                    disp 'if executetd'
+                    rem_idx = [rem_idx, k,k+3];
+                end
             end
-            hold off
-
-            subplot(5,2,8)
-            hold on 
-            tmp_dt = mean(diff(app.spec_res.x_3_2{plot_idx,int_idxs(i)}));
-            lim= [round(app.edt_min_frq.Value/tmp_dt)  round(app.edt_max_frq.Value/tmp_dt)];
-            plot(app.spec_res.x_3_2{plot_idx,int_idxs(i)}(lim(1):lim(2)), app.spec_res.y_3_2{plot_idx,int_idxs(i)}(lim(1):lim(2)))
-            leg_str_3_2{plot_idx} = char(string(app.spec_res.lbl_3_2{plot_idx,int_idxs(i)}));
-            if j ==2
-                legend (leg_str_3_2) 
-            end
-            hold off
-
-            subplot(5,2,10)
-            hold on 
-            tmp_dt = mean(diff(app.spec_res.x_4_2{plot_idx,int_idxs(i)}));
-            lim= [round(app.edt_min_frq.Value/tmp_dt)  round(app.edt_max_frq.Value/tmp_dt)];
-            plot(app.spec_res.x_4_2{plot_idx,int_idxs(i)}(lim(1):lim(2)), app.spec_res.y_4_2{plot_idx,int_idxs(i)}(lim(1):lim(2)))
-            leg_str_4_2{plot_idx} = char(string(app.spec_res.lbl_4_2{plot_idx,int_idxs(i)}));
-            if j ==2
-                legend (leg_str_4_2) 
-            end
-            hold off
         end
     end
     lim= [app.edt_min_frq.Value  app.edt_max_frq.Value];

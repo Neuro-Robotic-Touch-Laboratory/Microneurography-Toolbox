@@ -3,7 +3,7 @@ function update_transduction_axis(app)
 %   Detailed explanation goes here
 
 int_idx = find(strcmp(app.popup_int_transduction.Value,app.popup_int_transduction.Items));
-int_name = app.popup_int_entropy.Value;
+int_name = app.popup_int_transduction.Value;
 %sel_cluster = find(strcmp(app.popup_cluster.Value,app.popup_cluster.Items));
 
 cla(app.ax_spike_shape)

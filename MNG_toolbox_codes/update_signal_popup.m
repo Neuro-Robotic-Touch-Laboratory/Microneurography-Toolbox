@@ -23,8 +23,8 @@ app.popup_signal1.Value = name{1};
 app.popup_signal2.Items = name;
 app.popup_signal2.Value = name{i};
 
-app.popup_entropy_signal.Items = name;
-app.popup_entropy_signal.Value = name{1};
+% app.popup_entropy_signal.Items = name;
+% app.popup_entropy_signal.Value = name{1};
 
 app.popup_coorelation_signal1.Items = name;
 app.popup_coorelation_signal1.Value = name{1};

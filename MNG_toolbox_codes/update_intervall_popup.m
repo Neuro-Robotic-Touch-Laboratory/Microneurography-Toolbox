@@ -22,8 +22,8 @@ if ~isempty(app.burst_ints)
     app.popup_int_spect.Value = app.popup_int_spect.Items{1} ;
     app.popup_int_wavelet.Items = names;
     app.popup_int_wavelet.Value = app.popup_int_spect.Items{1} ;
-    app.popup_int_entropy.Items = names;
-    app.popup_int_entropy.Value = app.popup_int_spect.Items{1} ;
+%     app.popup_int_entropy.Items = names;
+%     app.popup_int_entropy.Value = app.popup_int_spect.Items{1} ;
     app.popup_int_stepwise.Items = names;
     app.popup_int_stepwise.Value = app.popup_int_stepwise.Items{1};
     app.popup_int_annotate.Items = names;
@@ -50,8 +50,8 @@ else
     app.popup_int_spect.Value = app.popup_int_spect.Items{1} ;
     app.popup_int_wavelet.Items = names;
     app.popup_int_wavelet.Value = app.popup_int_spect.Items{1} ;
-    app.popup_int_entropy.Items = names;
-    app.popup_int_entropy.Value = app.popup_int_spect.Items{1} ;
+%     app.popup_int_entropy.Items = names;
+%     app.popup_int_entropy.Value = app.popup_int_spect.Items{1} ;
     app.popup_int_stepwise.Items = names;
     app.popup_int_stepwise.Value = app.popup_int_stepwise.Items{1};
     app.popup_int_annotate.Items = names;

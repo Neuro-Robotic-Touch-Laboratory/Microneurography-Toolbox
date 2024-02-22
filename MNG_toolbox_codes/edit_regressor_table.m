@@ -13,7 +13,7 @@ switch action
         end
     case 'rem'
         if size(table_data,1) >0
-            table_data(end,:) =[]; 
+            table_data(app.tbl_regressor.Selection,:) =[]; 
         end
 end
 app.tbl_regressor.Data = table_data;

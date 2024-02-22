@@ -1,3 +1,4 @@
+ 
 function create_report(app)
 
 tmp = sort(app.lstbx_report.Value);
@@ -209,12 +210,17 @@ while ~isempty(tbl_figs)
     tbl_figs(1:l,:) = [];
 
     h = uifigure('Position', get(0, 'Screensize'),'Visible', 'off');
+    pause(0.1)
     tbl = uitable(h,'Data',tbl_data,'ColumnName',{'Figure','Page', 'Figure', 'Page'},'RowName',[], 'Position', [0,0,h.Position(3),h.Position(4)]);
+    pause(1)
     if ~isfile(filename)
         exportapp(h,filename)
+        pause(0.1)
     else
         exportapp(h,'tmp.pdf')
+        pause(0.1)
         mergePdfs({filename, 'tmp.pdf'}, filename)
+        pause(0.1)
     end
     close(h)
 end

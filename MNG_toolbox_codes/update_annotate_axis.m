@@ -8,6 +8,7 @@ else
     tmp =find(vertcat(app.burst_ints.type) == 1);
     borders = app.burst_ints(tmp(int_idx-1)).borders;
 end    
+xl =[];
 
 cla(app.ax_annotate_1_1)
 cla(app.ax_annotate_1_2)
@@ -20,9 +21,12 @@ if ~isnan(app.settings.channel_idx.msna)
     end
     plot(app.ax_annotate_1_1, downsample(data_msna(:,2),10), downsample(data_msna(:,1),10),'LineWidth',1.2)
 
-    app.lbl_annotate_1_1.Text = ['MSNA RAW intervall ' int_name];
+    app.lbl_annotate_1_1.Text = ['MNG RAW intervall ' int_name];
     plot_spec_ax(app.ax_annotate_1_2, data_msna(:,1), 1/ts_msna(1), [0.5 0.6470 0.9410], [app.edt_min_freq.Value app.edt_max_freq.Value])
     alpha(app.ax_annotate_1_2,0.25)
+    xl(end+1,:) = [data_msna(1,2), data_msna(end,2)];
+else
+    app.lbl_annotate_1_1.Text = 'MNG not selected';
 end
 
 cla(app.ax_annotate_2_1)
@@ -62,7 +66,9 @@ if ~isnan(app.settings.channel_idx.bldp)
 
     plot_spec_ax(app.ax_annotate_2_2, data_bp(:,1),1/ts_bp(1),[0.4 0.4 0.4], [app.edt_min_freq.Value app.edt_max_freq.Value])
     alpha(app.ax_annotate_2_2, 0.25)
-
+    xl(end+1,:) = [data_bp(1,2), data_bp(end,2)];
+else
+    app.lbl_annotate_2_1.Text = 'Blood pressure not selected';
 end
 
 cla(app.ax_annotate_3_1)
@@ -106,6 +112,9 @@ if ~isnan(app.settings.channel_idx.ecg)
     plot_spec_ax(app.ax_annotate_3_2, data_ecg(:,1),1/ts_ecg(1),[1 0.7250 0.6980], [app.edt_min_freq.Value app.edt_max_freq.Value])
     alpha(app.ax_annotate_3_2, 0.25)
     hold(app.ax_annotate_3_1,'off')
+    xl(end+1,:) = [data_ecg(1,2), data_ecg(end,2)];
+else
+    app.lbl_annotate_1_1.Text = 'ECG not selected';
 end
 
 cla(app.ax_annotate_4_1)
@@ -147,9 +156,11 @@ if ~isnan(app.settings.channel_idx.resp)
     hold(app.ax_annotate_4_1,'off')
     plot_spec_ax(app.ax_annotate_4_2, data_resp(:,1),1/ts_resp(1),[0.7250 1 0.6980], [app.edt_min_freq.Value app.edt_max_freq.Value])
     alpha(app.ax_annotate_4_2, 0.25)
-
+    xl(end+1,:) = [data_resp(1,2), data_resp(end,2)];
+else
+    app.lbl_annotate_1_1.Text = 'Respiration signal not selected';
 end
-xl = [max([data_msna(1,2), data_ecg(1,2), data_resp(1,2), data_bp(1,2)]), min([data_msna(end,2), data_ecg(end,2), data_resp(end,2), data_bp(end,2)])];
+xl = [max(xl(:,1)), min(xl(:,2))];
 xlim(app.ax_annotate_1_1, xl)
 app.edt_min_time.Value = xl(1);
 app.edt_max_time.Value = xl(2);

@@ -8,9 +8,6 @@ end
 load(filename,'data','sr');
 data=data';
 
-sr=1e4;
-
-
 templateMatchedSpikes=aaa.spikes;
 peakTimes_ms=aaa.index;
 peak_idxs=uint32(aaa.index*sr/1000);

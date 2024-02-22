@@ -28,6 +28,7 @@ app.data(sys_idx).name = 'systolic BP';
 app.data(sys_idx).unit = unit;
 app.data(sys_idx).tic_multipl = 0.005/app.data(max_fs_idx).ts(1);
 tmp = 0.005:0.005:diff(app.settings.interval(1,:));
+
 sys_data = data(app.bp_res.systolic_idx,:);
 app.data(sys_idx).data = (interp1(sys_data(:,2),sys_data(:,1),tmp))';
 tmp_idx = [find(~isnan(app.data(sys_idx).data),1) ,  find(~isnan(app.data(sys_idx).data),1,'last')];
@@ -59,7 +60,7 @@ end
 app.data(mea_idx).name = 'mean BP';
 app.data(mea_idx).unit = unit;
 app.data(mea_idx).tic_multipl = 0.005/app.data(max_fs_idx).ts(1);
-app.data(mea_idx).data = mean([app.data(sys_idx).data,app.data(sys_idx).data],2);
+app.data(mea_idx).data = mean([app.data(sys_idx).data,app.data(dia_idx).data],2);
 app.data(mea_idx).ts = app.data(sys_idx).ts;
 app.data(mea_idx).derived = true;
 

@@ -20,22 +20,19 @@ for i = 1 : length(app.burst_ints)
     plot_data(i).n_bursts = sum(tmp_idx_burst);
     plot_data(i).burstrate = sum(tmp_idx_burst)/dur;
     plot_data(i).dur = dur;
-    tmp_idx_beats = app.hb_res.use_beats(:,1) & app.hb_res.use_beats(:,i+1);
-    plot_data(i).burstincidence = sum(tmp_idx_beats)/sum(tmp_idx_burst);
-    plot_data(i).mean_hr = sum(tmp_idx_beats)/dur *60;
-
+    
     if ~isempty(app.hb_res)
-        tmp_idx_hb = app.hb_res.use_beats(:,1) & app.hb_res.use_beats(:,i+1);
-        plot_data(i).rr_interval = app.hb_res.dt_instantaneous(tmp_idx_hb(1:end-1));
-        plot_data(i).ts_hb = app.hb_res.t_events(tmp_idx_hb);
+        tmp_idx_beats = app.hb_res.use_beats(:,1) & app.hb_res.use_beats(:,i+1);
+        plot_data(i).burstincidence = sum(tmp_idx_burst)/sum(tmp_idx_beats);
+        plot_data(i).mean_hr = sum(tmp_idx_beats)/dur *60;
+        plot_data(i).rr_interval = app.hb_res.dt_instantaneous(tmp_idx_beats(1:end-1));
+        plot_data(i).ts_hb = app.hb_res.t_events(tmp_idx_beats);
     end
 
 end
 
 
 %% plot/save boxplots
-
-
 
 namecell = {[]};
 tmp_cell_1 = {[]};
@@ -51,19 +48,14 @@ for i = 1:length(plot_data)
     tmp_cell_1{i} = plot_data(i).integral;
     tmp_cell_2{i} = plot_data(i).amplitude;
     tmp_cell_3{i} = plot_data(i).duration;
-    tmp_cell_4{i} = plot_data(i).rr_interval;
+    
     if ~isempty(app.hb_res)
-
+        tmp_cell_4{i} = plot_data(i).rr_interval;
         tmp_cell_5{i} = HRV.HR(plot_data(i).rr_interval,10);
         tmp_cell_5{i}(isnan(tmp_cell_5{i})) = [];
-
         tmp_cell_6{i} = HRV.SDNN(plot_data(i).rr_interval,0);
-
-        tmp_cell_7{i} =  HRV.RMSSD(plot_data(i).rr_interval,0);
-
-        tmp_cell_8{i} =  HRV.pNN50(plot_data(i).rr_interval,0);
-
-
+        tmp_cell_7{i} = HRV.RMSSD(plot_data(i).rr_interval,0);
+        tmp_cell_8{i} = HRV.pNN50(plot_data(i).rr_interval,0);
     end
 end
 %% get filename and replace '.' by '-'
@@ -82,16 +74,17 @@ plot_boxplot(tmp_cell_1,namecell,path,[file  '_INT_' num2str(round(app.settings.
 plot_boxplot(tmp_cell_2,namecell,path,[file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_burst_analysis_burst_amplitude'],indx,'Burst Amplitude')
 
 plot_boxplot(tmp_cell_3,namecell,path,[file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_burst_analysis_burst_duration'],indx, 'Burst Duration')
-
-plot_boxplot(tmp_cell_4,namecell,path,[file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_burst_analysis_rr-interval'],indx, 'RR-Interval')
+if ~isempty(app.hb_res)
+    plot_boxplot(tmp_cell_4,namecell,path,[file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_burst_analysis_rr-interval'],indx, 'RR-Interval')
+end
 
 
 %% calculate / organize results to be written to xls file
 
 if ~isempty(app.bp_res)
     sys_ch_idx = find(contains(vertcat(app.data.name),'systolic BP'));
-    mea_ch_idx = find(contains(vertcat(app.data.name),'diastolic BP'));
-    dia_ch_idx = find(contains(vertcat(app.data.name),'mean BP'));
+    mea_ch_idx = find(contains(vertcat(app.data.name),'mean BP'));
+    dia_ch_idx = find(contains(vertcat(app.data.name),'diastolic BP'));
 else
     sys_ch_idx = nan;
     mea_ch_idx = nan;
@@ -114,63 +107,71 @@ plot_cell{1,1} = 'interval';
 plot_cell{2,1} = 'duration [s]';
 plot_cell{3,1} = 'number of bursts';
 plot_cell{4,1} = 'burst rate [Hz]';
-plot_cell{5,1} = 'burst incidence';
-plot_cell{6,1} = 'median integral [uV*ms]';
-plot_cell{7,1} = 'mean integral [uV*ms]';
-plot_cell{8,1} = 'std integral [uV*ms]';
-plot_cell{9,1} = 'median amplidude [uV]';
-plot_cell{10,1} = 'mean amplidude [uV]';
-plot_cell{11,1} = 'std amplidude [uV]';
-plot_cell{12,1} = 'median duration [s]';
-plot_cell{13,1} = 'mean duration [s]';
-plot_cell{14,1} = 'std duration [s]';
-plot_cell{15,1} = 'mean heart rate [BPM]';
+plot_cell{5,1} = 'median integral [uV*ms]';
+plot_cell{6,1} = 'mean integral [uV*ms]';
+plot_cell{7,1} = 'std integral [uV*ms]';
+plot_cell{8,1} = 'median amplidude [uV]';
+plot_cell{9,1} = 'mean amplidude [uV]';
+plot_cell{10,1} = 'std amplidude [uV]';
+plot_cell{11,1} = 'median duration [s]';
+plot_cell{12,1} = 'mean duration [s]';
+plot_cell{13,1} = 'std duration [s]';
 
-plot_cell{16,1} = 'median rr-interval [s]';
-plot_cell{17,1} = 'mean rr-interval [s]';
-plot_cell{18,1} = 'std rr-interval [s]';
-plot_cell{19,1} = 'median heartrate [BPM]';
-plot_cell{20,1} = 'mean heartrate [BPM]';
-plot_cell{21,1} = 'std heartrate [BPM]';
-plot_cell{22,1} = 'SDNN [ms]';
-plot_cell{23,1} = 'RMSSD [ms]';
-plot_cell{24,1} = 'pNN50 [%]';
-plot_cell{25,1} = 'pLF [%]';
-plot_cell{26,1} = 'pHF [%]';
-plot_cell{27,1} = 'LF/HF ratio';
-plot_cell{28,1} = 'VLF [ms²]';
-plot_cell{29,1} = 'LF [ms²]';
-plot_cell{30,1} = 'HF [ms²]';
+if ~isempty(app.hb_res)
+    hb_idx = size(plot_cell,1)+1;
+    plot_cell{hb_idx,1} = 'burst incidence';
+    plot_cell{hb_idx+1,1} = 'mean heart rate [BPM]';
+    plot_cell{hb_idx+2,1} = 'median rr-interval [s]';
+    plot_cell{hb_idx+3,1} = 'mean rr-interval [s]';
+    plot_cell{hb_idx+4,1} = 'std rr-interval [s]';
+    plot_cell{hb_idx+5,1} = 'median heartrate [BPM]';
+    plot_cell{hb_idx+6,1} = 'mean heartrate [BPM]';
+    plot_cell{hb_idx+7,1} = 'std heartrate [BPM]';
+    plot_cell{hb_idx+8,1} = 'SDNN [ms]';
+    plot_cell{hb_idx+9,1} = 'RMSSD [ms]';
+    plot_cell{hb_idx+10,1} = 'pNN50 [%]';
+    plot_cell{hb_idx+11,1} = 'pLF [%]';
+    plot_cell{hb_idx+12,1} = 'pHF [%]';
+    plot_cell{hb_idx+13,1} = 'LF/HF ratio';
+    plot_cell{hb_idx+14,1} = 'VLF [ms²]';
+    plot_cell{hb_idx+15,1} = 'LF [ms²]';
+    plot_cell{hb_idx+16,1} = 'HF [ms²]';
+end
 
 if ~isempty(app.bp_res)
     bp_idx = size(plot_cell,1)+1;
-    plot_cell{bp_idx,1} = 'median systolic BP';
-    plot_cell{bp_idx+1,1} = 'mean systolic BP';
-    plot_cell{bp_idx+2,1} = 'std systolic BP';
-    plot_cell{bp_idx+3,1} = 'median mean BP';
-    plot_cell{bp_idx+4,1} = 'mean mean BP';
-    plot_cell{bp_idx+5,1} = 'std mean BP';
-    plot_cell{bp_idx+6,1} = 'median diastolic BP';
-    plot_cell{bp_idx+7,1} = 'mean diastolic BP';
-    plot_cell{bp_idx+8,1} = 'std diastolic BP';  
+    plot_cell{bp_idx,1} = 'median systolic BP [mmHg]';
+    plot_cell{bp_idx+1,1} = 'mean systolic BP [mmHg]';
+    plot_cell{bp_idx+2,1} = 'std systolic BP [mmHg]';
+    plot_cell{bp_idx+3,1} = 'median mean BP [mmHg]';
+    plot_cell{bp_idx+4,1} = 'mean mean BP [mmHg]';
+    plot_cell{bp_idx+5,1} = 'std mean BP [mmHg]';
+    plot_cell{bp_idx+6,1} = 'median diastolic BP [mmHg]';
+    plot_cell{bp_idx+7,1} = 'mean diastolic BP [mmHg]';
+    plot_cell{bp_idx+8,1} = 'std diastolic BP [mmHg]';  
 else
     bp_idx = nan;
 end
 
 if ~isempty(app.resp_res)
     resp_idx = size(plot_cell,1)+1;
-    plot_cell{resp_idx,1} = 'median respiration rate';
-    plot_cell{resp_idx+1,1} = 'mean respiration rate';
-    plot_cell{resp_idx+2,1} = 'std respiration rate';
+    plot_cell{resp_idx,1} = 'median respiration rate [BPM]';
+    plot_cell{resp_idx+1,1} = 'mean respiration rate [BPM]';
+    plot_cell{resp_idx+2,1} = 'std respiration rate [BPM]';
 else
     resp_idx = nan;
+end
+%% baroreflexstuff
+if ~isempty(app.bp_res) && ~isempty(app.hb_res)
+    baro_idx = size(plot_cell,1)+1;
+    plot_cell{baro_idx} = 'std baroreflexsensitivity [ms/mmHg]';
 end
 
 if ~isnan(co2_ch_idx)
     etco2_idx = size(plot_cell,1)+1;
-    plot_cell{etco2_idx,1} = 'median etCO2';
-    plot_cell{etco2_idx+1,1} = 'mean etCO2';
-    plot_cell{etco2_idx+2,1} = 'std etCO2';
+    plot_cell{etco2_idx,1} = 'median etCO2 [mmHg]';
+    plot_cell{etco2_idx+1,1} = 'mean etCO2 [mmHg]';
+    plot_cell{etco2_idx+2,1} = 'std etCO2 [mmHg]';
 else
     etco2_idx = nan;
 end
@@ -189,67 +190,82 @@ for i = 1: length(plot_data)
     plot_cell{2,i+1} = plot_data(i).dur;
     plot_cell{3,i+1} = plot_data(i).n_bursts;
     plot_cell{4,i+1} = plot_data(i).burstrate;
-    plot_cell{5,i+1} = plot_data(i).burstincidence;
-    plot_cell{6,i+1} = median(plot_data(i).integral);
-    plot_cell{7,i+1} = mean(plot_data(i).integral);
-    plot_cell{8,i+1} = std(plot_data(i).integral);
-    plot_cell{9,i+1} = median(plot_data(i).amplitude);
-    plot_cell{10,i+1} = mean(plot_data(i).amplitude);
-    plot_cell{11,i+1} = std(plot_data(i).amplitude);
-    plot_cell{12,i+1} = median(plot_data(i).duration);
-    plot_cell{13,i+1} = mean(plot_data(i).duration);
-    plot_cell{14,i+1} = std(plot_data(i).duration);
+    plot_cell{5,i+1} = median(plot_data(i).integral);
+    plot_cell{6,i+1} = mean(plot_data(i).integral);
+    plot_cell{7,i+1} = std(plot_data(i).integral);
+    plot_cell{8,i+1} = median(plot_data(i).amplitude);
+    plot_cell{9,i+1} = mean(plot_data(i).amplitude);
+    plot_cell{10,i+1} = std(plot_data(i).amplitude);
+    plot_cell{11,i+1} = median(plot_data(i).duration);
+    plot_cell{12,i+1} = mean(plot_data(i).duration);
+    plot_cell{13,i+1} = std(plot_data(i).duration);
+   
     if ~isempty(app.hb_res)
-        plot_cell{15,i+1} = plot_data(i).mean_hr;
-        plot_cell{16,i+1} = median(plot_data(i).rr_interval);
-        plot_cell{17,i+1} = mean(plot_data(i).rr_interval);
-        plot_cell{18,i+1} = std(plot_data(i).rr_interval);
-        plot_cell{19,i+1} = median(tmp_cell_5{i});
-        plot_cell{20,i+1} = mean(tmp_cell_5{i});
-        plot_cell{21,i+1} = std(tmp_cell_5{i});
-        plot_cell{22,i+1} = tmp_cell_6{i};
-        plot_cell{23,i+1} = tmp_cell_7{i};
-        plot_cell{24,i+1} = tmp_cell_8{i};
+        plot_cell{hb_idx,i+1} = plot_data(i).burstincidence;
+        plot_cell{hb_idx+1,i+1} = plot_data(i).mean_hr;
+        plot_cell{hb_idx+2,i+1} = median(plot_data(i).rr_interval);
+        plot_cell{hb_idx+3,i+1} = mean(plot_data(i).rr_interval);
+        plot_cell{hb_idx+4,i+1} = std(plot_data(i).rr_interval);
+        plot_cell{hb_idx+5,i+1} = median(tmp_cell_5{i});
+        plot_cell{hb_idx+6,i+1} = mean(tmp_cell_5{i});
+        plot_cell{hb_idx+7,i+1} = std(tmp_cell_5{i});
+        plot_cell{hb_idx+8,i+1} = tmp_cell_6{i};
+        plot_cell{hb_idx+9,i+1} = tmp_cell_7{i};
+        plot_cell{hb_idx+10,i+1} = tmp_cell_8{i};
         [pLF,pHF,LFHFratio,VLF,LF,HF,~,~,~] = ...
             HRV.fft_val_fun(plot_data(i).rr_interval, 1/app.data(app.settings.channel_idx.ecg).ts(1),'spline');
-        plot_cell{25,i+1} = pLF;
-        plot_cell{26,i+1} = pHF;
-        plot_cell{27,i+1} = LFHFratio;
-        plot_cell{28,i+1} = VLF;
-        plot_cell{29,i+1} = LF;
-        plot_cell{30,i+1} = HF;
+        plot_cell{hb_idx+11,i+1} = pLF;
+        plot_cell{hb_idx+12,i+1} = pHF;
+        plot_cell{hb_idx+13,i+1} = LFHFratio;
+        plot_cell{hb_idx+14,i+1} = VLF;
+        plot_cell{hb_idx+15,i+1} = LF;
+        plot_cell{hb_idx+16,i+1} = HF;
     end
     if ~isnan(bp_idx)
-        if app.burst_ints(i).type == 1
-            tmp_idx = [app.burst_ints(i).borders(1)/app.data(sys_ch_idx).ts(1),app.burst_ints(i).borders(2)/app.data(sys_ch_idx).ts(1)];
-            plot_cell{bp_idx,i+1} = median(app.data(sys_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{bp_idx+1,i+1} = mean(app.data(sys_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{bp_idx+2,i+1} = std(app.data(sys_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{bp_idx+3,i+1} = median(app.data(mea_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{bp_idx+4,i+1} = mean(app.data(mea_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{bp_idx+5,i+1} = std(app.data(mea_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{bp_idx+6,i+1} = median(app.data(dia_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{bp_idx+7,i+1} = mean(app.data(dia_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{bp_idx+8,i+1} = std(app.data(dia_ch_idx).data(tmp_idx(1):tmp_idx(2)));  
+        tmp_sig = [];
+        tmp_ts = app.data(sys_ch_idx).ts(1);
+        for j = 1:size(app.burst_ints(i).borders,1)
+            tmp_sig = [tmp_sig, [app.data(sys_ch_idx).data(app.burst_ints(i).borders(j,1)/tmp_ts:app.burst_ints(i).borders(j,2)/tmp_ts)';
+                                 app.data(mea_ch_idx).data(app.burst_ints(i).borders(j,1)/tmp_ts:app.burst_ints(i).borders(j,2)/tmp_ts)';
+                                 app.data(dia_ch_idx).data(app.burst_ints(i).borders(j,1)/tmp_ts:app.burst_ints(i).borders(j,2)/tmp_ts)']];
         end
+        plot_cell{bp_idx,i+1} = median(tmp_sig(1,:));
+        plot_cell{bp_idx+1,i+1} = mean(tmp_sig(1,:));
+        plot_cell{bp_idx+2,i+1} = std(tmp_sig(1,:));
+        plot_cell{bp_idx+3,i+1} = median(tmp_sig(2,:));
+        plot_cell{bp_idx+4,i+1} = mean(tmp_sig(2,:));
+        plot_cell{bp_idx+5,i+1} = std(tmp_sig(2,:));
+        plot_cell{bp_idx+6,i+1} = median(tmp_sig(3,:));
+        plot_cell{bp_idx+7,i+1} = mean(tmp_sig(3,:));
+        plot_cell{bp_idx+8,i+1} = std(tmp_sig(3,:));  
     end
 
     if ~isnan(resp_idx)
-         if app.burst_ints(i).type == 1
-            tmp_idx = [app.burst_ints(i).borders(1)/app.data(resp_ch_idx).ts(1),app.burst_ints(i).borders(2)/app.data(resp_ch_idx).ts(1)];
-            plot_cell{resp_idx,i+1} = median(app.data(resp_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{resp_idx+1,i+1} = mean(app.data(resp_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{resp_idx+2,i+1} = std(app.data(resp_ch_idx).data(tmp_idx(1):tmp_idx(2))); 
+        tmp_sig = [];
+        tmp_ts = app.data(resp_ch_idx).ts(1);
+        for j = 1:size(app.burst_ints(i).borders,1)
+            tmp_sig = [tmp_sig, app.data(resp_ch_idx).data(app.burst_ints(i).borders(j,1)/tmp_ts:app.burst_ints(i).borders(j,2)/tmp_ts)'];
         end
+        plot_cell{resp_idx,i+1} = median(tmp_sig);
+        plot_cell{resp_idx+1,i+1} = mean(tmp_sig);
+        plot_cell{resp_idx+2,i+1} = std(tmp_sig); 
     end
 
+    if ~isnan(baro_idx)
+        
+        plot_cell{baro_idx,i+1} = plot_cell{hb_idx+4,i+1}*1000 / plot_cell{bp_idx+2,i+1};
+    end
+
+
     if ~isnan(etco2_idx)
-        if app.burst_ints(i).type == 1
-            tmp_idx = [app.burst_ints(i).borders(1)/app.data(co2_ch_idx).ts(1),app.burst_ints(i).borders(2)/app.data(co2_ch_idx).ts(1)];
-            plot_cell{etco2_idx,i+1} = median(app.data(co2_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{etco2_idx+1,i+1} = mean(app.data(co2_ch_idx).data(tmp_idx(1):tmp_idx(2)));
-            plot_cell{etco2_idx+2,i+1} = std(app.data(co2_ch_idx).data(tmp_idx(1):tmp_idx(2))); 
+        tmp_sig = [];
+        tmp_ts = app.data(co2_ch_idx).ts(1);
+        for j = 1:size(app.burst_ints(i).borders,1)
+            tmp_sig = [tmp_sig, app.data(co2_ch_idx).data(app.burst_ints(i).borders(j,1)/tmp_ts:app.burst_ints(i).borders(j,2)/tmp_ts)'];
         end
+        plot_cell{etco2_idx,i+1} = median(tmp_sig);
+        plot_cell{etco2_idx+1,i+1} = mean(tmp_sig);
+        plot_cell{etco2_idx+2,i+1} = std(tmp_sig); 
     end
 %     if ~isnan(minvent_idx)
 %     
@@ -323,45 +339,50 @@ if ~isempty(app.stat_group)
                 stat_plot_cell = {plot_data(app.stat_group(i).intervals(1)).duration, plot_data(app.stat_group(i).intervals(2)).duration};
                 plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, 'Burst Duration', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
                                  ['statistics group ' num2str(i) ], h, p, 'Q3')
-        
-                switch app.stat_group(i).test
-                    case 'two sample t test'
-                        [h,p] =  ttest2(tmp_cell_4{app.stat_group(i).intervals(1)}, tmp_cell_4{app.stat_group(i).intervals(2)});
-                    case 'Wilcoxon rank sum test'
-                        [p,h] = ranksum(tmp_cell_4{app.stat_group(i).intervals(1)}, tmp_cell_4{app.stat_group(i).intervals(2)});
+                if ~isempty(app.hb_res)
+                    switch app.stat_group(i).test
+                        case 'two sample t test'
+                            [h,p] =  ttest2(tmp_cell_4{app.stat_group(i).intervals(1)}, tmp_cell_4{app.stat_group(i).intervals(2)});
+                        case 'Wilcoxon rank sum test'
+                            [p,h] = ranksum(tmp_cell_4{app.stat_group(i).intervals(1)}, tmp_cell_4{app.stat_group(i).intervals(2)});
+                    end
+                    res{6,1} = 'RR-intervals';
+                    if islogical(h)
+                        h = int8(h);
+                    end
+                    res{6,2} = h;
+                    res{6,3} = p; 
+                    stat_plot_cell = {tmp_cell_4{app.stat_group(i).intervals(1)}, tmp_cell_4{app.stat_group(i).intervals(2)}};
+                    plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, 'RR-intervals', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
+                                     ['statistics group ' num2str(i) ], h, p, 'W3')
+                    
+                    switch app.stat_group(i).test
+                        case 'two sample t test'
+                            [h,p] =  ttest2(tmp_cell_5{app.stat_group(i).intervals(1)}, tmp_cell_5{app.stat_group(i).intervals(2)});
+                        case 'Wilcoxon rank sum test'
+                            [p,h] = ranksum(tmp_cell_5{app.stat_group(i).intervals(1)}, tmp_cell_5{app.stat_group(i).intervals(2)});
+                    end
+                    res{7,1} = 'averaged heart rate';
+                    if islogical(h)
+                        h = int8(h);
+                    end
+                    res{7,2} = h;
+                    res{7,3} = p;
+                    stat_plot_cell = {tmp_cell_5{app.stat_group(i).intervals(1)}, tmp_cell_5{app.stat_group(i).intervals(2)}};
+                    plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, 'averaged heart rate', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
+                                     ['statistics group ' num2str(i) ], h, p, 'AD3')
                 end
-                res{6,1} = 'RR-intervals';
-                if islogical(h)
-                    h = int8(h);
-                end
-                res{6,2} = h;
-                res{6,3} = p; 
-                stat_plot_cell = {tmp_cell_4{app.stat_group(i).intervals(1)}, tmp_cell_4{app.stat_group(i).intervals(2)}};
-                plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, 'RR-intervals', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
-                                 ['statistics group ' num2str(i) ], h, p, 'W3')
-                
-                switch app.stat_group(i).test
-                    case 'two sample t test'
-                        [h,p] =  ttest2(tmp_cell_5{app.stat_group(i).intervals(1)}, tmp_cell_5{app.stat_group(i).intervals(2)});
-                    case 'Wilcoxon rank sum test'
-                        [p,h] = ranksum(tmp_cell_5{app.stat_group(i).intervals(1)}, tmp_cell_5{app.stat_group(i).intervals(2)});
-                end
-                res{7,1} = 'averaged heart rate';
-                if islogical(h)
-                    h = int8(h);
-                end
-                res{7,2} = h;
-                res{7,3} = p;
-                stat_plot_cell = {tmp_cell_5{app.stat_group(i).intervals(1)}, tmp_cell_5{app.stat_group(i).intervals(2)}};
-                plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, 'averaged heart rate', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
-                                 ['statistics group ' num2str(i) ], h, p, 'AD3')
-                
                 writecell(res,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],'FileType','spreadsheet','Sheet', ['statistics group ' num2str(i) ],'Range','A1')
     
             case false
                  names = [];
                  namecell= {[]};
-                 for j = 1:5
+                 if ~isempty(app.hb_res)
+                     signals = 1:5;
+                 else
+                     signals = 1:3;
+                 end
+                 for j = signals
                     vals = [];
                     group = string([]);
                     
@@ -464,7 +485,7 @@ if ~isempty(app.stat_group)
                     end
     
                 end
-                writecell(res,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results' ],'FileType','spreadsheet','Sheet', ['statistics group ' num2str(i) ],'Range','A1')
+                writecell(res,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],'FileType','spreadsheet','Sheet', ['statistics group ' num2str(i) ],'Range','A1')
             
         end
         app.lbl_working.Text = [num2str(round((1+i) / (1+length(app.stat_group))*100)) '% done'];
@@ -489,6 +510,7 @@ title(ttl)
 for i = 1 : length(indx)
     switch indx(i)
         case 1
+           h.Visible = 'on';
             savefig(h,[path '\' file '.fig'])
             
         case 2
@@ -497,6 +519,7 @@ for i = 1 : length(indx)
             saveas(h,[path '\' file '.epsc'])
     end
 end
+close (h)
 end
 
 function plot_boxplot_xls(datacell,namecell, ttl, filename,sheetname, hyp, p, startcell)

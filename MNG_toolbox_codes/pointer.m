@@ -21,6 +21,10 @@ classdef pointer < handle
     methods
         function obj = pointer (app)
             obj.dur = app.edt_window.Value*1/(mean(diff(app.ecg(:,2)))); 
+            if obj.dur > size(app.ecg,1)
+                obj.dur = size(app.ecg,1)-1;
+                app.edt_window.Value = floor(obj.dur*(mean(diff(app.ecg(:,2)))));
+            end
             obj.start_idx = 1;
             obj.stop_idx = obj.start_idx +obj.dur;
             obj.dspl_idx = app.hb_res.idx(app.hb_res.idx >= obj.start_idx & app.hb_res.idx <= obj.stop_idx);

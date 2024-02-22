@@ -38,9 +38,36 @@ else
     data_1(1:idx-1,:) = [];
 end
 
-data_1_ds = [downsample(data_1(:,1), .01/ts_1(1)),downsample(data_1(:,2), .01/ts_1(1))];
 
-data_2_ds = [downsample(data_2(:,1), .01/ts_2(1)),downsample(data_2(:,2), .01/ts_2(1))];
+% go = true;
+% fkt_1 = 1;
+% tmp1 = ts_1(1);
+% tmp2 = 0.01;
+% while go
+%     fkt_1 = fkt_1*10;
+%     if isequal(double(tmp1*fkt_1),int32(tmp1*fkt_1)) && isequal(double(tmp2*fkt_1),int32(tmp2*fkt_1))
+%         go = false;
+%     end
+% end
+% go = true;
+% fkt_2 = 1;
+% tmp1 = ts_2(1);
+% tmp2 = 0.01;
+% while go
+%     fkt_2 = fkt_2*10;
+%     
+%     if isequal(double(tmp1*fkt_2),int32(tmp1*fkt_2)) && isequal(double(tmp2*fkt_2),int32(tmp2*fkt_2))
+%         go = false;
+%     end
+% end
+[data_1_ds, tsds_1] = resample(data_1(:,1),data_1(:,2),100,'linear');
+[data_2_ds, tsds_2] = resample(data_2(:,1),data_2(:,2),100,'linear');
+
+data_1_ds(:,2) = tsds_1;
+data_2_ds(:,2) = tsds_2;
+% data_1_ds = [downsample(data_1(:,1), .01/ts_1(1)),downsample(data_1(:,2), .01/ts_1(1))];
+% 
+% data_2_ds = [downsample(data_2(:,1), .01/ts_2(1)),downsample(data_2(:,2), .01/ts_2(1))];
 
 
 
@@ -90,38 +117,46 @@ for i = 1: size(borders,1)
     clear h1
     h1 = figure('Visible','off');
     ca1 = gca;
-    [r,p] = corrplot1(ca1,[data_1_dsds_int(1:end-lag01,1),data_2_dsds_int(lag01+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
+    if isempty(data_1_dsds_int(1:end-lag01,1)) || isempty(data_2_dsds_int(lag01+1:end,1))
+        results(i).lag1.r = nan;
+        results(i).lag1.p = nan;
+        results(i).lag1.ax11 = nan;
+        results(i).lag1.ax12 = nan;
+        results(i).lag1.ax21 = nan;
+        results(i).lag1.ax22 = nan;
+    else
+        [r,p] = corrplot1(ca1,[data_1_dsds_int(1:end-lag01,1),data_2_dsds_int(lag01+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
+        
+        results(i).lag1.r = r;
+        results(i).lag1.p = p;
+        results(i).lag1.ax11.Data = h1.Children(1).Children.Data;
+        results(i).lag1.ax11.BinEdges = h1.Children(1).Children.BinEdges;
+        results(i).lag1.ax11.XLim = h1.Children(1).Children.Parent.XLim;
+        results(i).lag1.ax11.YLim = h1.Children(1).Children.Parent.YLim;
     
-    results(i).lag1.r = r;
-    results(i).lag1.p = p;
-    results(i).lag1.ax11.Data = h1.Children(1).Children.Data;
-    results(i).lag1.ax11.BinEdges = h1.Children(1).Children.BinEdges;
-    results(i).lag1.ax11.XLim = h1.Children(1).Children.Parent.XLim;
-    results(i).lag1.ax11.YLim = h1.Children(1).Children.Parent.YLim;
-
-    results(i).lag1.ax12.text.String = h1.Children(4).Children(1).String;
-    results(i).lag1.ax12.text.Position = h1.Children(4).Children(1).Position;
-    results(i).lag1.ax12.line1.XData = h1.Children(4).Children(2).XData;
-    results(i).lag1.ax12.line1.YData = h1.Children(4).Children(2).YData;
-    results(i).lag1.ax12.line2.XData = h1.Children(4).Children(3).XData;
-    results(i).lag1.ax12.line2.YData = h1.Children(4).Children(3).YData;
-    results(i).lag1.ax12.XLim = h1.Children(4).Children(3).Parent.XLim;
-    results(i).lag1.ax12.YLim = h1.Children(4).Children(3).Parent.YLim;
-
-    results(i).lag1.ax21.text.String = h1.Children(5).Children(1).String;
-    results(i).lag1.ax21.text.Position = h1.Children(5).Children(1).Position;
-    results(i).lag1.ax21.line1.XData = h1.Children(5).Children(2).XData;
-    results(i).lag1.ax21.line1.YData = h1.Children(5).Children(2).YData;
-    results(i).lag1.ax21.line2.XData = h1.Children(5).Children(3).XData;
-    results(i).lag1.ax21.line2.YData = h1.Children(5).Children(3).YData;
-    results(i).lag1.ax21.XLim = h1.Children(5).Children(3).Parent.XLim;
-    results(i).lag1.ax21.YLim = h1.Children(5).Children(3).Parent.YLim;
-
-    results(i).lag1.ax22.Data = h1.Children(2).Children.Data;
-    results(i).lag1.ax22.BinEdges = h1.Children(2).Children.BinEdges;
-    results(i).lag1.ax22.XLim = h1.Children(2).Children.Parent.XLim;
-    results(i).lag1.ax22.YLim = h1.Children(2).Children.Parent.YLim;
-
+        results(i).lag1.ax12.text.String = h1.Children(4).Children(1).String;
+        results(i).lag1.ax12.text.Position = h1.Children(4).Children(1).Position;
+        results(i).lag1.ax12.line1.XData = h1.Children(4).Children(2).XData;
+        results(i).lag1.ax12.line1.YData = h1.Children(4).Children(2).YData;
+        results(i).lag1.ax12.line2.XData = h1.Children(4).Children(3).XData;
+        results(i).lag1.ax12.line2.YData = h1.Children(4).Children(3).YData;
+        results(i).lag1.ax12.XLim = h1.Children(4).Children(3).Parent.XLim;
+        results(i).lag1.ax12.YLim = h1.Children(4).Children(3).Parent.YLim;
+    
+        results(i).lag1.ax21.text.String = h1.Children(5).Children(1).String;
+        results(i).lag1.ax21.text.Position = h1.Children(5).Children(1).Position;
+        results(i).lag1.ax21.line1.XData = h1.Children(5).Children(2).XData;
+        results(i).lag1.ax21.line1.YData = h1.Children(5).Children(2).YData;
+        results(i).lag1.ax21.line2.XData = h1.Children(5).Children(3).XData;
+        results(i).lag1.ax21.line2.YData = h1.Children(5).Children(3).YData;
+        results(i).lag1.ax21.XLim = h1.Children(5).Children(3).Parent.XLim;
+        results(i).lag1.ax21.YLim = h1.Children(5).Children(3).Parent.YLim;
+    
+        results(i).lag1.ax22.Data = h1.Children(2).Children.Data;
+        results(i).lag1.ax22.BinEdges = h1.Children(2).Children.BinEdges;
+        results(i).lag1.ax22.XLim = h1.Children(2).Children.Parent.XLim;
+        results(i).lag1.ax22.YLim = h1.Children(2).Children.Parent.YLim;
+    end
     close(h1)
 
      lag02=lags(2)*1/(.01*ds);
@@ -130,39 +165,48 @@ for i = 1: size(borders,1)
     clear h2
     h2 = figure('Visible','on');
     ca2 = gca;
-    [r,p] = corrplot1(ca2,[data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
+    if isempty(data_1_dsds_int(1:end-lag02,1)) || isempty(data_2_dsds_int(lag02+1:end,1))
+        results(i).lag2.r = nan;
+        results(i).lag2.p = nan;
+        results(i).lag2.ax11 = nan;
+        results(i).lag2.ax12 = nan;
+        results(i).lag2.ax21 = nan;
+        results(i).lag2.ax22 = nan;
+    else
+
+        [r,p] = corrplot1(ca2,[data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
+        
+     
+        results(i).lag2.r = r;
+        results(i).lag2.p = p;
+        results(i).lag2.ax11.Data = h2.Children(1).Children.Data;
+        results(i).lag2.ax11.BinEdges = h2.Children(1).Children.BinEdges;
+        results(i).lag2.ax11.XLim = h2.Children(1).Children.Parent.XLim;
+        results(i).lag2.ax11.YLim = h2.Children(1).Children.Parent.YLim;
     
- 
-    results(i).lag2.r = r;
-    results(i).lag2.p = p;
-    results(i).lag2.ax11.Data = h2.Children(1).Children.Data;
-    results(i).lag2.ax11.BinEdges = h2.Children(1).Children.BinEdges;
-    results(i).lag2.ax11.XLim = h2.Children(1).Children.Parent.XLim;
-    results(i).lag2.ax11.YLim = h2.Children(1).Children.Parent.YLim;
-
-    results(i).lag2.ax12.text.String = h2.Children(4).Children(1).String;
-    results(i).lag2.ax12.text.Position = h2.Children(4).Children(1).Position;
-    results(i).lag2.ax12.line1.XData = h2.Children(4).Children(2).XData;
-    results(i).lag2.ax12.line1.YData = h2.Children(4).Children(2).YData;
-    results(i).lag2.ax12.line2.XData = h2.Children(4).Children(3).XData;
-    results(i).lag2.ax12.line2.YData = h2.Children(4).Children(3).YData;
-    results(i).lag2.ax12.XLim = h2.Children(4).Children(3).Parent.XLim;
-    results(i).lag2.ax12.YLim = h2.Children(4).Children(3).Parent.YLim;
-
-    results(i).lag2.ax21.text.String = h2.Children(5).Children(1).String;
-    results(i).lag2.ax21.text.Position = h2.Children(5).Children(1).Position;
-    results(i).lag2.ax21.line1.XData = h2.Children(5).Children(2).XData;
-    results(i).lag2.ax21.line1.YData = h2.Children(5).Children(2).YData;
-    results(i).lag2.ax21.line2.XData = h2.Children(5).Children(3).XData;
-    results(i).lag2.ax21.line2.YData = h2.Children(5).Children(3).YData;
-    results(i).lag2.ax21.XLim = h2.Children(5).Children(3).Parent.XLim;
-    results(i).lag2.ax21.YLim = h2.Children(5).Children(3).Parent.YLim;
-
-    results(i).lag2.ax22.Data = h2.Children(2).Children.Data;
-    results(i).lag2.ax22.BinEdges = h2.Children(2).Children.BinEdges;
-    results(i).lag2.ax22.XLim = h2.Children(2).Children.Parent.XLim;
-    results(i).lag2.ax22.YLim = h2.Children(2).Children.Parent.YLim;
-
+        results(i).lag2.ax12.text.String = h2.Children(4).Children(1).String;
+        results(i).lag2.ax12.text.Position = h2.Children(4).Children(1).Position;
+        results(i).lag2.ax12.line1.XData = h2.Children(4).Children(2).XData;
+        results(i).lag2.ax12.line1.YData = h2.Children(4).Children(2).YData;
+        results(i).lag2.ax12.line2.XData = h2.Children(4).Children(3).XData;
+        results(i).lag2.ax12.line2.YData = h2.Children(4).Children(3).YData;
+        results(i).lag2.ax12.XLim = h2.Children(4).Children(3).Parent.XLim;
+        results(i).lag2.ax12.YLim = h2.Children(4).Children(3).Parent.YLim;
+    
+        results(i).lag2.ax21.text.String = h2.Children(5).Children(1).String;
+        results(i).lag2.ax21.text.Position = h2.Children(5).Children(1).Position;
+        results(i).lag2.ax21.line1.XData = h2.Children(5).Children(2).XData;
+        results(i).lag2.ax21.line1.YData = h2.Children(5).Children(2).YData;
+        results(i).lag2.ax21.line2.XData = h2.Children(5).Children(3).XData;
+        results(i).lag2.ax21.line2.YData = h2.Children(5).Children(3).YData;
+        results(i).lag2.ax21.XLim = h2.Children(5).Children(3).Parent.XLim;
+        results(i).lag2.ax21.YLim = h2.Children(5).Children(3).Parent.YLim;
+    
+        results(i).lag2.ax22.Data = h2.Children(2).Children.Data;
+        results(i).lag2.ax22.BinEdges = h2.Children(2).Children.BinEdges;
+        results(i).lag2.ax22.XLim = h2.Children(2).Children.Parent.XLim;
+        results(i).lag2.ax22.YLim = h2.Children(2).Children.Parent.YLim;
+    end
     close(h2)
 
     lag03=lags(3)*1/(.01*ds);
@@ -170,38 +214,46 @@ for i = 1: size(borders,1)
     clear h3
     h3 = figure('Visible','on');
     ca3 = gca;
-    [r,p] = corrplot1(ca3,[data_1_dsds_int(1:end-lag03,1),data_2_dsds_int(lag03+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
+    if isempty(data_1_dsds_int(1:end-lag03,1)) || isempty(data_2_dsds_int(lag03+1:end,1))
+        results(i).lag3.r = nan;
+        results(i).lag3.p = nan;
+        results(i).lag3.ax11 = nan;
+        results(i).lag3.ax12 = nan;
+        results(i).lag3.ax21 = nan;
+        results(i).lag3.ax22 = nan;
+    else
+        [r,p] = corrplot1(ca3,[data_1_dsds_int(1:end-lag03,1),data_2_dsds_int(lag03+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
+        
+        results(i).lag3.r = r;
+        results(i).lag3.p = p;
+        results(i).lag3.ax11.Data = h3.Children(1).Children.Data;
+        results(i).lag3.ax11.BinEdges = h3.Children(1).Children.BinEdges;
+        results(i).lag3.ax11.XLim = h3.Children(1).Children.Parent.XLim;
+        results(i).lag3.ax11.YLim = h3.Children(1).Children.Parent.YLim;
     
-    results(i).lag3.r = r;
-    results(i).lag3.p = p;
-    results(i).lag3.ax11.Data = h3.Children(1).Children.Data;
-    results(i).lag3.ax11.BinEdges = h3.Children(1).Children.BinEdges;
-    results(i).lag3.ax11.XLim = h3.Children(1).Children.Parent.XLim;
-    results(i).lag3.ax11.YLim = h3.Children(1).Children.Parent.YLim;
-
-    results(i).lag3.ax12.text.String = h3.Children(4).Children(1).String;
-    results(i).lag3.ax12.text.Position = h3.Children(4).Children(1).Position;
-    results(i).lag3.ax12.line1.XData = h3.Children(4).Children(2).XData;
-    results(i).lag3.ax12.line1.YData = h3.Children(4).Children(2).YData;
-    results(i).lag3.ax12.line2.XData = h3.Children(4).Children(3).XData;
-    results(i).lag3.ax12.line2.YData = h3.Children(4).Children(3).YData;
-    results(i).lag3.ax12.XLim = h3.Children(4).Children(3).Parent.XLim;
-    results(i).lag3.ax12.YLim = h3.Children(4).Children(3).Parent.YLim;
-
-    results(i).lag3.ax21.text.String = h3.Children(5).Children(1).String;
-    results(i).lag3.ax21.text.Position = h3.Children(5).Children(1).Position;
-    results(i).lag3.ax21.line1.XData = h3.Children(5).Children(2).XData;
-    results(i).lag3.ax21.line1.YData = h3.Children(5).Children(2).YData;
-    results(i).lag3.ax21.line2.XData = h3.Children(5).Children(3).XData;
-    results(i).lag3.ax21.line2.YData = h3.Children(5).Children(3).YData;
-    results(i).lag3.ax21.XLim = h3.Children(5).Children(3).Parent.XLim;
-    results(i).lag3.ax21.YLim = h3.Children(5).Children(3).Parent.YLim;
-
-    results(i).lag3.ax22.Data = h3.Children(2).Children.Data;
-    results(i).lag3.ax22.BinEdges = h3.Children(2).Children.BinEdges;
-    results(i).lag3.ax22.XLim = h3.Children(2).Children.Parent.XLim;
-    results(i).lag3.ax22.YLim = h3.Children(2).Children.Parent.YLim;
-
+        results(i).lag3.ax12.text.String = h3.Children(4).Children(1).String;
+        results(i).lag3.ax12.text.Position = h3.Children(4).Children(1).Position;
+        results(i).lag3.ax12.line1.XData = h3.Children(4).Children(2).XData;
+        results(i).lag3.ax12.line1.YData = h3.Children(4).Children(2).YData;
+        results(i).lag3.ax12.line2.XData = h3.Children(4).Children(3).XData;
+        results(i).lag3.ax12.line2.YData = h3.Children(4).Children(3).YData;
+        results(i).lag3.ax12.XLim = h3.Children(4).Children(3).Parent.XLim;
+        results(i).lag3.ax12.YLim = h3.Children(4).Children(3).Parent.YLim;
+    
+        results(i).lag3.ax21.text.String = h3.Children(5).Children(1).String;
+        results(i).lag3.ax21.text.Position = h3.Children(5).Children(1).Position;
+        results(i).lag3.ax21.line1.XData = h3.Children(5).Children(2).XData;
+        results(i).lag3.ax21.line1.YData = h3.Children(5).Children(2).YData;
+        results(i).lag3.ax21.line2.XData = h3.Children(5).Children(3).XData;
+        results(i).lag3.ax21.line2.YData = h3.Children(5).Children(3).YData;
+        results(i).lag3.ax21.XLim = h3.Children(5).Children(3).Parent.XLim;
+        results(i).lag3.ax21.YLim = h3.Children(5).Children(3).Parent.YLim;
+    
+        results(i).lag3.ax22.Data = h3.Children(2).Children.Data;
+        results(i).lag3.ax22.BinEdges = h3.Children(2).Children.BinEdges;
+        results(i).lag3.ax22.XLim = h3.Children(2).Children.Parent.XLim;
+        results(i).lag3.ax22.YLim = h3.Children(2).Children.Parent.YLim;
+    end
     close(h3)
 
     % .Toolbar = []

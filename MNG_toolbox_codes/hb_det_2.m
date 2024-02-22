@@ -78,9 +78,11 @@ if use_bp
     no_bts_idx_end = test_array(no_bts+1,1);
     add_idx = nan(size(no_bts));
     for i = 1:length(no_bts_idx_start)
-        [~,lcs,~,p] =  findpeaks(ecg(no_bts_idx_start(i):no_bts_idx_end(i),1));
-        [~,mx_idx] = max(p);
-        add_idx(i) =  no_bts_idx_start(i)-1+lcs(mx_idx);
+        if no_bts_idx_start(i)~=no_bts_idx_end(i)
+            [~,lcs,~,p] =  findpeaks(ecg(no_bts_idx_start(i):no_bts_idx_end(i),1));
+            [~,mx_idx] = max(p);
+            add_idx(i) =  no_bts_idx_start(i)-1+lcs(mx_idx);
+        end
     end
     hb_idx = sort([add_idx;hb_idx]);
     mult_bts = find(diff(test_array(:,2)) == 0);
@@ -107,7 +109,7 @@ if use_bp
 
 end
 
-hb_res.idx = hb_idx;
+hb_res.idx = hb_idx(~isnan(hb_idx));
 hb_res.t_events = ecg(hb_res.idx,2);
 
 

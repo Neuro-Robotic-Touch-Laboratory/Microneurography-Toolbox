@@ -32,7 +32,9 @@ plot(app.ax_msna_raw, t_msna,app.data(app.settings.channel_idx.msna).data(t_i/ap
 ylim(app.ax_msna_raw,[-20 20])
 xlim(app.ax_msna_raw,[t_msna(1) t_msna(end)])
 
-hb_idx = app.hb_res.use_beats(:,1) & app.hb_res.use_beats(:,int_idx);
+if ~isempty(app.hb_res)
+    hb_idx = app.hb_res.use_beats(:,1) & app.hb_res.use_beats(:,int_idx);
+end
 burst_idx = app.burst_res.use_burst(:,1) & app.burst_res.use_burst(:,2) & app.burst_res.use_burst(:,int_idx+1);
 if int_idx ==1
     dur = diff([app.burst_res.ts(1),app.burst_res.ts(end)]);
@@ -51,17 +53,19 @@ end
 plot(app.ax_msna_int, t_msna(2001:end), app.burst_res.x(2001:end),'LineWidth',1.2,'HitTest','off')  
 ylim(app.ax_msna_int, yl)  
 hold(app.ax_msna_int, 'on')
-hold(app.ax_msna_int, 'on')
+
 
 %% plot all heartbeats as one object 
-hb = nan(length(app.hb_res.t_events(hb_idx))*3,2);
-tmp_idx = 1:3:length(app.hb_res.t_events(hb_idx))*3;
-hb(tmp_idx,1)= app.hb_res.t_events(hb_idx);
-hb(tmp_idx+1,1)= app.hb_res.t_events(hb_idx);
-yl = ylim(app.ax_msna_int);
-hb(tmp_idx,2)= yl(1);
-hb(tmp_idx+1,2)= yl(2);
-plot (app.ax_msna_int,hb(:,1),hb(:,2),'LineWidth',1.5,'Color',[0 0.5 0.2],'HitTest','off')
+if ~isempty(app.hb_res)
+    hb = nan(length(app.hb_res.t_events(hb_idx))*3,2);
+    tmp_idx = 1:3:length(app.hb_res.t_events(hb_idx))*3;
+    hb(tmp_idx,1)= app.hb_res.t_events(hb_idx);
+    hb(tmp_idx+1,1)= app.hb_res.t_events(hb_idx);
+    yl = ylim(app.ax_msna_int);
+    hb(tmp_idx,2)= yl(1);
+    hb(tmp_idx+1,2)= yl(2);
+    plot (app.ax_msna_int,hb(:,1),hb(:,2),'LineWidth',1.5,'Color',[0 0.5 0.2],'HitTest','off')
+end
 xlim(app.ax_msna_int,xl)
 
 %%
@@ -163,7 +167,11 @@ title(app.ax_burst_interval_his,'')
 
 app.lbl_num_burst.Text = ['Number of Bursts: ' num2str(sum(burst_idx)) ];
 app.lbl_burst_rate.Text = ['Rate: ' num2str(sum(burst_idx)/dur) ' [Hz]'];
-app.lbl_incidence.Text = ['Incidence: ' num2str(sum(burst_idx)/sum(hb_idx)) ' bursts/beats'];
+if ~isempty(app.hb_res)
+    app.lbl_incidence.Text = ['Incidence: ' num2str(sum(burst_idx)/sum(hb_idx)) ' bursts/beats'];
+else
+    app.lbl_incidence.Text = 'no ECG available';
+end
 app.lbl_threshold.Text = ['HThreshold: ' num2str(app.burst_res.htresh) ' [' char(string(app.data(app.settings.channel_idx.msna).unit)) ']'];
 
 end

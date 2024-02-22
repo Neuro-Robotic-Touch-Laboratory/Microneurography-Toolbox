@@ -14,16 +14,22 @@ function [RRR7, RRR8 ] = transduction_calc(data, t_events_ecg, t_bpFoot, bpValue
 AAAt_BPfoot=t_bpFoot;
 AAAt_footIndex=footIndex;
 AAAt_ECGpeak=t_events_ecg';
-
-for i = 1 : length(AAAt_BPfoot)
-    if AAAt_BPfoot(1) < AAAt_ECGpeak(1)
-        AAAt_BPfoot(1) = [];
-        AAAt_footIndex(1) = [];
+% if ~isnan(t_bpFoot)
+    for i = 1 : length(AAAt_BPfoot)
+        if AAAt_BPfoot(1) < AAAt_ECGpeak(1)
+            AAAt_BPfoot(1) = [];
+            AAAt_footIndex(1) = [];
+        end
     end
-   
-end
+% end
 
-[t_ecgCUT, t_bpCUT, footCUT] = riallinea_BP_ECG_v08(AAAt_ECGpeak, AAAt_BPfoot, AAAt_footIndex);
+% if isnan(AAAt_footIndex) || isnan(AAAt_BPfoot)
+%     t_ecgCUT = AAAt_ECGpeak;
+%     t_bpCUT = nan;
+%     footCUT = nan;
+% else
+    [t_ecgCUT, t_bpCUT, footCUT] = riallinea_BP_ECG_v08(AAAt_ECGpeak, AAAt_BPfoot, AAAt_footIndex);
+% end
 
 AAAt_ECGpeak = [];
 AAAt_ECGpeak = t_ecgCUT;
@@ -208,35 +214,40 @@ FIRSTx10 = [XtimeFirst_min_plus_sorted, XtimeLAST_max_minus];
 AVGx10 = [XtimeAVG_mean_plus_sorted, XtimeAVG_mean_minus];
 LASTx10 = [XtimeLAST_max_plus_sorted, XtimeFirst_min_minus];
 
-try
-    BP_FR = [bpValues(int32(AAAt_footIndex))', FR_cycle', DTcycle'];
-catch
+
+% if ~isnan(AAAt_footIndex)
     try
-        aqws = bpValues(int32(AAAt_footIndex))';  
-        swed = FR_cycle(1 : length(aqws))';
-        derf = DTcycle(1 : length(aqws))';
-        BP_FR = [bpValues(int32(AAAt_footIndex))', swed, derf];
+        BP_FR = [bpValues(int32(AAAt_footIndex))', FR_cycle', DTcycle'];
     catch
         try
-            aqws1 = bpValues(int32(AAAt_footIndex(1 : end-1)))';  
-            swed1 = FR_cycle(1 : length(aqws1))';
-            derf1 = DTcycle(1 : length(aqws1))';
-            BP_FR = [aqws1, swed1, derf1];   
+            aqws = bpValues(int32(AAAt_footIndex))';  
+            swed = FR_cycle(1 : length(aqws))';
+            derf = DTcycle(1 : length(aqws))';
+            BP_FR = [bpValues(int32(AAAt_footIndex))', swed, derf];
         catch
             try
-                aqws2 = bpValues(int32(AAAt_footIndex(1 : end-2)))';  
-                swed2 = FR_cycle(1 : length(aqws2))';
-                derf2 = DTcycle(1 : length(aqws2))';
-                BP_FR = [aqws2, swed2, derf2];       
+                aqws1 = bpValues(int32(AAAt_footIndex(1 : end-1)))';  
+                swed1 = FR_cycle(1 : length(aqws1))';
+                derf1 = DTcycle(1 : length(aqws1))';
+                BP_FR = [aqws1, swed1, derf1];   
             catch
-                aqws3 = bpValues(int32(AAAt_footIndex(1 : end-3)))';  
-                swed3 = FR_cycle(1 : length(aqws3))';
-                derf3 = DTcycle(1 : length(aqws3))';
-                BP_FR = [aqws3, swed3, derf3];  
+                try
+                    aqws2 = bpValues(int32(AAAt_footIndex(1 : end-2)))';  
+                    swed2 = FR_cycle(1 : length(aqws2))';
+                    derf2 = DTcycle(1 : length(aqws2))';
+                    BP_FR = [aqws2, swed2, derf2];       
+                catch
+                    aqws3 = bpValues(int32(AAAt_footIndex(1 : end-3)))';  
+                    swed3 = FR_cycle(1 : length(aqws3))';
+                    derf3 = DTcycle(1 : length(aqws3))';
+                    BP_FR = [aqws3, swed3, derf3];  
+                end
             end
         end
     end
-end
+% else
+%     BP_FR = nan; 
+% end
 
 
 FIRSTx10 = [FIRSTx10; zeros(3, length(FIRSTx10(1, :)))];
@@ -356,89 +367,99 @@ FIRSTx10_daSaR(i_RRsenzaSpike, :) = [];
 
 for plotDaSaR=1
     for i = 1 : 10
-        BP_FR_daSaR = [];   
-        BP_FR_daSaR = BP_FR;
-
-        if length(i_RRsenzaSpike) >= 1
-            if i+i_RRsenzaSpike(end)-1 <= length(BP_FR_daSaR)
-                BP_FR_daSaR(i+i_RRsenzaSpike-1, :) = [];
+%         if~isnan(BP_FR)
+            BP_FR_daSaR = [];   
+            BP_FR_daSaR = BP_FR;
+    
+            if length(i_RRsenzaSpike) >= 1
+                if i+i_RRsenzaSpike(end)-1 <= length(BP_FR_daSaR)
+                    BP_FR_daSaR(i+i_RRsenzaSpike-1, :) = [];
+                end
             end
-        end
-    
-        fineBP = min(length(BP_FR_daSaR), i+length(nonzeros(FIRSTx10_daSaR(:, 10+i)))-1);
         
-        A = BP_FR_daSaR(i : fineBP, 1);
-        B = nonzeros(FIRSTx10_daSaR(:, 10+i));
-%         C=nonzeros(AVGx10_daSaR(:,10+i));
-%         D=nonzeros(LASTx10_daSaR(:,10+i));
-        
-        [~, iirmOA] = rmoutliers(A);
-        [~, iirmOB] = rmoutliers(B);
-        
-        iirmO = zeros(length(A), 1);
-        iirmO(iirmOA) = 1;
-        iirmO(iirmOB) = 1;
-    
-        if max(iirmO) > 0
-            A1 = A(not(iirmO));
-            B1 = B(not(iirmO));
-%             C1 = C(not(iirmO));
-%             D1 = D(not(iirmO));
-        else
-            A1 = A;
-            B1 = B;
-%             C1 = C;
-%             D1 = D;
-        end
-        
-        [R, ~] = corrcoef(A1, B1);
-        RRR7(10+i, 1)=R(1, 2);
-
-        try            
-            A = BP_FR_daSaR(1: length(nonzeros(FIRSTx10_daSaR(:, 11-i))), 1);
-            B = -nonzeros(FIRSTx10_daSaR(:, 11-i));
-%             C = -nonzeros(AVGx10_daSaR(:, 11-i));
-%             D = -nonzeros(LASTx10_daSaR(:, 11-i));
+            fineBP = min(length(BP_FR_daSaR), i+length(nonzeros(FIRSTx10_daSaR(:, 10+i)))-1);
+            
+            A = BP_FR_daSaR(i : fineBP, 1);
+            B = nonzeros(FIRSTx10_daSaR(:, 10+i));
+    %         C=nonzeros(AVGx10_daSaR(:,10+i));
+    %         D=nonzeros(LASTx10_daSaR(:,10+i));
             
             [~, iirmOA] = rmoutliers(A);
             [~, iirmOB] = rmoutliers(B);
+            
             iirmO = zeros(length(A), 1);
             iirmO(iirmOA) = 1;
             iirmO(iirmOB) = 1;
-            
+        
             if max(iirmO) > 0
                 A1 = A(not(iirmO));
                 B1 = B(not(iirmO));
-%                 C1 = C(not(iirmO));
-%                 D1 = D(not(iirmO));                
+    %             C1 = C(not(iirmO));
+    %             D1 = D(not(iirmO));
             else
                 A1 = A;
                 B1 = B;
-%                 C1 = C;
-%                 D1 = D;
+    %             C1 = C;
+    %             D1 = D;
             end
             
             [R, ~] = corrcoef(A1, B1);
-            RRR7(11-i, 1) = R(1, 2);
-        end
+            RRR7(10+i, 1)=R(1, 2);
+    
+            try            
+                A = BP_FR_daSaR(1: length(nonzeros(FIRSTx10_daSaR(:, 11-i))), 1);
+                B = -nonzeros(FIRSTx10_daSaR(:, 11-i));
+    %             C = -nonzeros(AVGx10_daSaR(:, 11-i));
+    %             D = -nonzeros(LASTx10_daSaR(:, 11-i));
+                
+                [~, iirmOA] = rmoutliers(A);
+                [~, iirmOB] = rmoutliers(B);
+                iirmO = zeros(length(A), 1);
+                iirmO(iirmOA) = 1;
+                iirmO(iirmOB) = 1;
+                
+                if max(iirmO) > 0
+                    A1 = A(not(iirmO));
+                    B1 = B(not(iirmO));
+    %                 C1 = C(not(iirmO));
+    %                 D1 = D(not(iirmO));                
+                else
+                    A1 = A;
+                    B1 = B;
+    %                 C1 = C;
+    %                 D1 = D;
+                end
+                
+                [R, ~] = corrcoef(A1, B1);
+                RRR7(11-i, 1) = R(1, 2);
+            end
+%         else
+%             RRR7(10+i, 1) = nan;
+%             RRR7(11-i, 1) = nan;
+%         end
     end
     
     RRR8=[];
 
    
     for i=1:10
-        try
-%             [R_fr1,PValue,H] = corrplot([BP_FR_daSaR(i+1:end,1),BP_FR_daSaR(1:end-i,2)],'varNames', VariableNames,'type','Pearson','testR','on','alpha',0.05)
-            [R_fr1,~] = corr([BP_FR_daSaR(i+1:end,1),BP_FR_daSaR(1:end-i,2)],'type','Pearson','rows','pairwise','tail','both');           
-            RRR8(10+i,1)=R_fr1(1,2);
-        end
-    
-        try
-%             [R_fr2,PValue,H] = corrplot([BP_FR_daSaR(1:end-i,1),BP_FR_daSaR(i+1:end,2)],'varNames', VariableNames,'type','Pearson','testR','on','alpha',0.05)
-            [R_fr2,~] = corr([BP_FR_daSaR(1:end-i,1),BP_FR_daSaR(i+1:end,2)],'type','Pearson','rows','pairwise','tail','both');
-            RRR8(11-i,1)=R_fr2(1,2);
-    
-        end
+%         if~isnan(BP_FR)
+            try
+    %             [R_fr1,PValue,H] = corrplot([BP_FR_daSaR(i+1:end,1),BP_FR_daSaR(1:end-i,2)],'varNames', VariableNames,'type','Pearson','testR','on','alpha',0.05)
+                [R_fr1,~] = corr([BP_FR_daSaR(i+1:end,1),BP_FR_daSaR(1:end-i,2)],'type','Pearson','rows','pairwise','tail','both');           
+                RRR8(10+i,1)=R_fr1(1,2);
+            end
+        
+            try
+    %             [R_fr2,PValue,H] = corrplot([BP_FR_daSaR(1:end-i,1),BP_FR_daSaR(i+1:end,2)],'varNames', VariableNames,'type','Pearson','testR','on','alpha',0.05)
+                [R_fr2,~] = corr([BP_FR_daSaR(1:end-i,1),BP_FR_daSaR(i+1:end,2)],'type','Pearson','rows','pairwise','tail','both');
+                RRR8(11-i,1)=R_fr2(1,2);
+        
+            end
+%         else
+%             RRR8(10+i,1) = nan;
+%             RRR8(11-i,1) = nan;
+%         end
     end
 
     try
