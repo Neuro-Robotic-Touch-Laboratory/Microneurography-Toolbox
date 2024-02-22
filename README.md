@@ -15,7 +15,7 @@ Compatibility: Available as a standalone executable (.exe) for Windows users wit
 
 Data Visualization: View and save the results through the GUI.
 
-Statistical Analysis: Perform statistical tests (e.g., t-test, Wilcoxon) for comparing subintervals of each recording.
+Statistical Analysis: Perform statistical tests (e.g., t-test, Wilcoxon) for comparing subintervals of a single dataset or across diverse recordings.
 _____________________________________
 
 INSTALLATION
