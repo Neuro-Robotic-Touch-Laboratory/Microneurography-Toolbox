@@ -79,8 +79,8 @@ end
 
 hold(app.ax_msna_int, 'on')
 tmp=find(burst_idx);
-
-
+burst_rem_idx = ~app.burst_res.use_burst(:,1) & app.burst_res.use_burst(:,2);
+tmp_rem = find(burst_rem_idx);
         
 colors = [1.0000, 0, 0;...
           0, 1.0000, 0;...
@@ -88,8 +88,8 @@ colors = [1.0000, 0, 0;...
           1.0000, 0.1034, 0.7241;...
           1.0000, 0.8276, 0];
 
-burst_plot1 =[nan,nan]; burst_plot2 =[nan,nan]; burst_plot3 =[nan,nan]; burst_plot4 =[nan,nan]; burst_plot5 =[nan,nan];
-burst_amp_plot1 = [nan,nan]; burst_amp_plot2 = [nan,nan]; burst_amp_plot3 = [nan,nan]; burst_amp_plot4 = [nan,nan]; burst_amp_plot5 = [nan,nan]; 
+burst_plot1 =[nan,nan]; burst_plot2 =[nan,nan]; burst_plot3 =[nan,nan]; burst_plot4 =[nan,nan]; burst_plot5 =[nan,nan]; burst_plot_rem = [nan,nan];
+burst_amp_plot1 = [nan,nan]; burst_amp_plot2 = [nan,nan]; burst_amp_plot3 = [nan,nan]; burst_amp_plot4 = [nan,nan]; burst_amp_plot5 = [nan,nan]; burst_amp_plot_rem = [nan,nan]; 
 
 for j = 1:5: ceil(length(tmp)/5)*5 %%%% floor
     if j <= length(tmp)
@@ -129,11 +129,20 @@ for j = 1:5: ceil(length(tmp)/5)*5 %%%% floor
     end
 end
 
+for j = 1:length(tmp_rem) 
+    burst_plot_rem = [burst_plot_rem;[(t_msna(app.burst_res.burst_loc(tmp_rem(j),1):app.burst_res.burst_loc(tmp_rem(j),2)))',...
+                   (app.burst_res.htresh +app.burst_res.xshift(app.burst_res.burst_loc(tmp_rem(j),1):app.burst_res.burst_loc(tmp_rem(j),2)))'];...
+                   [t_msna(app.burst_res.burst_loc(tmp_rem(j),1)), app.burst_res.htresh+app.burst_res.xshift(app.burst_res.burst_loc(tmp_rem(j),1))];...
+                   [nan,nan]];
+    burst_amp_plot_rem = [burst_amp_plot_rem ; [app.burst_res.t_burst(tmp_rem(j)) ,app.burst_res.burst_int(tmp_rem(j))]];
+end
+
 plot(app.ax_msna_int,burst_plot1(:,1),burst_plot1(:,2),'Color',colors(1,:),'LineWidth',1.5)
 plot(app.ax_msna_int,burst_plot2(:,1),burst_plot2(:,2),'Color',colors(2,:),'LineWidth',1.5)
 plot(app.ax_msna_int,burst_plot3(:,1),burst_plot3(:,2),'Color',colors(3,:),'LineWidth',1.5)
 plot(app.ax_msna_int,burst_plot4(:,1),burst_plot4(:,2),'Color',colors(4,:),'LineWidth',1.5)
 plot(app.ax_msna_int,burst_plot5(:,1),burst_plot5(:,2),'Color',colors(5,:),'LineWidth',1.5)
+plot(app.ax_msna_int,burst_plot_rem(:,1),burst_plot_rem(:,2),'Color',[.7,.7,.7],'LineWidth',1.5)
 
 hold(app.ax_burst_res,'on')
 plot(app.ax_burst_res,burst_amp_plot1(:,1),burst_amp_plot1(:,2),'.','MarkerSize',20,'Color',colors(1,:))
@@ -141,6 +150,7 @@ plot(app.ax_burst_res,burst_amp_plot2(:,1),burst_amp_plot2(:,2),'.','MarkerSize'
 plot(app.ax_burst_res,burst_amp_plot3(:,1),burst_amp_plot3(:,2),'.','MarkerSize',20,'Color',colors(3,:))
 plot(app.ax_burst_res,burst_amp_plot4(:,1),burst_amp_plot4(:,2),'.','MarkerSize',20,'Color',colors(4,:))
 plot(app.ax_burst_res,burst_amp_plot5(:,1),burst_amp_plot5(:,2),'.','MarkerSize',20,'Color',colors(5,:))
+plot(app.ax_burst_res,burst_amp_plot_rem(:,1),burst_amp_plot_rem(:,2),'.','MarkerSize',20,'Color',[.7,.7,.7])
 
 plot(app.ax_burst_res, app.burst_res.t_burst(burst_idx), app.burst_res.burst_int(burst_idx), '-.','linewidth',2,'color','black','HitTest','off')
 hold(app.ax_burst_res,'off')

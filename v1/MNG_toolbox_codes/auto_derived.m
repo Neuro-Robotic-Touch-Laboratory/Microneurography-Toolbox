@@ -14,7 +14,7 @@ if ~isempty(app.data)
     auto_hb(app)
     auto_resp(app)
     auto_etco2(app)
-%     auto_min_vent(app)
+    auto_min_vent(app)
 else
     warndlg('Please load datafile first')
 end

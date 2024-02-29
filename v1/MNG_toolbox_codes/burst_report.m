@@ -176,14 +176,14 @@ else
     etco2_idx = nan;
 end
 
-% if ~isempty(app.resp_res)
-%     minvent_idx = size(plot_cell,1)+1;
-%     plot_cell{resp_idx,1} = 'median minute ventilation';
-%     plot_cell{resp_idx+1,1} = 'mean minute ventilation';
-%     plot_cell{resp_idx+2,1} = 'std minute ventilation';
-% else
-%     minvent_idx = nan;
-% end
+if ~isempty(app.resp_res)
+    minvent_idx = size(plot_cell,1)+1;
+    plot_cell{resp_idx,1} = 'median minute ventilation';
+    plot_cell{resp_idx+1,1} = 'mean minute ventilation';
+    plot_cell{resp_idx+2,1} = 'std minute ventilation';
+else
+    minvent_idx = nan;
+end
 
 for i = 1: length(plot_data)
     plot_cell{1,i+1} = plot_data(i).name;

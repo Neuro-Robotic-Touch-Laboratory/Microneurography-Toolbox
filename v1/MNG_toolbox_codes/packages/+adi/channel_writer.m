@@ -1,100 +1,60 @@
-classdef (Hidden) channel_writer < handle
+classdef (Hidden) channel_writer
     %
     %   Class:
     %   adi.channel_writer
     %
-    %   This is meant to be an interface
+    %   This class facilities writing a channel to the binary file format.
+    %   More details can be found in adi.binary_file_writer
     %
-    %   adi.setChannelName(file_h,channel,channel_name)
-    %   adi.sdk.setChannelInfo
-    %   adi.sdk.addChannelSamples
+    %   See Also:
+    %   adi.binary_file_writer
     
     
-    properties
-        id
-    end
-    %*** These are currently not write safe - they don't get updated
+    %{
+        Each channel header has the following format:
+        type name description
+        char Title[32] channel title
+        char Units[32] units name
+        double scale see text
+        double offset see text
+        double RangeHigh see text
+        double RangeLow see text
+    %}
+    
     properties
         name
-        fs
         units
-        enabled = true
-        samples_per_record
-    end
-    
-    properties (Hidden)
-        parent %adi.file_writer
-    end
-    
-    properties (Dependent)
-       duration_per_record
-       last_record_duration
-       current_record 
+        data
+        fs
+        %These are only needed for 16 bit data, although they must be in
+        %the binary.
+        scale  = 1
+        offset = 0
     end
     
     methods
-        function value = get.duration_per_record(obj)
-           value = obj.samples_per_record./obj.fs; 
-        end
-        function value = get.current_record(obj)
-           value = obj.parent.current_record; 
-        end
-        function value = get.last_record_duration(obj)
-           all_durations = obj.duration_per_record;
-           if isempty(all_durations)
-               value = NaN;
-           else
-               value = all_durations(end);
-           end
-        end
-    end
-    
-    methods
-        function obj = channel_writer(file_writer_obj,id,name,fs,units)
-            %
-            %
-            %    adi.channel_writer(file_writer_obj,id,name,fs,units)
-            
-            obj.parent = file_writer_obj;
-            obj.id = id;
-            obj.name = name;
-            obj.fs = fs;
+        function obj = channel_writer(channel_name,units,fs,data)
+            %TODO: Check name size
+            obj.name  = channel_name;
             obj.units = units;
+            obj.data  = data;
+            obj.fs    = fs;
+        end
+        function writeHeader(obj,fid)
+            %pass
             
-            obj.updateName();
-            obj.updateInfo();
-        end
-        function initializeRecord(objs,record_number)
-            %
-            %   initializeRecord(objs,record_number)
-            %
-           for iObj = 1:length(objs)
-               obj = objs(iObj);
-               if length(obj.samples_per_record) < record_number
-                   temp = obj.samples_per_record;
-                   obj.samples_per_record = zeros(1,record_number);
-                   obj.samples_per_record(1:length(temp)) = temp;
-               end
-           end
-        end
-        function updateName(obj)
-            file_h = obj.parent.file_h;
-            adi.sdk.setChannelName(file_h,obj.id,obj.name);
-        end
-        function updateInfo(obj)
-            writer_h = obj.parent.data_writer_h;
-            adi.sdk.setChannelInfo(writer_h,obj.id,1/obj.fs,obj.units,'enabled_for_record',obj.enabled);
-        end
-        function addSamples(obj,data)
-            %
-            %   addSamples(obj,data)
+            temp_title = zeros(1,32,'uint8');
+            temp_units = zeros(1,32,'uint8');
+            temp_title(1:length(obj.name)) = uint8(obj.name);
+            temp_units(1:length(obj.units)) = uint8(obj.units);
             
-            cur_record_local = obj.current_record;
-            n_samples = length(data);
-            obj.samples_per_record(cur_record_local) = obj.samples_per_record(cur_record_local) + n_samples;
-            
-            writer_h = obj.parent.data_writer_h;
-            adi.sdk.addChannelSamples(writer_h,obj.id,data)
+            fwrite(fid,temp_title,'*char');
+            fwrite(fid,temp_units,'*char');
+            fwrite(fid,obj.scale,'double');
+            fwrite(fid,obj.offset,'double');
+            %Range high and low ... - not currently used
+            fwrite(fid,Inf,'double');
+            fwrite(fid,-Inf,'double');
         end
     end
     
