@@ -273,6 +273,9 @@ if (data_handler.with_raw || data_handler.with_psegment) && handles.par.cont_seg
     clear xd_sub
 end
 
+disp(['max ipermut' num2str(max(ipermut))])%
+size(clu)%
+size(spikes)%
 %Fixing lost elements of clu . Skiped elements will be  class -1 because in
 %all the uses of clu are like: clu(temp,3:end)+1
 if handles.par.permut == 'y' && ~isempty(clu)

@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox_1.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox_1" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration file="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox_1.prj" location="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox_1" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>MNG_toolbox</param.appname>
     <param.icon>${PROJECT_ROOT}\MNG_toolbox_1_resources\icon.ico</param.icon>
     <param.icons>
@@ -104,6 +104,7 @@
       <file>${PROJECT_ROOT}\computeRadFiring.m</file>
       <file>${PROJECT_ROOT}\computeRadFiring_v02.m</file>
       <file>${PROJECT_ROOT}\CondEn.m</file>
+      <file>${PROJECT_ROOT}\convert_mat_file.m</file>
       <file>${PROJECT_ROOT}\corre_report.m</file>
       <file>${PROJECT_ROOT}\correlation_analysis.m</file>
       <file>${PROJECT_ROOT}\corrplot1.m</file>
@@ -226,25 +227,19 @@
       <file>${PROJECT_ROOT}\pics\mnesys.png</file>
       <file>${PROJECT_ROOT}\pics\tuen Beam.png</file>
       <file>${PROJECT_ROOT}\pics\tuscany heaalth ecosystem.png</file>
-      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+file_comparison\@comments_comparison\comments_comparison.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+w\@sample_count_manager\sample_count_manager.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\@channel\channel.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\@channel\exportToHDF5File.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\@comment\comment.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\@file_viewer\file_viewer.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="MNG_toolbox.exe" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\MNG_toolbox.exe</file>
-      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="readme.txt" optional="true">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="splash.png" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="readme.txt" optional="true">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="MNG_toolbox.exe" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\MNG_toolbox.exe</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="splash.png" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>D:\Program Files\MATLAB\R2022b</root>
+      <root>C:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
+        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -256,6 +251,11 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

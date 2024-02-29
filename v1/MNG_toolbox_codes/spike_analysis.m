@@ -63,9 +63,9 @@ if calc_flag
     Get_spikes_folder([writable_folder '\temp.mat'])% Get_spikes([writable_folder '\temp.mat']) % add sample rate
     disp(which('set_parameters'))
     if app.chkbx_spike_clustering.Value
-        app.edt_spike_file.Value = [writable_folder '\temp.mat'];
-        clipboard('copy',[writable_folder '\temp.mat'])
-        h = wave_clus;
+%         app.edt_spike_file.Value = [writable_folder '\temp.mat'];
+%         clipboard('copy',[writable_folder '\temp.mat'])
+        h = wave_clus([writable_folder '\temp.mat']);
         waitfor(h)
     end    
     

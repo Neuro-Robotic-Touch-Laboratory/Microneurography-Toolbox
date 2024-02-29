@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="4125016312" file="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="2828076418" file="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox.prj" location="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
@@ -12,7 +12,7 @@
     </param.icons>
     <param.summary />
     <param.description />
-    <param.screenshot>${PROJECT_ROOT}\pics\Logo - Software_400x400px.png</param.screenshot>
+    <param.screenshot>${PROJECT_ROOT}\pics\Logo_w - Software_400x400px.png</param.screenshot>
     <param.version>1.0</param.version>
     <param.products.name>
       <item>Curve Fitting Toolbox</item>
@@ -65,53 +65,6 @@
       <file>${PROJECT_ROOT}\pics\mnesys.png</file>
       <file>${PROJECT_ROOT}\pics\tuen Beam.png</file>
       <file>${PROJECT_ROOT}\pics\tuscany heaalth ecosystem.png</file>
-      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+file_comparison\@comments_comparison\comments_comparison.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+array\uniqueWithGroupIndices.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+cellstr\contains.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+cellstr\join.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+datetime\getTimeZone.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+datetime\unixToMatlab.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+dir\changeFileExtension.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+dir\createFolderIfNoExist.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+dir\filepartsx.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+dir\fullfile.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+in\process_varargin_result.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+in\processVarargin.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+stack\calling_function_info.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+stack\getMyBasePath.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+stack\getPackageRoot.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+sl\+str\contains.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\+w\@sample_count_manager\sample_count_manager.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\@channel\channel.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\@channel\exportToHDF5File.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\@comment\comment.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\@file_viewer\file_viewer.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\channel_writer.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\comment_handle.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\convert.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\createFile.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\data_writer_handle.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\editFile.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\file.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\file_handle.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\file_read_options.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\file_writer.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\h5_conversion_options.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\h5_file_h.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\h5_file_sdk.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\handle_manager.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\mat_comment_handle.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\mat_conversion_options.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\mat_file_h.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\mat_file_sdk.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\private\c.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\private\c0.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\private\clong.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\private\sdk_mex.mexw64</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\readFile.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\record.m</file>
-      <file>D:\sssa\matlab\mng toolbox slim\packages\+adi\sdk.m</file>
     </fileset.depfun>
     <fileset.resources>
       <file>${PROJECT_ROOT}\adapt_lms_spec.m</file>
@@ -144,6 +97,7 @@
       <file>${PROJECT_ROOT}\computeRadFiring.m</file>
       <file>${PROJECT_ROOT}\computeRadFiring_v02.m</file>
       <file>${PROJECT_ROOT}\CondEn.m</file>
+      <file>${PROJECT_ROOT}\convert_mat_file.m</file>
       <file>${PROJECT_ROOT}\corre_report.m</file>
       <file>${PROJECT_ROOT}\correlation_analysis.m</file>
       <file>${PROJECT_ROOT}\corrplot1.m</file>
@@ -259,14 +213,15 @@
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="compiled" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled</file>
+      <file location="${PROJECT_ROOT}" name="compiled" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>D:\Program Files\MATLAB\R2022b</root>
+      <root>C:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
+        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -278,6 +233,11 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>
