@@ -522,9 +522,9 @@ function do_clustering_single(filename,min_spikes4SPC, par_file, par_input,fnum,
     end
 
     % CALCULATES INPUTS TO THE CLUSTERING ALGORITHM.
-    inspk = wave_features(spikes,par);     %takes wavelet coefficients.
-    par.inputs = size(inspk,2);                       % number of inputs to the clustering
-
+    inspk = wave_features(spikes,par);    %takes wavelet coefficients.
+    par.inputs = size(inspk,2);          % number of inputs to the clustering
+inspk, spikes,par %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	if par.permut == 'n'
         % GOES FOR TEMPLATE MATCHING IF TOO MANY SPIKES.
         if size(spikes,1)> par.max_spk;

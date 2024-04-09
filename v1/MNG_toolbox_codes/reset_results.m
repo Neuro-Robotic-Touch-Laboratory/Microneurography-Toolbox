@@ -36,6 +36,7 @@ if res_data
     app.corre_res = [];
     app.lbl_output.Text = 'none';
     app.comb_stat = [];
+    app.settings.par = [];
 end
 
 if res_derived

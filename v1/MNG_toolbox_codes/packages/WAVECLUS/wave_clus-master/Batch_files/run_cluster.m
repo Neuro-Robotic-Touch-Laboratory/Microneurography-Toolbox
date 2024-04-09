@@ -9,7 +9,7 @@ if exist([fname '.dg_01.lab'],'file')
     delete([fname '.dg_01']);
 end
 
-dat = load(fname_in);
+dat = load(fname_in); 
 n = length(dat);
 fid = fopen(sprintf('%s.run',fname),'wt');
 fprintf(fid,'NumberOfPoints: %s\n',num2str(n));
@@ -31,7 +31,7 @@ if par.randomseed ~= 0
 end    
 fclose(fid);
 
-system_type = computer;
+system_type = computer; computer
 switch system_type
     case {'PCWIN'}    
 %         if exist([pwd '\cluster.exe'])==0

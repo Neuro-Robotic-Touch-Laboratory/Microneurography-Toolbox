@@ -1,7 +1,7 @@
 function draw_histograms(handles, c2plot,USER_DATA)
 %This function plot the histogram of the cluster number 'c2plot'
 %handles should have the axes of that histogram. USER_DATA is the USER_DATA
-%of wave_clus.
+%of wave_clus. draw_histograms(handles, 0:min(nclusters,3),USER_DATA);
 
 
 spk_times = USER_DATA{3};

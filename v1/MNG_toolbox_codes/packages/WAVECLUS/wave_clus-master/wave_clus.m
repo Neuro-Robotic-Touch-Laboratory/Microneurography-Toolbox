@@ -163,7 +163,7 @@ handles.par = set_parameters();
 cd(pathname);
 
 handles.par.filename = filename;
-
+handles.par.filename %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i = 1:3
     si = num2str(i);
     set(eval(['handles.isi' si '_accept_button']),'value',1);
@@ -258,7 +258,7 @@ else
     set(handles.file_name,'string','Running SPC ...'); drawnow
     fname_in = handles.par.fname_in;
     save(fname_in,'inspk_aux','-ascii');                      %Input file for SPC
-
+   
     [clu,tree] = run_cluster(handles.par);
     forced = false(size(spikes,1) ,1);
     rejected = false(1, size(spikes,1));
@@ -274,8 +274,7 @@ if (data_handler.with_raw || data_handler.with_psegment) && handles.par.cont_seg
 end
 
 disp(['max ipermut' num2str(max(ipermut))])%
-size(clu)%
-size(spikes)%
+
 %Fixing lost elements of clu . Skiped elements will be  class -1 because in
 %all the uses of clu are like: clu(temp,3:end)+1
 if handles.par.permut == 'y' && ~isempty(clu)
@@ -578,7 +577,7 @@ if isempty(handles.par.spikes_file)
     var_list = strcat(var_list , ' ,''spikes''');
 else
     spikes_file = handles.par.spikes_file;
-    var_list = strcat(var_list , ' ,''spikes_file''');
+    var_list = strcat(var_list , ' ,''spikes_file''');var_list %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
 
 ver = '';

@@ -165,6 +165,8 @@ end
 if ~isempty(app.bp_res) && ~isempty(app.hb_res)
     baro_idx = size(plot_cell,1)+1;
     plot_cell{baro_idx} = 'std baroreflexsensitivity [ms/mmHg]';
+else
+    baro_idx = nan;
 end
 
 if ~isnan(co2_ch_idx)
@@ -252,7 +254,6 @@ for i = 1: length(plot_data)
     end
 
     if ~isnan(baro_idx)
-        
         plot_cell{baro_idx,i+1} = plot_cell{hb_idx+4,i+1}*1000 / plot_cell{bp_idx+2,i+1};
     end
 

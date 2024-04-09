@@ -13,8 +13,7 @@ if ~isempty(app.spike_res)
     
     if (spike_res.analysis.sorting == app.chkbx_spike_sorting.Value) ...
         && isequal(spike_res.analysis.dips,  [app.edt_dip1.Value, app.edt_peak.Value, app.edt_dip2.Value]) ...
-        && (spike_res.analysis.waveclus == app.chkbx_spike_clustering.Value...
-        && (spike_res.analysis.inverse == app.chbx_invert_spike.Value))
+        && (spike_res.analysis.waveclus == app.chkbx_spike_clustering.Value)
         calc_flag = false;
     end
     
@@ -23,7 +22,7 @@ if ~isempty(app.spike_res)
         spike_res.analysis.sorting = app.chkbx_spike_sorting.Value;
         spike_res.analysis.waveclus = app.chkbx_spike_clustering.Value;
         spike_res.analysis.dips = [app.edt_dip1.Value, app.edt_peak.Value, app.edt_dip2.Value];
-        spike_res.analysis.inverse = app.chbx_invert_spike.Value;
+%         spike_res.analysis.inverse = app.chbx_invert_spike.Value;
         spike_res.analysis.spike = false;
         spike_res.analysis.trans = false;
         spike_res.spikes = [];
@@ -42,52 +41,53 @@ else
     spike_res.analysis.dips = [app.edt_dip1.Value, app.edt_peak.Value, app.edt_dip2.Value];
     spike_res.analysis.spike = false;
     spike_res.analysis.trans = false;
-    spike_res.analysis.inverse = app.chbx_invert_spike.Value;
+%     spike_res.analysis.inverse = app.chbx_invert_spike.Value;
 
 end
 
 if calc_flag
-%     data = app.data(app.settings.channel_idx.msna).data(app.settings.interval(1,1)/app.data(app.settings.channel_idx.msna).ts(1):app.settings.interval(1,2)/app.data(app.settings.channel_idx.msna).ts(1));
     [data,ts,~,~] = current_signal(app, app.settings.channel_idx.msna);
-    if app.chbx_invert_spike.Value
-        data = data * (-1);
-    end
     
-    data = data';
-    writable_folder = GetWritableFolder;
-    sr = 1/ts(1);
-    save ([writable_folder '\temp.mat'], "data","sr") %save ('temp.mat', "data")
-    
+    data = data'; 
+
+    sr = 1/ts(1); % rem
+
     SimpleSpikesSorting = app.chkbx_spike_sorting.Value;
-    disp(which('set_parameters'))
-    Get_spikes_folder([writable_folder '\temp.mat'])% Get_spikes([writable_folder '\temp.mat']) % add sample rate
-    disp(which('set_parameters'))
+
+    [threshold, index, par, spikes] = detect_spikes(data, app.settings.par.sr, app.settings.par);
+
+    disp([num2str(length(index)) 'length index']) %
+    disp([num2str(size(spikes)) 'size spikes']) %
     if app.chkbx_spike_clustering.Value
-%         app.edt_spike_file.Value = [writable_folder '\temp.mat'];
-%         clipboard('copy',[writable_folder '\temp.mat'])
-        h = wave_clus([writable_folder '\temp.mat']);
-        waitfor(h)
+        disp([num2str(length(index)) 'length index2']) %
+        disp([num2str(size(spikes)) 'size spikes2']) %
+        app.wc_app = cluster_app(app,index, spikes, par, threshold);
+        waitfor(app.wc_app)
+        cluster.cluster_class = app.settings.tempclus.cluster_class;
+        app.settings.tempclus = [];
     end    
     
    
     if app.chkbx_spike_clustering.Value 
-        cluster=load([writable_folder '\times_temp.mat'],'cluster_class');
+%         cluster=load([writable_folder '\times_temp.mat'],'cluster_class');
         [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
                 =comBIN_wave_clus(cluster,data,sr);
     else
-        spikes=load([writable_folder '\temp_spikes.mat'],'spikes','index','threshold');
+%         spikes=load([writable_folder '\temp_spikes.mat'],'spikes','index','threshold'); % rem
+        spks =  struct('spikes',spikes,'threshold',threshold,'index',index);
+        
         if app.chkbx_spike_sorting.Value
             %%speed up with vector operation
-            [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
-                =comBIN12_v03(spikes,[writable_folder '\temp.mat'],app.edt_dip1.Value,app.edt_peak.Value,app.edt_dip2.Value);
-    %         [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
-    %             =comBIN12_v03(spikes,'temp',app.edt_dip1.Value,app.edt_peak.Value,app.edt_dip2.Value);
+%             [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ... % rem
+%                 =comBIN12_v03(spikes,[writable_folder '\temp.mat'],app.edt_dip1.Value,app.edt_peak.Value,app.edt_dip2.Value);                                           % rem
+            [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts, spike_res.cluster, spike_res.extremes(:,2),  spike_res.extremes(:,1), spike_res.extremes(:,3) ]...
+            =comBIN(spks,data,sr,app.edt_dip1.Value,app.edt_peak.Value,app.edt_dip2.Value);
             %%
         else
-            [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
-                =comBIN12_v03(spikes,[writable_folder '\temp.mat'],1,1,1);
-    %         [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
-    %             =comBIN12_v03(spikes,'temp',1,1,1);
+%             [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
+%                 =comBIN12_v03(spikes,[writable_folder '\temp.mat'],1,1,1);
+            [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts, spike_res.cluster, spike_res.extremes(:,2),  spike_res.extremes(:,1), spike_res.extremes(:,3) ]...
+            =comBIN(spks,data,sr,1,1,1);
         end
     end
     spike_res.analysis.sorting = app.chkbx_spike_sorting.Value;
@@ -95,11 +95,11 @@ if calc_flag
     spike_res.analysis.spike = false;
     spike_res.analysis.trans = false;
     spike_res = sel_spikes(spike_res, app.data(app.settings.channel_idx.msna).ts, app.burst_ints); 
-    list = dir(writable_folder);
-    list(1:2) = [];
-    for i = 1: length(list)
-        delete([list(i).folder '\' list(i).name])
-    end
+%     list = dir(writable_folder);
+%     list(1:2) = [];
+%     for i = 1: length(list)
+%         delete([list(i).folder '\' list(i).name])
+%     end
 end
 
 %% spike analysis

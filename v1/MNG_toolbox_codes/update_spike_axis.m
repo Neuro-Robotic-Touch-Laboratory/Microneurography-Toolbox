@@ -49,6 +49,7 @@ for i = 1: n_cluster
         xlim (app.ax_cluster_timestamps,xl)
         
     end
+    
 end
 
 if static

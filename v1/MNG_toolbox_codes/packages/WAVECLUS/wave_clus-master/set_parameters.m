@@ -37,8 +37,8 @@ par.tmin= 0;                         % starting time for loading (in sec)
 par.w_pre = 20;                      % number of pre-event data points stored (default 20) 
 par.w_post = 20;                     % number of post-event data points stored (default 44)) 
 par.alignment_window = 10;           % number of points around the sample expected to be the maximum 
-par.stdmin =10;                      % minimum threshold for detection     %3.5 
-par.stdmax =500;                     % maximum threshold for detection       %10 
+par.stdmin =200;                      % minimum threshold for detection %3.5 
+par.stdmax =900;                     % maximum threshold for detection       %10 
 par.detect_fmin = 300;               % high pass filter for detection 
 par.detect_fmax = 3000;              % low pass filter for detection (default 1000) 
 par.detect_order = 4;                % filter order for detection. 0 to disable the filter. 
@@ -84,6 +84,14 @@ par.permut = 'y';                   % for selection of random 'par.max_spk' spik
 % HISTOGRAM PARAMETERS 
 par.nbins = 100;                    % # of bins for the ISI histograms 
 par.bin_step = 1;                   % percentage number of bins to plot 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  

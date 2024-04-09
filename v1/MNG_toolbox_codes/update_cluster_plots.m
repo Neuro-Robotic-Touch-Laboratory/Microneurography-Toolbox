@@ -1,0 +1,93 @@
+function update_cluster_plots(app)
+%UNTITLED Summary of this function goes here
+%   Detailed explanation goes here
+
+clu_idx = app.settings.cluster_display;
+
+tmp = 'abcd';
+
+colors = [[0.0 0.0 1.0];[1.0 0.0 0.0];[0.0 0.5 0.0];[0.620690 0.0 0.0];[0.413793 0.0 0.758621];[0.965517 0.517241 0.034483];
+    [0.448276 0.379310 0.241379];[1.0 0.103448 0.724138];[0.545 0.545 0.545];[0.586207 0.827586 0.310345];
+    [0.965517 0.620690 0.862069];[0.620690 0.758621 1.]]; 
+maxc = size(colors,1);
+ls = size( app.user_data{2},2);
+displ_clus = [];
+for i = 1 :4 
+    if app.settings.cluster(clu_idx(i)).isclu
+
+        eval(['clus_ax = app.ax_clus_' tmp(i) ';' ]) 
+        cla(clus_ax)
+
+        eval(['isi_ax = app.ax_clus_' tmp(i) '_isi;']) 
+        eval(['app.lbl_clu_' tmp(i) '.Visible = "on";'])
+        eval(['app.ax_clus_' tmp(i) '.Visible = "on";'])
+        eval(['app.sbtn_fix_clus_' tmp(i) '.Visible = "on";'])
+        eval(['app.btn_man_clus_' tmp(i) '.Visible = "on";'])
+        eval(['app.ax_clus_' tmp(i) '_isi.Visible = "on";'])
+        eval(['app.lbl_clu_' tmp(i) '_isi.Visible = "on";'])
+        eval(['app.sbtn_reject_clu_' tmp(i) '.Visible = "on";'])
+        eval(['app.edt_max_clu_' tmp(i) '.Visible = "on";'])
+        eval(['app.edt_step_clu_' tmp(i) '.Visible = "on";'])
+        eval(['app.sbtn_fix_clus_' tmp(i) '.Value = app.settings.cluster(i).fix;']);
+        eval(['app.edt_max_clu_' tmp(i) '.Value = app.settings.cluster(i).nbins;']);
+        eval(['app.edt_step_clu_' tmp(i) '.Value = app.settings.cluster(i).bin_step;']);
+%         eval(['app.sbtn_reject_clu_' tmp(i) '.Value = app.settings.cluster(clu_idx(i)).reject;'])
+%         eval(['app.sbtn_accept_clu_' tmp(i) '.Value = ~app.settings.cluster(clu_idx(i)).reject;'])                 
+        if app.user_data{53}(clu_idx(i))
+            eval(['app.sbtn_fix_clus_' tmp(i) '.Enable = "off";'])
+            eval(['app.btn_man_clus_' tmp(i) '.Enable = "off";'])
+            eval(['app.sbtn_reject_clu_' tmp(i) '.Enable = "off";'])
+            eval(['app.edt_max_clu_' tmp(i) '.Enable = "off";'])
+            eval(['app.edt_step_clu_' tmp(i) '.Enable = "off";'])
+            if strcmp(app.dd_plot.Value,app.dd_plot.Items{1})
+                line(app.settings.cluster(clu_idx(i)).spikes(:,1), app.settings.cluster(clu_idx(i)).spikes(:,2) ,'color',[.8,.8,.8],'Parent',clus_ax);
+            end
+            line(1:ls,app.settings.cluster(clu_idx(i)).av,'color',[.7,.7,.7],'linewidth',2,'Parent',clus_ax)
+            line(1:ls,app.settings.cluster(clu_idx(i)).avdw,'color',[.6 .6 .6],'linewidth',0.5,'Parent',clus_ax)
+            line(1:ls,app.settings.cluster(clu_idx(i)).avup,'color',[.6 .6 .6],'linewidth',0.5,'Parent',clus_ax)
+            text(clus_ax, 0,0, 'REJECTED','FontWeight','bold','FontSize',35)
+        else
+            eval(['app.sbtn_fix_clus_' tmp(i) '.Enable = "on";'])
+            eval(['app.btn_man_clus_' tmp(i) '.Enable = "on";'])
+            eval(['app.sbtn_reject_clu_' tmp(i) '.Enable = "on";'])
+            eval(['app.edt_max_clu_' tmp(i) '.Enable = "on";'])
+            eval(['app.edt_step_clu_' tmp(i) '.Enable = "on";'])
+             if strcmp(app.dd_plot.Value,app.dd_plot.Items{1})
+                line(app.settings.cluster(clu_idx(i)).spikes(:,1), app.settings.cluster(clu_idx(i)).spikes(:,2) ,'color',colors(mod(clu_idx(i)-1,maxc)+1,:)*(clu_idx(i)~=0),'Parent',clus_ax);
+                col = [0,0,0];
+            else
+                col = colors(mod(clu_idx(i)-1,maxc)+1,:)*(clu_idx(i)~=0);
+            end
+            line(1:ls,app.settings.cluster(clu_idx(i)).av,'color',col,'linewidth',2,'Parent',clus_ax)
+            line(1:ls,app.settings.cluster(clu_idx(i)).avdw,'color',[.4 .4 .4],'linewidth',0.5,'Parent',clus_ax)
+            line(1:ls,app.settings.cluster(clu_idx(i)).avup,'color',[.4 .4 .4],'linewidth',0.5,'Parent',clus_ax)
+            xlim(isi_ax,'manual');
+            bar(isi_ax,app.settings.cluster(clu_idx(i)).X(1:end-1),app.settings.cluster(clu_idx(i)).N(1:end-1))
+            xlim(isi_ax,[0 app.settings.cluster(clu_idx(i)).nbins]);
+        end
+       
+        eval(['app.lbl_clu_' tmp(i) '.Text =  app.settings.cluster(clu_idx(i)).ttl;'])
+
+        ylim (clus_ax, app.settings.cluster_0.yl) %ylim(clus_ax,app.settings.cluster(i).ylimit)
+            
+        
+        eval(['app.lbl_clu_' tmp(i) '_isi.Text =  app.settings.cluster(clu_idx(i)).ttl_isi;'])
+
+        displ_clus = [displ_clus, ' ' num2str(clu_idx(i)) ',' ];
+    else
+        eval(['app.lbl_clu_' tmp(i) '.Visible = "off";'])
+        eval(['app.ax_clus_' tmp(i) '.Visible = "off";'])
+        eval(['app.sbtn_fix_clus_' tmp(i) '.Visible = "off";'])
+        eval(['app.btn_man_clus_' tmp(i) '.Visible = "off";'])
+        eval(['app.ax_clus_' tmp(i) '_isi.Visible = "off";'])
+        eval(['app.lbl_clu_' tmp(i) '_isi.Visible = "off";'])
+        eval(['app.sbtn_reject_clu_' tmp(i) '.Visible = "off";'])
+        eval(['app.sbtn_accept_clu_' tmp(i) '.Visible = "off";'])
+        eval(['app.edt_max_clu_' tmp(i) '.Visible = "off";'])
+        eval(['app.edt_step_clu_' tmp(i) '.Visible = "off";'])
+    end
+
+end
+
+app.lbl_disp_clu.Text = [ 'Cluster:[' displ_clus(1:end-1) ' ] of ' num2str(app.settings.cluster_0.n_clus) ' clusters'];
+end
