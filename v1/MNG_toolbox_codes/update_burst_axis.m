@@ -28,8 +28,9 @@ for i = 1: size(app.settings.burst_rem_int,1)
     hold(app.ax_msna_raw,'on')
 end
 
-plot(app.ax_msna_raw, t_msna,app.data(app.settings.channel_idx.msna).data(t_i/app.burst_res.ts(2)+1:t_f/app.burst_res.ts(2)),'LineWidth',1.2)
-ylim(app.ax_msna_raw,[-20 20])
+plot(app.ax_msna_raw, t_msna,app.data(int32(app.settings.channel_idx.msna)).data(int32(t_i/app.burst_res.ts(2)+1):int32(t_f/app.burst_res.ts(2))),'LineWidth',1.2)
+yl = quantile(app.data(int32(app.settings.channel_idx.msna)).data(int32(t_i/app.burst_res.ts(2)+1):int32(t_f/app.burst_res.ts(2))),[0.00001 .99999]);
+ylim(app.ax_msna_raw,yl)
 xlim(app.ax_msna_raw,[t_msna(1) t_msna(end)])
 
 if ~isempty(app.hb_res)

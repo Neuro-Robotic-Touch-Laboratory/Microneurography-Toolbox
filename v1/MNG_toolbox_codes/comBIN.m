@@ -1,6 +1,6 @@
-function [spikeMatrix, peak_idxs, peakTimes_ms, classes, peak_vals,  dip1, dip2 ]=comBIN(aaa,data,sr,NBINS_peak,NBINS_dip,NBINS_dip2,npointsbeforepeak,npointsafterpeak)
+function [spikeMatrix, peak_idxs, peakTimes_ms, classes, peak_vals,  dip1, dip2 ]=comBIN(aaa,data,sr,spk_pos,NBINS_peak,NBINS_dip,NBINS_dip2,npointsbeforepeak,npointsafterpeak)
                                                                                   %comBIN(spks,data,sr,1,1,1)
-if nargin<7
+if nargin<8
   npointsbeforepeak=20;
   npointsafterpeak=20;
 end
@@ -32,22 +32,57 @@ clear i idx spike
 peak_vals=data(peak_idxs);
 rmv=[];
 discardedSpikesMatrix=[];
-for i=1:numSpikes
-    [minPks,minLocs]=findpeaks(gnegate(-spikeMatrix(:,i)));%find all local minima
-    if numel(minPks)<2
-        rmv=[rmv i];
-        continue
-    end
-    [~,I]=sort(minPks, 'descend');I=I(1:2); I=sort(I,'ascend'); minLocs2=minLocs(I);%get greatest 2
-    minima2=spikeMatrix(minLocs2,i);
-    dip1(i)=minima2(1);
-    dip2(i)=minima2(2);
-    dip1_idx(i)=minLocs2(1);
-    dip2_idx(i)=minLocs2(2);
-end
+
+% tic
+% for i=1:numSpikes
+%     if spk_pos(i)
+%         [minPks,minLocs]=findpeaks(gnegate(spikeMatrix(:,i)));%find all local minima
+%         minPks = -minPks;
+%     else
+%         [minPks,minLocs]=findpeaks(gnegate(-spikeMatrix(:,i)));%find all local minima
+%         
+%     end
+%     
+%     if numel(minPks)<2
+%         rmv=[rmv i];
+%         continue
+%     end
+%     if spk_pos(i)
+%         [~,I]=sort(minPks, 'ascend');
+%     else
+%         [~,I]=sort(minPks, 'descend');
+%     end
+%     I=I(1:2); I=sort(I,'ascend'); minLocs2=minLocs(I);%get greatest 2
+%     minima2=spikeMatrix(minLocs2,i);
+%     dip1(i)=minima2(1);
+%     dip2(i)=minima2(2);
+%     dip1_idx(i)=minLocs2(1);
+%     dip2_idx(i)=minLocs2(2);
+%     if minLocs(I(1)) >20
+%         fails1 = [fails1,i];
+%     end
+%     if minLocs(I(2)) <22
+%         fails2 = [fails2,i];
+%     end
+% end
+% dip1=dip1';dip2=dip2';dip1_idx=dip1_idx';dip2_idx=dip2_idx';
+% toc
+%%
+
+pos_idx = find(spk_pos);
+neg_idx = find(~spk_pos);
+dip1_idx = [];
+dip2_idx = [];
+dip1 = [];
+dip2 = [];
+[dip1(pos_idx),dip1_idx(pos_idx)] = min(spikeMatrix(1:20,pos_idx));
+[dip1(neg_idx),dip1_idx(neg_idx)] = max(spikeMatrix(1:20,neg_idx));
+[dip2(pos_idx),dip2_idx(pos_idx)] = min(spikeMatrix(21:end,pos_idx));
+[dip2(neg_idx),dip2_idx(neg_idx)] = max(spikeMatrix(21:end,neg_idx));
+dip2_idx = dip2_idx+20;
 dip1=dip1';dip2=dip2';dip1_idx=dip1_idx';dip2_idx=dip2_idx';
 
-
+%%
 
 
 discardedSpikesMatrix=[discardedSpikesMatrix spikeMatrix(:,rmv)];

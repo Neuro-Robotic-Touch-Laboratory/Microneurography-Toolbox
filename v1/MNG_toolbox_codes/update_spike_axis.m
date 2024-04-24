@@ -9,6 +9,10 @@ int_idx = find(strcmp(app.popup_int_spike.Value,app.popup_int_spike.Items));
 %data = app.data(app.settings.channel_idx.msna).data(app.settings.interval(1,1)/app.data(app.settings.channel_idx.msna).ts(1):app.settings.interval(1,2)/app.data(app.settings.channel_idx.msna).ts(1));
 [data,ts,~, ~] = current_signal(app, app.settings.channel_idx.msna);
 
+[b,a] = ellip(app.settings.par.detect_order,0.1,40,[app.settings.par.detect_fmin, app.settings.par.detect_fmax]*2/(1/ts(1)));
+data_fs = filtfilt(b, a, data);
+yl_data = quantile(data_fs,[0.00001 .99999]);
+
 if int_idx ==1
     xl = ts;
 else
@@ -16,7 +20,7 @@ else
 end
 
 n_cluster = max(app.spike_res.cluster);
-cols = distinguishable_colors(n_cluster,[1 1 1; 0 0 0]);
+cols = distinguishable_colors(n_cluster,[1 1 1; 1 0 0; 0 0 1; 0.80 0.95 0.90]);
  %% plot all spike of one cluster as one object
 plotspikes = {[]}; 
 if static
@@ -34,8 +38,8 @@ for i = 1: n_cluster
     plotspikes{i,1}(tmp_idx+1,1)= tmp;
 
     plotspikes{i,2} = nan(length(tmp)*3,1);
-    plotspikes{i,2}(tmp_idx,2) = -50;
-    plotspikes{i,2}(tmp_idx+1,2)= 50;
+    plotspikes{i,2}(tmp_idx,2) = yl_data(1);%%-50;
+    plotspikes{i,2}(tmp_idx+1,2)= yl_data(2); %%50;
     plotspikes{i,3} = nan(length(tmp)*3,1);
     plotspikes{i,3}(tmp_idx,2) = i -0.45;
     plotspikes{i,3}(tmp_idx+1,2) = i +0.45;
@@ -46,7 +50,7 @@ for i = 1: n_cluster
               (-20:1:20)*app.data(app.settings.channel_idx.msna).ts(1),...
               app.spike_res.spike(int_idx).shape{i},'Color', cols(i,:), 'LineWidth',1.5 )
         leg_str{i} = ['n = ' num2str(app.spike_res.spike(int_idx).n_spikes(i))];
-        xlim (app.ax_cluster_timestamps,xl)
+%         xlim (app.ax_cluster_timestamps,xl)%%% warnings errrors 
         
     end
     
@@ -62,6 +66,7 @@ hold(app.ax_cluster_timestamps, 'off')
 ylim(app.ax_cluster_timestamps,[.5 n_cluster+.5])
 
 %% plot all heartbeats as one object
+
 yyaxis(app.ax_spike_msna, 'left')
 cla(app.ax_spike_msna)
 hold(app.ax_spike_msna, 'off')
@@ -70,25 +75,27 @@ if ~isnan(app.settings.channel_idx.ecg)
     tmp_idx = 1:3:length(app.hb_res.t_events(app.hb_res.use_beats(:,int_idx)))*3;
     hb(tmp_idx,1)= app.hb_res.t_events(app.hb_res.use_beats(:,int_idx));
     hb(tmp_idx+1,1)= app.hb_res.t_events(app.hb_res.use_beats(:,int_idx));
-    hb(tmp_idx,2)= -50;
-    hb(tmp_idx+1,2)= 50;
+    hb(tmp_idx,2)= yl_data(1);%% -50
+    hb(tmp_idx+1,2)= yl_data(2); %% 50
     plot (app.ax_spike_msna,hb(:,1),hb(:,2),'LineWidth',1.5,'Color','k')
     
 end
 hold(app.ax_spike_msna, 'on')
-plot(app.ax_spike_msna, downsample((1:length(data))*app.data(app.settings.channel_idx.msna).ts(1),100),downsample(data,100),'LineStyle','-')%, 'Color',[0.2 0.2 0.3]
+plot(app.ax_spike_msna, (1:length(data_fs))*app.data(app.settings.channel_idx.msna).ts(1),data_fs,'LineStyle','-')%, 'Color',[0.2 0.2 0.3]
 plot (app.ax_spike_msna,plotspikes{sel_cluster,1},plotspikes{sel_cluster,2},'Color', cols(sel_cluster,:), 'LineWidth', 0.7 ,'LineStyle','-.' )
-ylim(app.ax_spike_msna,[-20 20])
 xlim(app.ax_spike_msna,[0 length(data)*app.data(app.settings.channel_idx.msna).ts(1)])
+
 hold(app.ax_spike_msna, 'off')
 
 app.lbl_spike_ttl2.Text = ['Timestamps unit: ' num2str(sel_cluster)];
 app.lbl_spike_ttl2.FontColor = cols(sel_cluster,:);
-app.lbl_spike_ttl3.Text = ['Firing frequency unit: ' num2str(sel_cluster)];
+
 
 %% better spikefreq
 spikemap = zeros(length(data),1);
 spikemap(app.spike_res.spike_idx(app.spike_res.cluster == sel_cluster)) = 1;
+app.lbl_spike_ttl3.Text = ['Firing freq. unit: ' num2str(sel_cluster) ' (avrg. ' num2str(round(sum(spikemap)/diff(ts), 2)) 'Hz)'];
+app.lbl_spike_ttl3.FontColor = 'r';
 m = downsample(movsum(spikemap, 5000),20);
 
 %%
@@ -101,7 +108,7 @@ xlim(app.ax_spike_msna, xl)
 app.spike_res.rate_ylim = [min(m) max(m)];
 ylim(app.ax_spike_msna,app.spike_res.rate_ylim)
 yyaxis(app.ax_spike_msna, 'left')
-ylim(app.ax_spike_msna,[-20 20])
+ylim(app.ax_spike_msna,yl_data)
 
 if ~isnan(app.settings.channel_idx.ecg)
     tmp_idx = app.spike_res.spike(int_idx).first{sel_cluster}(:,2);
@@ -232,5 +239,18 @@ if ~isnan(app.settings.channel_idx.ecg)
     grid(app.ax_last_hist, 'minor')
 end
 ylim(app.ax_cluster_timestamps,[.5 n_cluster+.5])
+
+%% plot ISI in rate panel 
+
+times = diff(app.spike_res.spike_ts((app.spike_res.cluster == sel_cluster) & app.spike_res.use_spikes(:,int_idx)')/1000)*1000;
+multi_isi = nnz(times < 3);
+bin_step = app.edt_step.Value;
+nbins = app.edt_max.Value;
+[N,X]=hist(times,0:bin_step:nbins);
+xlim (app.ax_isi,'manual')
+bar(app.ax_isi,X(1:end-1),N(1:end-1))
+xlim(app.ax_isi,[0 nbins]);
+title(app.ax_isi,[num2str(multi_isi) ' in < 3ms'])
+
 end
 

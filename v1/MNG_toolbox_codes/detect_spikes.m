@@ -1,4 +1,4 @@
-function [threshold, index, par, spikes] = detect_spikes(data, sr, par)
+function [threshold, index, par, spikes, spk_pos] = detect_spikes(data, sr, par)
 %DETECT_SPIKES Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -8,6 +8,7 @@ init_date = now;
 threshold = [];
 index = [];
 spikes = [];
+spk_pos = logical([]);
 seglen = par.segments_length*sr*60;
 num_seg = ceil (length(data)/(seglen)); %% process 5 min segments
 dur_seg = floor(length(data)/num_seg);
@@ -22,13 +23,15 @@ end
 for n = 1:num_seg  
     x = data(idx(n,1):idx(n,2));
         %<----  Add here extra processing of the signal (x)
-    [new_spikes, aux_th, new_index]  = amp_detect(x, par);
+    [new_spikes, aux_th, new_index, new_spk_pos]  = amp_detect(x, par);
     index = [index, ((new_index)+idx(n,1)-1)/sr*1000];%/sr*1000 + (idx-1)];
     
     %new_index to ms
     spikes = [spikes; new_spikes];
     threshold = [threshold, aux_th];
+    spk_pos = [spk_pos, new_spk_pos];
 end
+
 current_par = par;
 par = struct;
 par = update_parameters(par, current_par, 'detect');
@@ -37,7 +40,7 @@ par.channels = 1;
 end
 
 
-function [spikes,thr,index] = amp_detect(x, par)
+function [spikes,thr,index, spk_pos] = amp_detect(x, par)
 % Detect spikes with amplitude thresholding. Uses median estimation.
 % Detection is done with filters set by fmin_detect and fmax_detect. Spikes
 % are stored for sorting using fmin_sort and fmax_sort. This trick can
@@ -91,6 +94,7 @@ switch detect
                 xaux0 = index(nspk);
             end
         end
+        spk_pos = true(size(index)); 
     case 'neg'
         nspk = 0;
         xaux = find(xf_detect(w_pre+2:end-w_post-2-sample_ref) < -thr) +w_pre+1;
@@ -103,6 +107,7 @@ switch detect
                 xaux0 = index(nspk);
             end
         end
+        spk_pos = false(size(index)); 
     case 'both'
         nspk = 0;
         xaux = find(abs(xf_detect(w_pre+2:end-w_post-2-sample_ref)) > thr) +w_pre+1;
@@ -115,6 +120,9 @@ switch detect
                 xaux0 = index(nspk);
             end
         end
+        spk_pos = false(size(index)); 
+        idx = find(xf_detect(index)>0);
+        spk_pos(idx) = true;
 end
 
 % SPIKE STORING (with or without interpolation)
@@ -131,6 +139,7 @@ end
 aux = find(spikes(:,w_pre)==0);       %erases indexes that were artifacts
 spikes(aux,:)=[];
 index(aux)=[];
+spk_pos(aux)=[];
 
 switch par.interpolation
     case 'n'
