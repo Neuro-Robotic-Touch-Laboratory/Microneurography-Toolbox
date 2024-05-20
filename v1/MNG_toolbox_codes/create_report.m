@@ -59,6 +59,17 @@ for rec_int = 1: size(idx,1)
         filenames{cell_idx,2} = min(find(app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.burst.rr.format));
         cell_idx = cell_idx+1;
     end
+    if app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spikerate.done
+        for j = 1:length(app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spikerate.unit)
+                tbl_figs{cell_idx,1} = [char(rec_int_name) ' spikerate - unit ' num2str(j)];
+                filenames{cell_idx,1} = [char(app.settings.rep_dir) '\' ...
+                                         char(app.settings.figs(idx(rec_int,1)).name) '_INT_' ...
+                                         char(app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).name) '_spike_rates_unit_' ...
+                                         char(app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spike.subint(i).unit(j).name)  '.'];
+                filenames{cell_idx,2} = min(find(app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spike.subint(i).unit(j).format));
+                cell_idx = cell_idx+1;
+        end
+    end
 
     if app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spike.done
         for i =1: length(app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spike.subint)
@@ -83,6 +94,7 @@ for rec_int = 1: size(idx,1)
         end
     end
 
+    
     if app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spectral.done
         for i =1: length(app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spectral.subint)
             for j = 1:length(app.settings.figs(idx(rec_int,1)).ints(idx(rec_int,2)).anas.spectral.subint(i).signal)

@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3131631743" file="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox_1.prj" location="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox_1" preferred-package-location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3131631743" file="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox_1.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox_1" preferred-package-location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>MNG_toolbox</param.appname>
     <param.icon>${PROJECT_ROOT}\MNG_toolbox_1_resources\icon.ico</param.icon>
     <param.icons>
@@ -86,6 +86,9 @@
       <file>${PROJECT_ROOT}\auto_min_vent.m</file>
       <file>${PROJECT_ROOT}\auto_resp.m</file>
       <file>${PROJECT_ROOT}\BINfrequency.m</file>
+      <file>${PROJECT_ROOT}\blablubb.fig</file>
+      <file>${PROJECT_ROOT}\blablubb1.fig</file>
+      <file>${PROJECT_ROOT}\blablubb2.fig</file>
       <file>${PROJECT_ROOT}\BlandAltman.m</file>
       <file>${PROJECT_ROOT}\BlandAltman_ax.m</file>
       <file>${PROJECT_ROOT}\bp_dect.m</file>
@@ -140,6 +143,7 @@
       <file>${PROJECT_ROOT}\HRV.m</file>
       <file>${PROJECT_ROOT}\int_selection.mlapp</file>
       <file>${PROJECT_ROOT}\int_spikes.m</file>
+      <file>${PROJECT_ROOT}\interval selection.prj</file>
       <file>${PROJECT_ROOT}\mat_wc_reader.m</file>
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
       <file>${PROJECT_ROOT}\mynum2str.m</file>
@@ -189,6 +193,7 @@
       <file>${PROJECT_ROOT}\stat_selection.mlapp</file>
       <file>${PROJECT_ROOT}\stepwise_GDA_v06.m</file>
       <file>${PROJECT_ROOT}\stepwise_regression.m</file>
+      <file>${PROJECT_ROOT}\switch_vis.m</file>
       <file>${PROJECT_ROOT}\table1.mat</file>
       <file>${PROJECT_ROOT}\table2.mat</file>
       <file>${PROJECT_ROOT}\table3.mat</file>
@@ -234,19 +239,20 @@
       <file>${PROJECT_ROOT}\xwt_ax.m</file>
     </fileset.resources>
     <fileset.package />
-    <fileset.depfun />
+    <fileset.depfun>
+      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
+    </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="readme.txt" optional="true">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="MNG_toolbox.exe" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\MNG_toolbox.exe</file>
-      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="splash.png" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="MNG_toolbox.exe" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\MNG_toolbox.exe</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="readme.txt" optional="true">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\compiled\desktop\for_testing" name="splash.png" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2022b</root>
+      <root>D:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -258,11 +264,6 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

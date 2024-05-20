@@ -223,7 +223,9 @@ app.lbl_working.Text = 'saving plots';
 for j = 1 : length(form_idxs)
     switch form_idxs(j)
         case 1
-            savefig(f1,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.fig'])
+            %f1.Visible = 'on';
+            savefig(f1,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.fig'],'compact')
+            %switch_vis([path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.fig'])
         case 2
             saveas(f1,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.jpeg'])
 %         case 3

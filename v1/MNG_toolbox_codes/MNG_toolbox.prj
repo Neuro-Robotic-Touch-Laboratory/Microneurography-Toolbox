@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="147099218" file="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox.prj" location="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="1286384556" file="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
@@ -57,7 +57,9 @@
     <fileset.main>
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
     </fileset.main>
-    <fileset.depfun />
+    <fileset.depfun>
+      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
+    </fileset.depfun>
     <fileset.resources>
       <file>${PROJECT_ROOT}\adapt_lms_spec.m</file>
       <file>${PROJECT_ROOT}\adi.m</file>
@@ -71,6 +73,9 @@
       <file>${PROJECT_ROOT}\auto_min_vent.m</file>
       <file>${PROJECT_ROOT}\auto_resp.m</file>
       <file>${PROJECT_ROOT}\BINfrequency.m</file>
+      <file>${PROJECT_ROOT}\blablubb.fig</file>
+      <file>${PROJECT_ROOT}\blablubb1.fig</file>
+      <file>${PROJECT_ROOT}\blablubb2.fig</file>
       <file>${PROJECT_ROOT}\BlandAltman.m</file>
       <file>${PROJECT_ROOT}\BlandAltman_ax.m</file>
       <file>${PROJECT_ROOT}\bp_dect.m</file>
@@ -173,6 +178,7 @@
       <file>${PROJECT_ROOT}\stat_selection.mlapp</file>
       <file>${PROJECT_ROOT}\stepwise_GDA_v06.m</file>
       <file>${PROJECT_ROOT}\stepwise_regression.m</file>
+      <file>${PROJECT_ROOT}\switch_vis.m</file>
       <file>${PROJECT_ROOT}\table1.mat</file>
       <file>${PROJECT_ROOT}\table2.mat</file>
       <file>${PROJECT_ROOT}\table3.mat</file>
@@ -219,15 +225,14 @@
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\compiled" name="desktop" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop</file>
+      <file location="${PROJECT_ROOT}\compiled" name="desktop" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2022b</root>
+      <root>D:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -239,11 +244,6 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

@@ -511,9 +511,9 @@ title(ttl)
 for i = 1 : length(indx)
     switch indx(i)
         case 1
-           h.Visible = 'on';
-            savefig(h,[path '\' file '.fig'])
-            
+            %h.Visible = 'on';
+            savefig(h,[path '\' file '.fig'],'compact')
+            %switch_vis([path '\' file '.fig'])
         case 2
             saveas(h,[path '\' file '.jpeg'])
         case 3

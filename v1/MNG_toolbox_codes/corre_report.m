@@ -139,7 +139,9 @@ for i = 1:length(int_idxs)
     for j = 1 : length(form_idxs)
         switch form_idxs(j)
             case 1
-                savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 '.fig'])
+                %h.Visible = 'on';
+                savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 '.fig'],'compact')
+                %switch_vis([path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 '.fig'])
             case 2
                 saveas(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 '.jpeg'])
             case 3

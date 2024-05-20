@@ -14,7 +14,7 @@ for i = 1: file_meta.n_records
 end
 record_version = 1;
 
-for i = 1: length(file_in.com)
+for i = 1: size(file_in.com,1)
     comments(i).str = strtrim(file_in.comtext(file_in.com(i,5),:));
     comments(i).id = file_in.com(i,5);
     comments(i).tick_position = file_in.com(i,3);

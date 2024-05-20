@@ -175,7 +175,9 @@ for i = 1:length(int_idxs)
     for j = 1 : length(form_idxs)
         switch form_idxs(j)
             case 1
-                savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_annotate_' simple_name(int_names{int_idxs(i)}) '.fig'])
+                %h.Visible = 'on';
+                savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_annotate_' simple_name(int_names{int_idxs(i)}) '.fig'],'compact')
+                %switch_vis([path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_annotate_' simple_name(int_names{int_idxs(i)}) '.fig'])
             case 2
                 saveas(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_annotate_' simple_name(int_names{int_idxs(i)}) '.jpeg'])
             case 3
