@@ -13,7 +13,8 @@ for i = 1: file_meta.n_records
     record_meta(i).trigger_minus_rec_start_samples = 0;
 end
 record_version = 1;
-
+comments = struct('str', [], 'id', [], 'tick_position', [], 'channel', [], 'record', [], 'tick_dt',[]);
+comments(1) = [];
 for i = 1: size(file_in.com,1)
     comments(i).str = strtrim(file_in.comtext(file_in.com(i,5),:));
     comments(i).id = file_in.com(i,5);

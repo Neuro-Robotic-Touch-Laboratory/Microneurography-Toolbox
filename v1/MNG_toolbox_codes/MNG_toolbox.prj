@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="1286384556" file="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="1563291578" file="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>

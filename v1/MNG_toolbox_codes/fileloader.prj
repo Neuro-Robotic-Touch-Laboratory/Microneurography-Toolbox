@@ -1,0 +1,123 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration file="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\fileloader.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="fileloader" target="target.mlapps" target-name="Package App">
+    <param.appname>fileloader</param.appname>
+    <param.authnamewatermark />
+    <param.email />
+    <param.company />
+    <param.icon />
+    <param.icons />
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.version>1.0</param.version>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms>
+      <item>win64</item>
+    </param.platforms>
+    <param.output>${PROJECT_ROOT}</param.output>
+    <param.guid>0cabb577-ee7f-4fc2-88d0-d98993b05a94</param.guid>
+    <unset>
+      <param.authnamewatermark />
+      <param.email />
+      <param.company />
+      <param.icon />
+      <param.icons />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.version />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.output />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\fileloader_app.mlapp</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\convert_mat_file.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+array\uniqueWithGroupIndices.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+cellstr\contains.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+cellstr\join.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+datetime\getTimeZone.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+datetime\unixToMatlab.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+dir\changeFileExtension.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+dir\createFolderIfNoExist.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+dir\filepartsx.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+in\process_varargin_result.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+in\processVarargin.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+stack\calling_function_info.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+stack\getMyBasePath.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\+sl\+str\contains.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\@channel\channel.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\@channel\exportToHDF5File.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\@comment\comment.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\comment_handle.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\data_writer_handle.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\file.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\file_handle.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\file_read_options.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\h5_conversion_options.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\h5_file_h.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\h5_file_sdk.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\handle_logger.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\handle_manager.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\mat_comment_handle.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\mat_conversion_options.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\mat_file_h.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\mat_file_sdk.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\private\c.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\private\c0.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\private\clong.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\private\sdk_mex.mexw64</file>
+      <file>${PROJECT_ROOT}\packages\+adi\record.m</file>
+      <file>${PROJECT_ROOT}\packages\+adi\sdk.m</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab" name="mng toolbox slim" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>D:\Program Files\MATLAB\R2022b</root>
+      <toolboxes>
+        <toolbox name="matlabcoder" />
+        <toolbox name="gpucoder" />
+        <toolbox name="neuralnetwork" />
+      </toolboxes>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+      <toolbox>
+        <gpucoder>
+          <enabled>true</enabled>
+        </gpucoder>
+      </toolbox>
+      <toolbox>
+        <neuralnetwork>
+          <enabled>true</enabled>
+        </neuralnetwork>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
