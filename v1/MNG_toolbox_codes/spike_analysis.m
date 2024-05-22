@@ -70,8 +70,10 @@ if calc_flag
         spk_pos = app.spike_res.det_res.spk_pos;
         index = app.spike_res.det_res.index;
         use_beats = app.spike_res.use_spikes(:,1);
+        par = app.settings.par;
     else
         [threshold, index, par, spikes, spk_pos] = detect_spikes(data, app.settings.par.sr, app.settings.par);
+        app.settings.par = par;
     end
 
     disp([num2str(length(index)) 'length index']) %
