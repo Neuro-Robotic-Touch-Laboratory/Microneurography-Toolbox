@@ -33,7 +33,7 @@ _____________________________________
 
 DATA INPUT
 
-Load microneurographic recordings in '.ADICHT' (LabChart) or '.MAT' (MATLAB) format.
+Load microneurographic recordings in LabChart (.ADICHT), MATLAB (.MAT), or HDF5 (*.h5) formats.
 _____________________________________
 
 ACKNOWLEDGMENTS
@@ -63,6 +63,8 @@ LICENSING
 
 Please read details in individual files, as it includes some codes that are not authored by us.
 _____________________________________
+
+CONTACTS
 
 @author Giacomo D’Alesio – giacomo.dalesio@santannapisa.it
 @author Lars Ingmar Stumpp - larsingmar.stumpp@santannapisa.it 
