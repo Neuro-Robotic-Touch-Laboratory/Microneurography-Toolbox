@@ -76,7 +76,7 @@ else
     tmp =find(vertcat(app.burst_ints.type) == 1);
     borders = app.burst_ints(tmp(int_idx)).borders;
     borders = [ceil(borders(1)/.01), floor(borders(2)/.01)];
-    int_name = {app.burst_ints(tmp(int_idx)).name};
+    int_name = {simple_name(app.burst_ints(tmp(int_idx)).name)};
 end
 
 d1 = d10(borders(1):borders(2),:);
@@ -96,13 +96,13 @@ xlim ([min([d1(1,1),d2(1,1)]), max([d1(end,1), d2(end,1)])])
 xlabel('time [s]')
 ylabel(unit2)
 app.lbl_working.Text = '5 % done';
-pause(.05)
+drawnow%pause(.05)
     %% Continuous wavelet transform (CWT)
 subplot(3,2,3)
 tlim=[min(d1(1,1),d2(1,1)) max(d1(end,1),d2(end,1))];
 wt(d1,'S0',yp1,'Dj',1/20,'MaxScale',yp2);
 app.lbl_working.Text = '10 % done';
-pause(.05)
+drawnow%pause(.05)
 title (name1)
 xlim (tlim)    
 hold on
@@ -110,21 +110,23 @@ mycolormap = customcolormap([0 .25 .5 .75 1], {'#9d0142','#f66e45','#ffffbb','#6
 colormap(mycolormap);                                                            %
 colorbar off
 ylabel('Period [s]')
+xlabel('time [s]')
 app.lbl_working.Text = '20 % done';
-pause(.05)
+drawnow%pause(.05)
 
 subplot(3,2,5)    
 wt(d2,'S0',yp1,'Dj',1/20,'MaxScale',yp2);
 app.lbl_working.Text = '30 % done';
-pause(.05)
+drawnow%pause(.05)
 title (name2)
 xlim(tlim)
 hold on
 colormap(mycolormap);                                                           % to change colorscheme
 colorbar off
 ylabel('Period [s]')
+xlabel('time [s]')
 app.lbl_working.Text = '40 % done';
-pause(.05)
+drawnow%pause(.05)
     
     %% Cross wavelet transform (XWT)
     % The XWT finds regions in time frequency space where
@@ -145,7 +147,7 @@ D02 = d2(1:end-lag01+1,:);
 end
 xwt(D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[100 100],'ArrowSize',1,'ArrowHeadSize',1);
 app.lbl_working.Text = '50 % done';
-pause(.05)
+drawnow%pause(.05)
     % D01=[d1(1:end-lag01+1,1) d1(lag01:end,2)];
     % % xwt(d1',d2','ms',16);
     % xwt(D01,d2(1:end-lag01+1,:),'S0',yp1,'ms',yp2,'ArrowDensity',[100 100],'ArrowSize',1,'ArrowHeadSize',1);
@@ -170,7 +172,7 @@ title(['XWT: ' name1 ' + ' num2str(lag1) ' s ' ' - ' name2 ] )
 %     end
     
 app.lbl_working.Text = '60 % done';
-pause(.05)    
+drawnow%pause(.05)    
 %     try
 subplot(3,2,4)
 %     hold on
@@ -183,7 +185,7 @@ D02 = d2(1:end-lag01+1,:);
 
 xwt(D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[50 50],'ArrowSize',1,'ArrowHeadSize',1);
 app.lbl_working.Text = '70 % done';
-pause(.05)
+drawnow%pause(.05)
 xlabel('time [s]')
 ylabel('Period [s]')
     % hold on
@@ -196,7 +198,7 @@ xlim([min(d1(1,1),d2(1,1)) max(d1(end,1),d2(end,1))]);
 title(['XWT: ' name1 ' + ' num2str(lag2) ' s ' ' - ' name2 ])
 %     end
 app.lbl_working.Text = '80 % done'; 
-pause(.05)
+drawnow%pause(.05)
 %     try
 subplot(3,2,6)
 %     hold on
@@ -208,9 +210,10 @@ D01 = [d1(1:end-lag01+1,1) d1(lag01:end,2)];
 D02 = d2(1:end-lag01+1,:);
 xwt(D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[50 50],'ArrowSize',1,'ArrowHeadSize',1);
 app.lbl_working.Text = '90 % done';
-pause(.05)
+drawnow%pause(.05)
 %     xlabel('time [s]')
 ylabel('Period [s]')
+xlabel('time [s]')
     % hold on
     % % colormap(turbo)
 %     hold on
@@ -223,7 +226,7 @@ app.lbl_working.Text = 'saving plots';
 for j = 1 : length(form_idxs)
     switch form_idxs(j)
         case 1
-            %f1.Visible = 'on';
+            f1.Visible = 'on';
             savefig(f1,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.fig'],'compact')
             %switch_vis([path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_wavelet_analysis_' simple_name(int_name{1,1}) '_SIG_' name1 '-' name2 '.fig'])
         case 2

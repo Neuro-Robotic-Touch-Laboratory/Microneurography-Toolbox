@@ -6,12 +6,13 @@ function burst_report(app)
 
 %% create results
 
-plot_data = struct('name',[],'integral',[],'amplitude',[],'duration',[],...
+plot_data = struct('name',[],'simple_name',[],'integral',[],'amplitude',[],'duration',[],...
                    'n_bursts',[], 'burstrate',[], 'burstincidence',[], ...
                    'mean_hr',[]);
 
 for i = 1 : length(app.burst_ints)
     plot_data(i).name = app.burst_ints(i).name;%plot_data(i).name = app.burst_ints(sorted_idx(i)).name;
+    plot_data(i).simple_name = simple_name(plot_data(i).name);
     tmp_idx_burst = app.burst_res.use_burst(:,1) & app.burst_res.use_burst(:,2) & app.burst_res.use_burst(:,i+2);
     dur = sum(diff(app.burst_ints(i).borders,1,2));%dur = sum(diff(app.burst_ints(sorted_idx(i)).borders,1,2));
     plot_data(i).integral = app.burst_res.burst_int(tmp_idx_burst);
@@ -44,7 +45,7 @@ tmp_cell_6 = {[]};
 tmp_cell_7 = {[]};
 tmp_cell_8 = {[]};
 for i = 1:length(plot_data)
-    namecell{i} = plot_data(i).name;
+    namecell{i} = plot_data(i).simple_name;
     tmp_cell_1{i} = plot_data(i).integral;
     tmp_cell_2{i} = plot_data(i).amplitude;
     tmp_cell_3{i} = plot_data(i).duration;
@@ -294,9 +295,9 @@ if ~isempty(app.stat_group)
                 end
         
                 res{1,1} = ['statistics group ' num2str(i)   ];
-                res{1,2} = plot_data(app.stat_group(i).intervals(1)).name; 
+                res{1,2} = plot_data(app.stat_group(i).intervals(1)).simple_name; 
                 res{1,3} = ' vs. ';
-                res{1,4} = plot_data(app.stat_group(i).intervals(2)).name; 
+                res{1,4} = plot_data(app.stat_group(i).intervals(2)).simple_name; 
                 res{2,1} = test_string;
                 res{2,2} = 'null hypothesis';
                 res{2,3} = 'p-value';
@@ -307,7 +308,7 @@ if ~isempty(app.stat_group)
                 res{3,2} = h;
                 res{3,3} = p;
                 stat_plot_cell = {plot_data(app.stat_group(i).intervals(1)).integral, plot_data(app.stat_group(i).intervals(2)).integral};
-                plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, ...
+                plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).simple_name, plot_data(app.stat_group(i).intervals(2)).simple_name}, ...
                                  'Burst Integral', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ], ['statistics group ' num2str(i) ], h, p, 'E3')
                 
                 switch app.stat_group(i).test
@@ -323,7 +324,7 @@ if ~isempty(app.stat_group)
                 res{4,2} = h;
                 res{4,3} = p;
                 stat_plot_cell = {plot_data(app.stat_group(i).intervals(1)).amplitude, plot_data(app.stat_group(i).intervals(2)).amplitude};
-                plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name},... 
+                plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).simple_name, plot_data(app.stat_group(i).intervals(2)).simple_name},... 
                                  'Burst Amplitude', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ], ['statistics group ' num2str(i) ], h, p, 'k3')
                 switch app.stat_group(i).test
                     case 'two sample t test'
@@ -338,7 +339,7 @@ if ~isempty(app.stat_group)
                 res{5,2} = h;
                 res{5,3} = p; 
                 stat_plot_cell = {plot_data(app.stat_group(i).intervals(1)).duration, plot_data(app.stat_group(i).intervals(2)).duration};
-                plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, 'Burst Duration', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
+                plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).simple_name, plot_data(app.stat_group(i).intervals(2)).simple_name}, 'Burst Duration', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
                                  ['statistics group ' num2str(i) ], h, p, 'Q3')
                 if ~isempty(app.hb_res)
                     switch app.stat_group(i).test
@@ -354,7 +355,7 @@ if ~isempty(app.stat_group)
                     res{6,2} = h;
                     res{6,3} = p; 
                     stat_plot_cell = {tmp_cell_4{app.stat_group(i).intervals(1)}, tmp_cell_4{app.stat_group(i).intervals(2)}};
-                    plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, 'RR-intervals', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
+                    plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).simple_name, plot_data(app.stat_group(i).intervals(2)).simple_name}, 'RR-intervals', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
                                      ['statistics group ' num2str(i) ], h, p, 'W3')
                     
                     switch app.stat_group(i).test
@@ -370,7 +371,7 @@ if ~isempty(app.stat_group)
                     res{7,2} = h;
                     res{7,3} = p;
                     stat_plot_cell = {tmp_cell_5{app.stat_group(i).intervals(1)}, tmp_cell_5{app.stat_group(i).intervals(2)}};
-                    plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).name, plot_data(app.stat_group(i).intervals(2)).name}, 'averaged heart rate', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
+                    plot_boxplot_xls(stat_plot_cell, {plot_data(app.stat_group(i).intervals(1)).simple_name, plot_data(app.stat_group(i).intervals(2)).simple_name}, 'averaged heart rate', [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],...
                                      ['statistics group ' num2str(i) ], h, p, 'AD3')
                 end
                 writecell(res,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ],'FileType','spreadsheet','Sheet', ['statistics group ' num2str(i) ],'Range','A1')
@@ -393,20 +394,20 @@ if ~isempty(app.stat_group)
                         switch j
                             case 1
                                 vals = [vals,plot_data(int_idx(k)).integral];
-                                group(end+1:length(vals)) = string(app.burst_ints(int_idx(k)).name);
+                                group(end+1:length(vals)) = string(simple_name(app.burst_ints(int_idx(k)).name));
                                 tmp_cell{k} = plot_data(int_idx(k)).integral;
                                 if k == 1
-                                    names = [app.burst_ints(int_idx(k)).name];
+                                    names = [simple_name(app.burst_ints(int_idx(k)).name)];
                                     varname = 'Burst integral';
                                     startcell = {'E1','H1'};
                                 else
-                                    names = [names ' vs. ' app.burst_ints(int_idx(k)).name];
+                                    names = [names ' vs. ' simple_name(app.burst_ints(int_idx(k)).name)];
                                 end
-                                namecell{k} = app.burst_ints(int_idx(k)).name;
+                                namecell{k} = simple_name(app.burst_ints(int_idx(k)).name);
                                 
                             case 2
                                 vals = [vals,plot_data(int_idx(k)).amplitude];
-                                group(end+1:length(vals)) = string(app.burst_ints(int_idx(k)).name);
+                                group(end+1:length(vals)) = string(simple_name(app.burst_ints(int_idx(k)).name));
                                 tmp_cell{k} = plot_data(int_idx(k)).amplitude;
                                 if k == 1
                                     varname = 'Burst amplitude';
@@ -415,7 +416,7 @@ if ~isempty(app.stat_group)
                                 
                             case 3
                                 vals = [vals,plot_data(int_idx(k)).duration'];
-                                group(end+1:length(vals)) = string(app.burst_ints(int_idx(k)).name);
+                                group(end+1:length(vals)) = string(simple_name(app.burst_ints(int_idx(k)).name));
                                 tmp_cell{k} = plot_data(int_idx(k)).duration;
                                 if k == 1
                                     varname = 'Burst duration';
@@ -423,7 +424,7 @@ if ~isempty(app.stat_group)
                                 end
                             case 4
                                 vals = [vals,tmp_cell_4{int_idx(k)}'];
-                                group(end+1:length(vals)) = string(app.burst_ints(int_idx(k)).name);
+                                group(end+1:length(vals)) = string(simple_name(app.burst_ints(int_idx(k)).name));
                                 tmp_cell{k} = tmp_cell_4{int_idx(k)};
                                 if k == 1
                                     varname = 'RR-intervals';
@@ -432,7 +433,7 @@ if ~isempty(app.stat_group)
                                 
                             case 5
                                 vals = [vals,tmp_cell_5{int_idx(k)}'];
-                                group(end+1:length(vals)) = string(app.burst_ints(int_idx(k)).name);
+                                group(end+1:length(vals)) = string(simple_name(app.burst_ints(int_idx(k)).name));
                                 tmp_cell{k} = tmp_cell_5{int_idx(k)};
                                 if k == 1
                                     varname = 'averaged heart rate';
@@ -477,8 +478,8 @@ if ~isempty(app.stat_group)
                         res{1+((size(c,1)+1)*(j-1))+2,1} = varname;
                         cc = num2cell(c);
                         for k = 1:size(c,1)
-                            cc{k,1} = app.burst_ints(int_idx(c(k,1))).name;
-                            cc{k,2} = app.burst_ints(int_idx(c(k,2))).name;
+                            cc{k,1} = simple_name(app.burst_ints(int_idx(c(k,1))).name);
+                            cc{k,2} = simple_name(app.burst_ints(int_idx(c(k,2))).name);
                         end
                         res(2+((size(c,1)+1)*(j-1))+2: 1+((size(c,1)+1)*(j-1))+2+size(cc,1),1:6) = cc; 
                         plot_boxplot_phc_xls(tmp_cell,namecell , varname, [path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_burst_results.xls' ], ['statistics group ' num2str(i) ],  p, startcell{2})
@@ -511,7 +512,7 @@ title(ttl)
 for i = 1 : length(indx)
     switch indx(i)
         case 1
-            %h.Visible = 'on';
+            h.Visible = 'on';
             savefig(h,[path '\' file '.fig'],'compact')
             %switch_vis([path '\' file '.fig'])
         case 2

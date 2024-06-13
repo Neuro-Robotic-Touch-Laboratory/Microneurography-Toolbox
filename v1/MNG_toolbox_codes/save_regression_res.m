@@ -17,9 +17,9 @@ file(file == '.') = '-';
 
 for i = 1:length(int_idxs)
     if iscell(app.stepwise_res(int_idxs(i)).int_name)
-        int_name = app.stepwise_res(int_idxs(i)).int_name{1,1};
+        int_name = simple_name(app.stepwise_res(int_idxs(i)).int_name{1,1});
     else
-        int_name = app.stepwise_res(int_idxs(i)).int_name;
+        int_name = simple_name(app.stepwise_res(int_idxs(i)).int_name);
     end
 
     plot_cell = {[]};
@@ -80,7 +80,7 @@ for i = 1:length(int_idxs)
     for j = 1 : length(form_idxs)
         switch form_idxs(j)
             case 1
-                %h.Visible = 'on';
+                h.Visible = 'on';
                 savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_stepwise_regression_' simple_name(app.stepwise_res(int_idxs(i)).int_name) '.fig'],'compact')
                 %switch_vis([path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_stepwise_regression_' simple_name(app.stepwise_res(int_idxs(i)).int_name) '.fig'])
             case 2

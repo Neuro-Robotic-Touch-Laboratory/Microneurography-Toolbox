@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="3376030571" file="C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox.prj" location="C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="1661474878" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
@@ -47,7 +47,7 @@
     <param.platforms>
       <item>win64</item>
     </param.platforms>
-    <param.output>C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_Matlab_app</param.output>
+    <param.output>C:\Users\Lars\Documents</param.output>
     <param.guid>f6712898-5746-4d9a-8243-e0eade75ef9b</param.guid>
     <unset>
       <param.summary />
@@ -58,12 +58,7 @@
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
     </fileset.main>
     <fileset.depfun>
-      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+file_comparison\@comments_comparison\comments_comparison.m</file>
-      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+w\@sample_count_manager\sample_count_manager.m</file>
-      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@channel\channel.m</file>
-      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@channel\exportToHDF5File.m</file>
-      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@comment\comment.m</file>
-      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@file_viewer\file_viewer.m</file>
+      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
     </fileset.depfun>
     <fileset.resources>
       <file>${PROJECT_ROOT}\adapt_lms_spec.m</file>
@@ -133,6 +128,7 @@
       <file>${PROJECT_ROOT}\int_selection.mlapp</file>
       <file>${PROJECT_ROOT}\int_spikes.m</file>
       <file>${PROJECT_ROOT}\mat_wc_reader.m</file>
+      <file>${PROJECT_ROOT}\mergePdfs.m</file>
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
       <file>${PROJECT_ROOT}\mynum2str.m</file>
       <file>${PROJECT_ROOT}\nhist.m</file>
@@ -227,15 +223,14 @@
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
-      <file location="C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1" name="MNG_toolbox_Matlab_app" optional="false">C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_Matlab_app</file>
+      <file location="C:\Users\Lars" name="Documents" optional="false">C:\Users\Lars\Documents</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2022b</root>
+      <root>D:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -247,11 +242,6 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

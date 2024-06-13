@@ -33,7 +33,7 @@ for i = 1: length(tmp)
     borders(i+1,:) = app.burst_ints(tmp(i)).borders;
     
     borders(i+1,:) = [ceil(borders(i+1,1)/ts(1)), floor(borders(i+1,2)/ts(1))];
-    int_names{i+1} = app.burst_ints(tmp(i)).name;
+    int_names{i+1} = simple_name(app.burst_ints(tmp(i)).name);
 end
 
 
@@ -191,35 +191,43 @@ for i = 1:length(int_idxs)
     %ym =1.5*max( app.spec_res.y_1_1{j,i}( int16(0.2/mean(diff(app.spec_res.x_1_1{j,i}))) : int16(app.edt_max_frq.Value/mean(diff(app.spec_res.x_1_1{j,i})))));
     ylim([0, 1.5*mx(1)])
     xlim(lim)
+    xlabel('[Hz]')
     subplot(5,2,5)
     %ym = 1.5*max( app.spec_res.y_2_1{j,i}( int16(0.2/mean(diff(app.spec_res.x_2_1{j,i}))) : int16(app.edt_max_frq.Value/mean(diff(app.spec_res.x_2_1{j,i})))));
     ylim([0, 1.5*mx(2)])
     xlim(lim)
+    xlabel('[Hz]')
     subplot(5,2,7)
     %ym = 1.5*max( app.spec_res.y_3_1{j,i}(int16(0.2/mean(diff(app.spec_res.x_3_1{j,i}))) : int16(app.edt_max_frq.Value/mean(diff(app.spec_res.x_3_1{j,i})))));
     ylim([0, 1.5*mx(3)])
     xlim(lim)
+    xlabel('[Hz]')
     subplot(5,2,9)
     %ym = 1.5*max( app.spec_res.y_4_1{j,i}( int16(0.2/mean(diff(app.spec_res.x_4_1{j,i}))) : int16(app.edt_max_frq.Value/mean(diff(app.spec_res.x_4_1{j,i})))));
     ylim([0, 1.5*mx(4)])
     xlim(lim)
+    xlabel('[Hz]')
     subplot(5,2,4)
     ylim([0 app.edt_amp.Value])
     xlim(lim)
+    xlabel('[Hz]')
     subplot(5,2,6)
     ylim([0 app.edt_amp.Value])
     xlim(lim)
+    xlabel('[Hz]')
     subplot(5,2,8)
     ylim([0 app.edt_amp.Value])
     xlim(lim)
+    xlabel('[Hz]')
     subplot(5,2,10)
     ylim([0 app.edt_amp.Value])
     xlim(lim)
+    xlabel('[Hz]')
 
     for j = 1 : length(form_idxs)
         switch form_idxs(j)
             case 1
-                %h.Visible = 'on';
+                h.Visible = 'on';
                 savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_spectral_analysis_' simple_name(int_names{int_idxs(i)}) '_SIG_' name '.fig'],'compact')
 %                 switch_vis([path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_spectral_analysis_' simple_name(int_names{int_idxs(i)}) '_SIG_' name '.fig'])
             case 2

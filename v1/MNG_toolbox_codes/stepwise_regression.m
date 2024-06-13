@@ -7,6 +7,7 @@ channel_idx = find(strcmp(app.popup_signal_to_predict.Value,app.popup_signal_to_
 name_p =char(string(name_p)); 
 % data_p_d = downsample(data_p,(.01/ts_p(1)*ds));
 [data_p_d, ~] = resample(data_p,ts_p(1):ts_p(1):ts_p(2),100,'linear');
+data_p_d = downsample(data_p_d,ds);
 
 reg_table = app.tbl_regressor.Data;
 
@@ -18,7 +19,8 @@ for i= 1: size(reg_table,1)
     [data_tmp,ts_tmp,name_tmp, unit_tmp] = current_signal(app, ch_idx);
     
 %     data_r_d(:,i) = downsample(data_tmp,.01/ts_tmp(1)*ds)';
-    [data_r_d(:,i), ~] = resample(data_tmp,ts_tmp(1):ts_tmp(1):ts_tmp(2),100,'linear');
+    [data_tmp, ~] = resample(data_tmp,ts_tmp(1):ts_tmp(1):ts_tmp(2),100,'linear');
+    data_r_d(:,i) = downsample(data_tmp,ds)';
     reg_name{i} = char(string(name_tmp));
     lags(i) = reg_table{i,2};
 end
