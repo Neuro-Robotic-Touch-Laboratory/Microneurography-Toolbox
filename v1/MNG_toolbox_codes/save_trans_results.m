@@ -2,7 +2,7 @@ function save_trans_results(app)
 
 [int_idxs,~] = listdlg('PromptString',{'Please select intervals ',...
     'to be plotted/saved.',''},...
-    'SelectionMode','multiple','ListString',app.popup_int_spect.Items);
+    'SelectionMode','multiple','ListString',app.popup_int_transduction.Items);
 
 [form_idxs,~] = listdlg('PromptString',{'Please select fileformat ',...
     ''},...
@@ -23,7 +23,7 @@ y = [-1 -1 1 1];
 for i = 1:length(int_idxs)
     h = figure('Position', get(0, 'Screensize'),'Visible','off');
     set(h, 'NumberTitle', 'off', ...
-    'Name', app.popup_int_spect.Items{int_idxs(i)});
+    'Name', simple_name(app.popup_int_spect.Items{int_idxs(i)}));
 
     subplot(2,8,[1:3,9:11])
     hold on
@@ -35,7 +35,7 @@ for i = 1:length(int_idxs)
     hold off
     grid on, grid minor
     legend(n_sp1','FontSize',9,'Location','southeast')
-    title(['Spikes Sorted Shapes'  app.popup_int_transduction.Items{int_idxs(i)}])
+    title(['Spikes Sorted Shapes - '  simple_name(app.popup_int_transduction.Items{int_idxs(i)})])
 
     for j = 1 : length(app.spike_res.transduction(int_idxs(i)).cluster)
 

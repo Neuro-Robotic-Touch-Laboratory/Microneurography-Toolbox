@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="1563291578" file="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="1661474878" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
@@ -47,7 +47,7 @@
     <param.platforms>
       <item>win64</item>
     </param.platforms>
-    <param.output>${PROJECT_ROOT}\compiled\desktop</param.output>
+    <param.output>C:\Users\Lars\Documents</param.output>
     <param.guid>f6712898-5746-4d9a-8243-e0eade75ef9b</param.guid>
     <unset>
       <param.summary />
@@ -73,9 +73,6 @@
       <file>${PROJECT_ROOT}\auto_min_vent.m</file>
       <file>${PROJECT_ROOT}\auto_resp.m</file>
       <file>${PROJECT_ROOT}\BINfrequency.m</file>
-      <file>${PROJECT_ROOT}\blablubb.fig</file>
-      <file>${PROJECT_ROOT}\blablubb1.fig</file>
-      <file>${PROJECT_ROOT}\blablubb2.fig</file>
       <file>${PROJECT_ROOT}\BlandAltman.m</file>
       <file>${PROJECT_ROOT}\BlandAltman_ax.m</file>
       <file>${PROJECT_ROOT}\bp_dect.m</file>
@@ -131,6 +128,7 @@
       <file>${PROJECT_ROOT}\int_selection.mlapp</file>
       <file>${PROJECT_ROOT}\int_spikes.m</file>
       <file>${PROJECT_ROOT}\mat_wc_reader.m</file>
+      <file>${PROJECT_ROOT}\mergePdfs.m</file>
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
       <file>${PROJECT_ROOT}\mynum2str.m</file>
       <file>${PROJECT_ROOT}\nhist.m</file>
@@ -225,7 +223,7 @@
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\compiled" name="desktop" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop</file>
+      <file location="C:\Users\Lars" name="Documents" optional="false">C:\Users\Lars\Documents</file>
     </build-deliverables>
     <workflow />
     <matlab>

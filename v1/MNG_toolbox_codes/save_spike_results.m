@@ -74,7 +74,7 @@ if print_rate
         for k = 1 : length(form_idxs)
             switch form_idxs(k)
                 case 1
-                    %h.Visible = 'on';
+                    h.Visible = 'on';
                     savefig(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_rates_unit_' num2str(i) '.fig'],'compact')
                     %switch_vis([path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_rates_unit_' num2str(i) '.fig'])
                 case 2
@@ -144,11 +144,11 @@ for i = 1: length(int_idxs)
     subplot (4,1,1:2)
     xlim (xl)
     ylim([.5 n_cluster+.5])
-    title(['Spike timestamps ' int_names{int_idxs(i)} ' all units'])
+    title(['Spike timestamps ' simple_name(int_names{int_idxs(i)}) ' all units'])
     
     subplot (4,1,4)
     legend(leg_str,'Location','southwest','FontSize',7)
-    title(['Average spikeshape ' int_names{int_idxs(i)} ' all units'])
+    title(['Average spikeshape ' simple_name(int_names{int_idxs(i)}) ' all units'])
     
     subplot(4,1,3)
     if ~isempty(app.hb_res)
@@ -163,7 +163,7 @@ for i = 1: length(int_idxs)
         plot (hb(:,1),hb(:,2),'LineWidth',1.5,'Color','k')
         hold on
     end
-    plot( msna_int_f(:,2),  msna_int_f(:,1), 'Color',[0.2 0.2 0.3],'LineStyle','-')
+    plot( msna_int_f(:,2),  msna_int_f(:,1), 'Color',[0.6 0.7 0.7],'LineStyle','-')
     %plot(downsample((1:length(data))*app.data(app.settings.channel_idx.msna).ts(1),100),downsample(data(:,1),100), 'Color',[0.2 0.2 0.3],'LineStyle','-') %%%%% only plot msna in limits
     for j = 1: n_cluster 
         plot(plotspikes{j,1},plotspikes{j,2},'Color', cols(j,:), 'LineWidth', 0.5 )
@@ -188,7 +188,7 @@ for i = 1: length(int_idxs)
     for j = 1 : length(form_idxs)
         switch form_idxs(j)
             case 1
-                %h.Visible = 'on';
+                h.Visible = 'on';
                 savefig(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_overview_' simple_name(int_names{int_idxs(i)}) '.fig'],'compact')
                 %switch_vis([path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_overview_' simple_name(int_names{int_idxs(i)}) '.fig'])
             case 2
@@ -218,13 +218,13 @@ for i = 1: length(int_idxs)
             plot (hb(:,1),hb(:,2),'LineWidth',1.5,'Color','k')
         end
         hold on
-        plot( msna_int_f(:,2),  msna_int_f(:,1), 'Color',[0.2 0.2 0.3],'LineStyle','-')
+        plot( msna_int_f(:,2),  msna_int_f(:,1), 'Color',[0.6 0.7 0.7],'LineStyle','-')
         %plot(downsample((1:length(data))*app.data(app.settings.channel_idx.msna).ts(1),100),downsample(data(:,1),100), 'Color',[0.2 0.2 0.3],'LineStyle','-') %%% only plot msna in interval
         plot(plotspikes{j,1},plotspikes{j,2},'Color', cols(j,:), 'LineWidth', 0.5)
         ylim([-20 20])
         xlim(xl)
         hold off
-        title(['MSNA ' int_names{int_idxs(i)} ' unit: ' num2str(j)])
+        title(['MSNA ' simple_name(int_names{int_idxs(i)}) ' unit: ' num2str(j)])
         yyaxis right 
         hold off
         
@@ -374,7 +374,7 @@ m = downsample(movsum(spikemap, 5000),20);                          %% check
         for k = 1 : length(form_idxs)
             switch form_idxs(k)
                 case 1
-                    %h2.Visible = 'on';
+                    h2.Visible = 'on';
                     savefig(h2,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_unit_' num_str '_' simple_name(int_names{int_idxs(i)}) '.fig'],'compact')
                     % switch_vis([path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_analysis_unit_' num_str '_' simple_name(int_names{int_idxs(i)}) '.fig'])
                 case 2

@@ -21,7 +21,7 @@ borders = nan(length(tmp)+1,2);
 tmp =find(vertcat(app.burst_ints.type) == 1);
 for i = 1: length(tmp)        
     borders(i+1,:) = app.burst_ints(tmp(i)).borders;
-    int_names{i+1} = app.burst_ints(tmp(i)).name;
+    int_names{i+1} = simple_name(app.burst_ints(tmp(i)).name);
 end
 
 for i = 1:length(int_idxs)
@@ -175,7 +175,7 @@ for i = 1:length(int_idxs)
     for j = 1 : length(form_idxs)
         switch form_idxs(j)
             case 1
-                %h.Visible = 'on';
+                h.Visible = 'on';
                 savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_annotate_' simple_name(int_names{int_idxs(i)}) '.fig'],'compact')
                 %switch_vis([path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_annotate_' simple_name(int_names{int_idxs(i)}) '.fig'])
             case 2
