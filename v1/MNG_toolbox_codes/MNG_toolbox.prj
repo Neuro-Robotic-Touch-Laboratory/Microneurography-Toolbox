@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="1661474878" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="2597326837" file="C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox.prj" location="C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
@@ -12,7 +12,7 @@
     </param.icons>
     <param.summary />
     <param.description />
-    <param.screenshot>${PROJECT_ROOT}\pics\Logo_w - Software_400x400px.png</param.screenshot>
+    <param.screenshot>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\pics\Logo_w - Software_400x400px.png</param.screenshot>
     <param.version>1.0</param.version>
     <param.products.name>
       <item>Curve Fitting Toolbox</item>
@@ -58,7 +58,92 @@
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
     </fileset.main>
     <fileset.depfun>
-      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+file_comparison\@comments_comparison\comments_comparison.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+array\uniqueWithGroupIndices.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+cellstr\contains.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+cellstr\join.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+datetime\getTimeZone.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+datetime\unixToMatlab.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+dir\changeFileExtension.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+dir\createFolderIfNoExist.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+dir\filepartsx.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+dir\fullfile.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+in\process_varargin_result.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+in\processVarargin.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+stack\calling_function_info.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+stack\getMyBasePath.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+stack\getPackageRoot.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+sl\+str\contains.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+w\@sample_count_manager\sample_count_manager.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@channel\channel.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@channel\exportToHDF5File.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@comment\comment.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@file_viewer\file_viewer.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\channel_writer.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\comment_handle.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\convert.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\createFile.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\data_writer_handle.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\editFile.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\file.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\file_handle.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\file_read_options.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\file_writer.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\h5_conversion_options.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\h5_file_h.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\h5_file_sdk.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\handle_manager.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\mat_comment_handle.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\mat_conversion_options.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\mat_file_h.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\mat_file_sdk.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\private\c.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\private\c0.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\private\clong.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\private\sdk_mex.mexw64</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\readFile.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\record.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\sdk.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\amp_detect.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\amp_detect_pol.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\check_WC_params.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\find_temp.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\find_temp_old.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\fix_filter.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\fix_wavedec.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\Force_files\build_templates.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\Force_files\fit_gaussian.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\Force_files\force_membership_wc.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\Force_files\ML_gaussian.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\Force_files\nearest_neighbor.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\index_detect_pol.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\int_spikes.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\int_spikes_pol.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\readInData.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\run_cluster.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\spike_alignment.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\spike_detection_filter.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\test_ks.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\wave_features.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Batch_files\wc_polytrode_figs.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\draw_histograms.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\filelist_wc.xlj</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\mark_clusters_temperature_diagram.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\Plot_all_features.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\Plot_amplitudes.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\Plot_continuous_data.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\plot_spikes.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\plot_spikes_aux.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\wave_clus_aux.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\wave_clus_aux1.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\wave_clus_aux2.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\wave_clus_aux3.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\wave_clus_aux4.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Gui_functions\wave_clus_aux5.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\Raw_data_readers\supported_wc_extensions.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\set_parameters.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\set_parameters_ui.m</file>
+      <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\WAVECLUS\wave_clus-master\spc_log.txt</file>
     </fileset.depfun>
     <fileset.resources>
       <file>${PROJECT_ROOT}\adapt_lms_spec.m</file>
@@ -227,10 +312,11 @@
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>D:\Program Files\MATLAB\R2022b</root>
+      <root>C:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
+        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -242,6 +328,11 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

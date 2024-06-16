@@ -229,14 +229,17 @@ while ~isempty(tbl_figs)
         exportapp(h,filename)
         pause(0.1)
     else
-        exportapp(h,'tmp.pdf')
+        disp([app.settings.rep_dir '\tmp.pdf'])
+        exportapp(h,[app.settings.rep_dir '\tmp.pdf'])
         pause(0.1)
-        mergePdfs({filename, 'tmp.pdf'}, filename)
+        disp([app.settings.rep_dir '\tmp.pdf'])
+        mergePdfs({filename, [app.settings.rep_dir '\tmp.pdf']}, filename)
         pause(0.1)
     end
     close(h)
 end
-
+disp([app.settings.rep_dir '\tmp.pdf'])
+delete([app.settings.rep_dir '\tmp.pdf'])
 for i= 1:size(filenames,1)
     switch filenames{i,2}
         case 1
