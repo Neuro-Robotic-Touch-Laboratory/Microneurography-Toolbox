@@ -1,5 +1,9 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+<<<<<<< Updated upstream
   <configuration build-checksum="3131631743" file="C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_1.prj" location="C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox_1" preferred-package-location="D:\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+=======
+  <configuration build-checksum="1519683909" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_1.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox_1" preferred-package-location="C:\Users\Lars\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_Standalone_app" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+>>>>>>> Stashed changes
     <param.appname>MNG_toolbox</param.appname>
     <param.icon>${PROJECT_ROOT}\MNG_toolbox_1_resources\icon.ico</param.icon>
     <param.icons>
@@ -238,12 +242,16 @@
     </fileset.resources>
     <fileset.package />
     <fileset.depfun>
+<<<<<<< Updated upstream
       <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+file_comparison\@comments_comparison\comments_comparison.m</file>
       <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\+w\@sample_count_manager\sample_count_manager.m</file>
       <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@channel\channel.m</file>
       <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@channel\exportToHDF5File.m</file>
       <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@comment\comment.m</file>
       <file>C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\packages\+adi\@file_viewer\file_viewer.m</file>
+=======
+      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
+>>>>>>> Stashed changes
     </fileset.depfun>
     <build-deliverables>
       <file location="C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing" name="readme.txt" optional="true">C:\work\OneDrive - Scuola Superiore Sant'Anna\SSSA\matlab\mng toolbox slim\compiled\desktop\for_testing\readme.txt</file>
