@@ -34,7 +34,15 @@ app.popup_coorelation_signal2.Value = name{i};
 
 app.popup_signal_to_predict.Items = name;
 app.popup_signal_to_predict.Value = name{1};
+
 app.popup_regressor.Items = name;
 app.popup_regressor.Value = name{1};
+
+app.popup_lag_sig1.Items = name;
+app.popup_lag_sig1.Value = name{1};
+
+app.popup_lag_sig2.Items = name;
+app.popup_lag_sig2.Value = name{i};
+
 end
 

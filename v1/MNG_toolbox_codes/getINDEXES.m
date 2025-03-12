@@ -9,8 +9,10 @@ function [INDEXES] = getINDEXES(t, tevents, window4mean)
       %INTERVALLO
         INDEXES.t = t(t > tevents(2)); 
         windowIntervalMean_fun = @(t) mean(diff(tevents(t-window4mean<tevents & tevents<t)));
+        a = tic;
         INDEXES.dt_mean = arrayfun(windowIntervalMean_fun, INDEXES.t);
-        
+        t = toc(a);
+        disp(['arrayfun ' num2str(t) 's'])
       %RATE
         INDEXES.rate_mean = 60./INDEXES.dt_mean;
         

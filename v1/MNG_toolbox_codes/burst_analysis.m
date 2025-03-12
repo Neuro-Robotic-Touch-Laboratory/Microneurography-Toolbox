@@ -18,7 +18,7 @@ units_msna = app.data(app.settings.channel_idx.msna).unit;
 t_msna = (1:length(sel))*app.data(app.settings.channel_idx.msna).ts(1);
 Ts_msna = app.data(app.settings.channel_idx.msna).ts(1);
 CalcolaBurst=1;
-app.lbl_working.Text = 'Working 10%'; pause(0.01)
+app.lbl_working.Text = 'Working 10%'; drawnow
 if CalcolaBurst==1
     sel=bandpass(sel,[300 5000],1e4);
 
@@ -42,7 +42,7 @@ if CalcolaBurst==1
     Ksoglia= Soglia;
     PeakWidth = Finestra; % [seconds]
     PeakWidth = round(PeakWidth/Ts_msna);
-    app.lbl_working.Text = 'Working 20%'; pause(0.01)
+    app.lbl_working.Text = 'Working 20%';drawnow
 
     basmean = zeros(1, sampleLength);
     basStd = zeros(1, sampleLength);
@@ -55,20 +55,77 @@ if CalcolaBurst==1
     debug=0;
 
 
-app.lbl_working.Text = 'Working 30%'; pause(0.01)
+app.lbl_working.Text = 'Working 30%'; drawnow
+%     if debug==0
+%         x_windowValues = x(1:end);
+%         basmed = median(x_windowValues);
+%         basStd=std(x_windowValues);
+%         HThreshold=  basmed+ Ksoglia*basStd;  
+%         HThresholdOutlier=  basmed+ app.edt_outlier_threshold.Value*Ksoglia*basStd;    %% outlier threshold     
+%     end
+
     if debug==0
         x_windowValues = x(1:end);
         basmed = median(x_windowValues);
         basStd=std(x_windowValues);
-        HThreshold=  basmed+ Ksoglia*basStd;  
-        HThresholdOutlier=  basmed+ app.edt_outlier_threshold.Value*Ksoglia*basStd;    %% outlier threshold     
+    
+        if app.chkbx_manual.Value %gggggggggg
+            HThreshold=app.edt_threshold_abs.Value;
+        else
+            HThreshold=  basmed+ Ksoglia*basStd; 
+        end
+        %HThreshold=  basmed+ Ksoglia*basStd;  
+        
+        if app.chkbx_th_on_silent.Value
+            tic%%
+            x2 = x;
+            bidx = find (x2 >= HThreshold);
+            strt = [bidx(1),1];
+            for i=2:length(bidx)
+                if bidx(i)~=bidx(i-1)+1
+                    if (bidx(i-1)-strt(1)+1) < PeakWidth
+                        bidx(strt(2):i-1) = nan; 
+                    end
+                    strt= [bidx(i),i];
+                end
+            end
+            
+            bidx(isnan(bidx)) = [];
+            x2(bidx) = [];
+            sil_med = median(x2);
+            sil_Std = std(x2);
+            HThresholdOutlier = sil_med +app.edt_outlier_threshold.Value *Ksoglia *sil_Std;
+            clear x2
+            toc%%
+        else
+            HThresholdOutlier = basmed +app.edt_outlier_threshold.Value *Ksoglia *basStd;    %% outlier threshold     
+        end
     end
    
  %% fix outlier rejection 
     all_areas = ((x - HThreshold) > 0 & (x - HThresholdOutlier) < 0);     
+%     tic %%
+%     peak_areas2 = imopen( all_areas > 0, strel('line', PeakWidth, 0)); % what the hell does it do ?
+%     toc%%
+%%  
+%     tic
+    peak_areas = all_areas;
+
+    idx = find (peak_areas);
+    strt = [idx(1),1];
+    for i=2:length(idx)
+        if idx(i)~=idx(i-1)+1
+            if (idx(i-1)-strt(1)) < PeakWidth
+                peak_areas(idx(strt(2)):idx(i-1)) = false;
+                %idx(strt(2):i-1) = false; 
+            end
+            strt= [idx(i),i];
+        end
+    end
     
-    peak_areas = imopen( all_areas > 0, strel('line', PeakWidth, 0)); % what the hell does it do ?
-  
+%     isequal (peak_areas2,peak_areas)
+%     toc
+    %%
     tmp_idx = find(peak_areas == 0,1);          % remove bursts that are not enirely in the intervall
     peak_areas(1:tmp_idx) = 0;                  %   
     tmp_idx = find(peak_areas == 0,1,'last');   %
@@ -79,7 +136,7 @@ app.lbl_working.Text = 'Working 30%'; pause(0.01)
     if length(areaEnd_idx)>length(areaStart_idx)
         areaEnd_idx(1)=[];
     end
-    app.lbl_working.Text = 'Working 40%'; pause(0.01)
+    app.lbl_working.Text = 'Working 40%'; drawnow
     if length(areaStart_idx)>length(areaEnd_idx)
         areaStart_idx(end)=[];
     end
@@ -103,7 +160,7 @@ app.lbl_working.Text = 'Working 30%'; pause(0.01)
     IpeakAreas=find(peak_areas==1);
     HThreshold=mean(HThreshold);
     x_shift=x-HThreshold;
-    app.lbl_working.Text = 'Working 50%'; pause(0.01)
+    app.lbl_working.Text = 'Working 50%'; drawnow
     IpeakAreas2=[areaStart_idx';areaEnd_idx'];
     
     x_shift_corretto=x_shift;
@@ -141,7 +198,7 @@ app.lbl_working.Text = 'Working 30%'; pause(0.01)
     
         end
     end
-app.lbl_working.Text = 'Working 60%'; pause(0.01)
+app.lbl_working.Text = 'Working 60%'; drawnow
     index_remove=unique(index_remove);
     AA_t_I(index_remove,:)=[];
     DD_t_I= sortrows(AA_t_I,1);
@@ -169,7 +226,7 @@ app.lbl_working.Text = 'Working 60%'; pause(0.01)
         burst_res.ts = [t_msna(1), mean(diff(t_msna)), t_msna(end)];
         burst_res.x = x;
 
-        app.lbl_working.Text = 'Working 70%'; pause(0.01)
+        app.lbl_working.Text = 'Working 70%'; drawnow
         for j=1:length(IpeakAreasLoc) 
        
             AUC_IpeakAreasLoc(j)=trapz(t_msna(IpeakAreasLoc(j,1):IpeakAreasLoc(j,2)),x_shift_corretto(IpeakAreasLoc(j,1):IpeakAreasLoc(j,2)));
@@ -193,7 +250,7 @@ app.lbl_working.Text = 'Working 60%'; pause(0.01)
             tAUC1=tbursts;
             AUC1=1000*AUC_IpeakAreasLoc;
         end
-        app.lbl_working.Text = 'Working 80%'; pause(0.01)
+        app.lbl_working.Text = 'Working 80%'; drawnow
         tbursts=tAUC1;
         AUC_IpeakAreasLoc = AUC1;
 
@@ -208,33 +265,35 @@ app.lbl_working.Text = 'Working 60%'; pause(0.01)
 
 %% save msna results
 
-        debugUUU=1;
-        if debugUUU==1
-            for i=3;%[2 5]
-                MSNA_RESULTS=[];
-                window4mean=i;
-                MSNA_RESULTS=getINDEXES(t_msna, tbursts, window4mean); %% might be improved
-            end
-        end
-        app.lbl_working.Text = 'Working 90%'; pause(0.01)
-        try
-        MSNA_RESULTS.nPeaks= n_Peaks;
-        MSNA_RESULTS.tPeaks= t_Peaks;
-        MSNA_RESULTS.Not_tPeaks= NOT_t_Peaks;
-        MSNA_RESULTS.t_Peak_mean= t_Peak_mean;
-        MSNA_RESULTS.AVGintegral=mean(100*AUC_IpeakAreasLoc);
-        end
+%         debugUUU=1;
+%         if debugUUU==1
+%             for i=3;%[2 5]
+%                 MSNA_RESULTS=[];
+%                 window4mean=i;
+%                 
+%                 MSNA_RESULTS=getINDEXES(t_msna, tbursts, window4mean); %% might be improved TOOO SLOW !!
+%                 
+%             end
+%         end
+%         app.lbl_working.Text = 'Working 90%'; drawnow
+%         try
+%         MSNA_RESULTS.nPeaks= n_Peaks;
+%         MSNA_RESULTS.tPeaks= t_Peaks;
+%         MSNA_RESULTS.Not_tPeaks= NOT_t_Peaks;
+%         MSNA_RESULTS.t_Peak_mean= t_Peak_mean;
+%         MSNA_RESULTS.AVGintegral=mean(100*AUC_IpeakAreasLoc);
+%         end
     
-        imin3=diff(tbursts)<0.3;
-        tbursts_cl=tbursts;
+        %imin3=diff(tbursts)<0.3;
+        %tbursts_cl=tbursts;
 
     %%lower left graph (burst integral)
 
-        CC.burst_integral=AUC_IpeakAreasLoc;
+        %CC.burst_integral=AUC_IpeakAreasLoc;
 
     %% lower middle left graph (burst amplitude)
 
-        FF.burst_amplitude=AMPL_IpeakAreasLoc;
+        %FF.burst_amplitude=AMPL_IpeakAreasLoc;
 
 
 %%lower middle right graph (burst duration)
@@ -244,7 +303,7 @@ app.lbl_working.Text = 'Working 60%'; pause(0.01)
         burst_res.burst_loc = IpeakAreasLoc;
 
 
-        EE.inter_burst_interval=MSNA_RESULTS.dt_instantaneous;
+        %EE.inter_burst_interval=MSNA_RESULTS.dt_instantaneous;
 
     end
 

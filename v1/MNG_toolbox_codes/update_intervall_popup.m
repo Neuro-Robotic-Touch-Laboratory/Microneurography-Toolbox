@@ -30,6 +30,8 @@ if ~isempty(app.burst_ints)
     app.popup_int_annotate.Value = app.popup_int_annotate.Items{1};
     app.popup_int_corre.Items = names;
     app.popup_int_corre.Value = app.popup_int_corre.Items{1};
+    app.popup_lag_int.Items = names;
+    app.popup_lag_int.Value = app.popup_lag_int.Items{1};
     
     names = {'full'};
     for i = 1 : length(app.burst_ints)
