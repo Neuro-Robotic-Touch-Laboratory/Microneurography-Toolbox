@@ -44,5 +44,11 @@ app.popup_lag_sig1.Value = name{1};
 app.popup_lag_sig2.Items = name;
 app.popup_lag_sig2.Value = name{i};
 
+name(2:end+1) = name(1:end)
+name{1} = 'none'
+
+app.popup_lag_bgsig.Items = name;
+app.popup_lag_bgsig.Value = name{1};
+
 end
 

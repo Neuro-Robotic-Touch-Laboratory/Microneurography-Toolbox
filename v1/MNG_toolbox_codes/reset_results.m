@@ -37,6 +37,11 @@ if res_data
     app.lbl_output.Text = 'none';
     app.comb_stat = [];
     app.settings.par = [];
+    app.lag = struct('bgsig',[],'lims',[],'int',[],'sig1',[],'mm1',[],'sig2',[],'mm2',[],'lag',[],'displ_str',[]);
+    app.lag(1) = [];
+    app.lstbx_save.Items = {};
+    app.lstbx_save.Value = {};
+
 end
 
 if res_derived

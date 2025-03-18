@@ -1,7 +1,5 @@
 function save_lag_fig(app)
-[ints,~] = listdlg('ListString',app.popup_lag_int.Items, 'PromptString','Select a intervals');
-[sig1, ~]  = listdlg('ListString',app.popup_lag_sig1.Items, 'PromptString','Select a signal 1');
-[sig2, ~]  = listdlg('ListString',app.popup_lag_sig2.Items, 'PromptString','Select a signal 2');
+
 
 print_cell = {};
 print_cell{1,1} = 'Interval';
@@ -15,139 +13,144 @@ print_cell{1,8} = 'p';
 print_cell{1,9} = 'spearmans rho';
 print_cell{1,10} = 'p';
 
-for i=1:length(ints)
-    app.popup_lag_int.Value = app.popup_lag_int.Items{ints(i)};
-    for j = 1:length(sig1)
-        app.popup_lag_sig1.Value = app.popup_lag_sig1.Items(sig1(j));
-        for k =1:length(sig2)
-            app.popup_lag_sig2.Value = app.popup_lag_sig2.Items(sig2(k));
-%             app.chkbx_lag_ma_sig1.Value = false;
-%             app.chkbx_lag_ma_sig2.Value = false;
-% %             app.chkbx_invert_sig1.Value = false;
-% %             app.chkbx_invert_sig2.Value = false;
-%             update_lag_axis(app, 'sig')
-%             update_lag_axis(app, 'calc')
-%             [lag,rk,pk, rs,ps] = plot_stuff(app);
-%             
-%             print_cell{end+1,1} = app.popup_lag_int.Value;
-%             print_cell{end,2} = app.popup_lag_sig1.Value;
-%             print_cell{end,3} = '0';
-%             print_cell{end,4} = app.popup_lag_sig2.Value;
-%             print_cell{end,5} = 0;
-%             print_cell{end,6} = lag;
-%             print_cell{end,7} = rk;
-%             print_cell{end,8} = pk;
-%             print_cell{end,9} = rs;
-%             print_cell{end,10} = ps;
-
-%             app.chkbx_lag_ma_sig1.Value = true;
-%             app.chkbx_lag_ma_sig2.Value = true;
-%             app.edt_lag_ma_sig1.Value = 1;
-%             app.edt_lag_ma_sig2.Value = 1;
-% 
-%             update_lag_axis(app, 'sig')
-%             update_lag_axis(app, 'calc')
-%             [lag,rk,pk, rs,ps] = plot_stuff(app);
-% 
-%             print_cell{end+1,1} = app.popup_lag_int.Value;
-%             print_cell{end,2} = app.popup_lag_sig1.Value;
-%             print_cell{end,3} = 1;
-%             print_cell{end,4} = app.popup_lag_sig2.Value;
-%             print_cell{end,5} = 1;
-%             print_cell{end,6} = lag;
-%             print_cell{end,7} = rk;
-%             print_cell{end,8} = pk;
-%             print_cell{end,9} = rs;
-%             print_cell{end,10} = ps;
-
-            app.chkbx_lag_ma_sig1.Value = true;
-            app.chkbx_lag_ma_sig2.Value = true;
-            app.edt_lag_ma_sig1.Value = 3;
-            app.edt_lag_ma_sig2.Value = 3;
-
-            update_lag_axis(app, 'sig')
-            update_lag_axis(app, 'calc')
-            [lag,rk,pk, rs,ps] = plot_stuff(app);
-
-            print_cell{end+1,1} = app.popup_lag_int.Value;
-            print_cell{end,2} = app.popup_lag_sig1.Value;
-            print_cell{end,3} = 3;
-            print_cell{end,4} = app.popup_lag_sig2.Value;
-            print_cell{end,5} = 3;
-            print_cell{end,6} = lag;
-            print_cell{end,7} = rk;
-            print_cell{end,8} = pk;
-            print_cell{end,9} = rs;
-            print_cell{end,10} = ps;
-
-            
-            app.chkbx_lag_ma_sig1.Value = true;
-            app.chkbx_lag_ma_sig2.Value = true;
-            app.edt_lag_ma_sig1.Value = 5;
-            app.edt_lag_ma_sig2.Value = 5;
-%             app.chkbx_invert_sig1.Value = false;
-%             app.chkbx_invert_sig2.Value = true;
-            update_lag_axis(app, 'sig')
-            update_lag_axis(app, 'calc')
-            [lag,rk,pk, rs,ps] = plot_stuff(app);
-            
-            print_cell{end+1,1} = app.popup_lag_int.Value;
-            print_cell{end,2} = app.popup_lag_sig1.Value;
-            print_cell{end,3} = 5;
-            print_cell{end,4} = app.popup_lag_sig2.Value;
-            print_cell{end,5} = 5;
-            print_cell{end,6} = lag;
-            print_cell{end,7} = rk;
-            print_cell{end,8} = pk;
-            print_cell{end,9} = rs;
-            print_cell{end,10} = ps;
-
-            disp(['i: ' num2str(i) ' / ' num2str(length(ints)) ' , j: ' num2str(j) ' / ' num2str(length(sig1)) ' , k: ' num2str(k)  '/ ' num2str(length(sig2))])
-        end
+for i=1:length(app.lag)
+    app.popup_lag_bgsig.Value = app.popup_lag_bgsig.Items{app.lag(i).bgsig};
+    app.popup_lag_int.Value = app.popup_lag_int.Items{app.lag(i).int};
+    app.popup_lag_sig1.Value = app.popup_lag_sig1.Items{app.lag(i).sig1};
+    app.popup_lag_sig2.Value = app.popup_lag_sig2.Items{app.lag(i).sig2};
+    if app.lag(i).mm1 == 0
+        app.chkbx_lag_ma_sig1.Value = false;
+    else
+        app.chkbx_lag_ma_sig1.Value = true;
+        app.edt_lag_ma_sig1.Value = app.lag(i).mm1;
     end
+
+    if app.lag(i).mm2 == 0
+        app.chkbx_lag_ma_sig2.Value = false;
+    else
+        app.chkbx_lag_ma_sig2.Value = true;
+        app.edt_lag_ma_sig2.Value = app.lag(i).mm2;
+    end
+    update_lag_axis(app, 'sig')
+    update_lag_axis(app, 'calc')
+    update_lag_axis(app, 'select',app.lag(i).lag)
+    app.sldr_lag_start.Value = app.lag(i).lims(1);
+    app.sldr_lag_end.Value = app.lag(i).lims(2);
+    [rk,pk, rs,ps] = plot_stuff(app, app.lag(i));
+    
+    print_cell{end+1,1} = app.popup_lag_int.Value;
+    print_cell{end,2} = app.popup_lag_sig1.Value;
+    print_cell{end,3} = app.lag(i).mm1;
+    print_cell{end,4} = app.popup_lag_sig2.Value;
+    print_cell{end,5} = app.lag(i).mm2;
+    print_cell{end,6} = app.lag(i).lag;
+    print_cell{end,7} = rk;
+    print_cell{end,8} = pk;
+    print_cell{end,9} = rs;
+    print_cell{end,10} = ps;
+    
+    disp(['i: ' num2str(i) ' / ' num2str(length(ints)) ' , j: ' num2str(j) ' / ' num2str(length(sig1)) ' , k: ' num2str(k)  '/ ' num2str(length(sig2))])
+    
 end
 
-writecell(print_cell,[app.settings.output_dir '\sig_lags.xls' ])
+tmp(1) = find(app.settings.file_path == '\',1,'last');
+tmp(2) = find(app.settings.file_path == '.',1,'last');
+file = app.settings.file_path(tmp(1)+1:tmp(2)-1);
+file(file == '.') = '-';
+writecell(print_cell,[app.settings.output_dir '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) 'spike_results.xls'])
 
 end
 
-function [lag,rk,pk, rs,ps] = plot_stuff(app)
+function [rk,pk, rs,ps] = plot_stuff(app, lag_set)
+%%
 tmp = [app.sldr_lag_start.Value,app.sldr_lag_end.Value];
 h = figure;
-h.Position = [20,100,1120,840];
+h.Position = [20,100,1400,840];
 
-subplot(2,2,2)
-tmp = [app.sldr_lag_start.Value,app.sldr_lag_end.Value];
-plot(app.settings.lagxcts, app.settings.lagxc)
-[~,idx] = max(abs(app.settings.lagxc));
-line([app.settings.lagxcts(idx), app.settings.lagxcts(idx)], ylim, 'Color', 'r')
-line([app.settings.lagxcts(1) app.settings.lagxcts(end)], [0,0], 'Color', 'k','LineStyle',':')
+subplot(3,5,1:3)
 
-lag = (idx-length(app.settings.lagsig1(tmp(1):tmp(2))))*mean(diff(app.settings.lagts));
-
-idx = idx-length(app.settings.lagsig1(tmp(1):tmp(2)));
-xlim ([app.settings.lagxcts(1), app.settings.lagxcts(end)])
-
-ax = subplot(2,2,1);
-ax.XTick = [0,1];
-ax.YTick = [];
-ylim ([0,12])
-xlim ([0,2 ])
-text(0.1,10,['Intervall: ' char(app.popup_lag_int.Value)])
-if app.chkbx_lag_ma_sig1.Value
-tmp_str =[ ' movmean: ' num2str(app.edt_lag_ma_sig1.Value) ' s'];
+mn1 = min(app.settings.lagsig1);
+mx1 = max(app.settings.lagsig1);
+if ~isnan(app.settings.lagbgsig(1,1))
+    plot (app.settings.lagbgsig(:,2),app.settings.lagbgsig(:,1)*diff([mn1,mx1])+mn1, Color=[0.7 0.7 0.7])
 else
-tmp_str = '';
+    plot (nan,nan, Color=[0.7 0.7 0.7])
 end
-text (0.1,8.5,['Signal 1: ' (app.popup_lag_sig1.Value) tmp_str])
+hold on
+plot (app.settings.lagts,app.settings.lagsig1, Color=[0 0.4470 0.7410])
+plot (app.settings.lagts(1:app.sldr_lag_start.Value),app.settings.lagsig1(1:app.sldr_lag_start.Value), Color=[0.8,0.8,0.8]);
+plot (app.settings.lagts(app.sldr_lag_end.Value:length(app.settings.lagts)),app.settings.lagsig1(app.sldr_lag_end.Value:length(app.settings.lagts)), Color=[0.8,0.8,0.8]);
+hold off
+xlim ([app.settings.lagts(1),app.settings.lagts(end)])
+
+
+
+if app.chkbx_lag_ma_sig1.Value
+    tmp_str = [num2str(app.edt_lag_ma_sig1.Value) ' s movmean'];
+else
+    tmp_str = '';
+end
+
+title ([app.popup_lag_sig1.Value ' ' tmp_str])
+
+subplot(3,5,6:8)
+
+mn2 = min(app.settings.lagsig2);
+mx2 = max(app.settings.lagsig2);
+if ~isnan(app.settings.lagbgsig(1,1))
+    plot (app.settings.lagbgsig(:,2),app.settings.lagbgsig(:,1)*diff([mn2,mx2])+mn2, Color=[0.7 0.7 0.7])
+else
+    plot (nan,nan, Color=[0.7 0.7 0.7])
+end
+hold on
+plot (app.settings.lagts,app.settings.lagsig2, Color=[0.8500 0.3250 0.0980])
+plot (app.settings.lagts(1:app.sldr_lag_start.Value),app.settings.lagsig2(1:app.sldr_lag_start.Value), Color=[0.8,0.8,0.8]);
+plot (app.settings.lagts(app.sldr_lag_end.Value:length(app.settings.lagts)),app.settings.lagsig2(app.sldr_lag_end.Value:length(app.settings.lagts)), Color=[0.8,0.8,0.8]);
+hold off
+xlim ([app.settings.lagts(1),app.settings.lagts(end)])
 
 if app.chkbx_lag_ma_sig2.Value
-tmp_str =[ ' movmean: ' num2str(app.edt_lag_ma_sig2.Value) ' s'];
+    tmp_str = [num2str(app.edt_lag_ma_sig2.Value) ' s movmean'];
 else
-tmp_str = '';
+    tmp_str = '';
 end
-text(0.1,7,['Signal 1: ' (app.popup_lag_sig2.Value) tmp_str])
-text(0.1,5.5,['Lag: ' num2str(lag) ' s'])
+
+title ([app.popup_lag_sig2.Value ' ' tmp_str])
+
+
+subplot(3,5,[4,5,9,10])
+
+plot (app.settings.lagxcts,app.settings.lagxc)
+xlim ([app.settings.lagxcts(1),app.settings.lagxcts(end)])
+line([lag_set.lag,lag_set.lag],ylim,'Color', 'r')
+title (['Lag: ' num2str(lag_set.lag) 's'])
+subplot(3,5,11:15)
+
+tmp = [app.sldr_lag_start.Value,app.sldr_lag_end.Value];
+
+sig1 = app.settings.lagsig1(tmp(1):tmp(2))-mean(app.settings.lagsig1(tmp(1):tmp(2)));
+sig1 = sig1/max(abs(sig1));
+
+sig2 = app.settings.lagsig2(tmp(1):tmp(2))-mean(app.settings.lagsig2(tmp(1):tmp(2)));
+sig2 = sig2/max(abs(sig2));
+idx =  lag_set.lag/mean(diff(app.settings.lagts)); 
+if lag_set.lag>=0
+    sig2 = [nan(idx,1);sig2];
+else
+    sig1 = [nan(abs(idx),1);sig1];
+end
+ts1 = (1:length(sig1))*mean(diff(app.settings.lagts));
+ts2 = (1:length(sig2))*mean(diff(app.settings.lagts));
+if app.settings.inverse_lagsig
+    sig2 = sig2*(-1);
+end
+
+plot(ts1,sig1, LineWidth=1.5)
+hold ('on') 
+plot(ts2,sig2, LineWidth=1.5)
+hold ('off')
+xlim ([ts1(1),max(ts1(end),ts2(end))])
+
 sig1 = app.settings.lagsig1(tmp(1):tmp(2))-mean(app.settings.lagsig1(tmp(1):tmp(2)));
 sig1 = sig1/max(abs(sig1));
 
@@ -161,39 +164,11 @@ else
     sig1(end-idx+1:end) = [];
 end
 rk=999;pk =999;
-% [rk,pk ]  = corr(sig1,sig2,'Type','Kendall');
+%     [rk,pk ]  = corr(sig1,sig2,'Type','Kendall');
 [rs,ps ]  = corr(sig1,sig2,'Type','Spearman');
 
-if app.settings.inverse_lagsig
-    text(0.1,4, 'signal 2 inversed')
-else
-    text(0.1,4, 'signal 2 not inversed')
-end
-text(0.1,2.5,['Spearmans rho: ' num2str(rs,3) ', p: ' num2str(ps,5)])
+title(['Spearmans r: ' num2str(rs) ', p: ' num2str(rs)])
 
-subplot(2,2,3:4)
-
-tmp = [app.sldr_lag_start.Value,app.sldr_lag_end.Value];
-
-sig1 = app.settings.lagsig1(tmp(1):tmp(2))-mean(app.settings.lagsig1(tmp(1):tmp(2)));
-sig1 = sig1/max(abs(sig1));
-
-sig2 = app.settings.lagsig2(tmp(1):tmp(2))-mean(app.settings.lagsig2(tmp(1):tmp(2)));
-sig2 = sig2/max(abs(sig2));
-if idx>=0
-    sig2 = [nan(idx,1);sig2];
-else
-    sig1 = [nan(abs(idx),1);sig1];
-end
-if app.settings.inverse_lagsig
-    sig2 = sig2*(-1);
-end
-
-plot(sig1, LineWidth=1.5)
-hold ('on') 
-plot(sig2, LineWidth=1.5)
-hold ('off')
-xlim ([1,max(length(sig1),length(sig2))])
 
 bs = find (app.settings.file_path == '\',1,"last");
 dt = find (app.settings.file_path == '.',1,"last");
@@ -214,3 +189,4 @@ fn = [app.settings.output_dir '\' app.settings.file_path(bs+1:dt-1) '-' app.popu
 savefig(h,fn)
 close(h)
 end
+
