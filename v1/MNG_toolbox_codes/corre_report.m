@@ -82,7 +82,7 @@ for i = 1:length(int_idxs)
         data_2_dsds_int = data_2_dsds(tmp_idx:int32(borders(int_idxs(i),2)*1/(.01*ds)),:);
     end
 
-    h = figure('Position', get(0, 'Screensize'),'Visible','on');
+    h = figure('Position', get(0, 'Screensize'),'Visible','off');
     set(h, 'NumberTitle', 'off', ...
     'Name', int_names{int_idxs(i)});
 
@@ -98,14 +98,14 @@ for i = 1:length(int_idxs)
     tlim=[min(data_1_dsds_int(1,2),data_2_dsds_int(1,2)) max(data_1_dsds_int(end,2),data_2_dsds_int(end,2))];
     xlim(tlim);
     legend(name_1, name_2)
-    title([name_1 ' & ' name_2])
+    title([name_1 ' & ' name_2 ' - ' simple_name(int_names{int_idxs(i)})])
     
     subplot(3,2,3)
 
     plot(data_1_dsds_int(:,2), data_1_dsds_int(:,1),'.','MarkerSize',12);
     hold on
     plot(data_1_dsds_int(:,2), data_1_dsds_int(:,1),'-','LineWidth',0.5,'color',[0.3 0.3 0.3]);
-    title(name_1); 
+    title([name_1  ' - ' simple_name(int_names{int_idxs(i)})]); 
     xlim(tlim)
     hold off
     colorbar('off')
@@ -117,7 +117,7 @@ for i = 1:length(int_idxs)
     plot(data_2_dsds_int(:,2), data_2_dsds_int(:,1),'.','color',[0.8500 0.3250 0.0980],'MarkerSize',12);
     hold on
     plot(data_2_dsds_int(:,2), data_2_dsds_int(:,1),'-','LineWidth',0.5,'color',[0.3 0.3 0.3]);
-    title(name_2)
+    title([name_2  ' - ' simple_name(int_names{int_idxs(i)})])
     xlim(tlim)
     hold off
     colorbar('off')
@@ -127,18 +127,18 @@ for i = 1:length(int_idxs)
     subplot(3,2,2)
     lag01=lags(1)*1/(.01*ds);
     [~,~] = corrplot1([data_1_dsds_int(1:end-lag01,1),data_2_dsds_int(lag01+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
-    title(['Lag 1: ' num2str(app.edt_corre_lag1.Value) 's']) 
-
+    title(['Lag 1: ' num2str(app.edt_corre_lag1.Value) 's - F(x) = ',num2str(app.corre_res(int_idxs(i)).lag1.c(1)),'*x + ','(',num2str(app.corre_res(int_idxs(i)).lag1.c(2)),')']) 
+   
     
     subplot(3,2,4)
     lag02=lags(2)*1/(.01*ds);
     [~,~] = corrplot1([data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
-    title(['Lag 2: ' num2str(app.edt_corre_lag2.Value) 's'])
+    title(['Lag 2: ' num2str(app.edt_corre_lag2.Value) 's - F(x) = ',num2str(app.corre_res(int_idxs(i)).lag2.c(1)),'*x + ','(',num2str(app.corre_res(int_idxs(i)).lag2.c(2)),')']) 
 
     subplot(3,2,6)
     lag03=lags(3)*1/(.01*ds);
     [~,~] = corrplot1([data_1_dsds_int(1:end-lag03,1),data_2_dsds_int(lag03+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
-    title(['Lag 3: ' num2str(app.edt_corre_lag3.Value) 's'])
+    title(['Lag 3: ' num2str(app.edt_corre_lag3.Value) 's - F(x) = ',num2str(app.corre_res(int_idxs(i)).lag3.c(1)),'*x + ','(',num2str(app.corre_res(int_idxs(i)).lag3.c(2)),')']) 
 
     for j = 1 : length(form_idxs)
         switch form_idxs(j)

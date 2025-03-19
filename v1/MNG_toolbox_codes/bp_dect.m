@@ -370,13 +370,15 @@ function [ dicroticIndex, notchIndex ] = getDicroticIndex( waveformDD, waveformD
     for i = 1 : length(systolicIndex)
         Start = systolicIndex(i) + round(minWavelength/2);
         End = min([dicroticIndex(i) + round(minWavelength/4), length(waveformD)]);
-        ZOI = waveformD(Start : End);
-        ZOI = ZOI(2:end).*ZOI(1:end-1);
-        extrema = find(ZOI<0);
-        if length(extrema) >=2
-            notchIndex(i) = FixIndex(notchIndex(i), bpwaveform, Down, 4);
-            dicroticIndex(i) = FixIndex(min(notchIndex(i) + round(0.25*minWavelength), length(bpwaveform)), bpwaveform, Up, 4);
-        end
+        %if ~isnan(Start)&&~isnan(End)
+            ZOI = waveformD(Start : End);
+            ZOI = ZOI(2:end).*ZOI(1:end-1);
+            extrema = find(ZOI<0);
+            if length(extrema) >=2
+                notchIndex(i) = FixIndex(notchIndex(i), bpwaveform, Down, 4);
+                dicroticIndex(i) = FixIndex(min(notchIndex(i) + round(0.25*minWavelength), length(bpwaveform)), bpwaveform, Up, 4);
+            end
+        %end
     end
 end
 

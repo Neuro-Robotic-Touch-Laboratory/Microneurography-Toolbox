@@ -124,11 +124,13 @@ for i = 1: size(borders,1)
         results(i).lag1.ax12 = nan;
         results(i).lag1.ax21 = nan;
         results(i).lag1.ax22 = nan;
+        results(i).lag1.c = nan;
     else
         [r,p] = corrplot1(ca1,[data_1_dsds_int(1:end-lag01,1),data_2_dsds_int(lag01+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
         
         results(i).lag1.r = r;
         results(i).lag1.p = p;
+        results(i).lag1.c = polyfit(data_1_dsds_int(1:end-lag01,1),data_2_dsds_int(lag01+1:end,1),1);
         results(i).lag1.ax11.Data = h1.Children(1).Children.Data;
         results(i).lag1.ax11.BinEdges = h1.Children(1).Children.BinEdges;
         results(i).lag1.ax11.XLim = h1.Children(1).Children.Parent.XLim;
@@ -172,6 +174,7 @@ for i = 1: size(borders,1)
         results(i).lag2.ax12 = nan;
         results(i).lag2.ax21 = nan;
         results(i).lag2.ax22 = nan;
+        results(i).lag2.c = nan;
     else
 
         [r,p] = corrplot1(ca2,[data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
@@ -179,6 +182,7 @@ for i = 1: size(borders,1)
      
         results(i).lag2.r = r;
         results(i).lag2.p = p;
+        results(i).lag2.c = polyfit(data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1),1);
         results(i).lag2.ax11.Data = h2.Children(1).Children.Data;
         results(i).lag2.ax11.BinEdges = h2.Children(1).Children.BinEdges;
         results(i).lag2.ax11.XLim = h2.Children(1).Children.Parent.XLim;
@@ -221,11 +225,13 @@ for i = 1: size(borders,1)
         results(i).lag3.ax12 = nan;
         results(i).lag3.ax21 = nan;
         results(i).lag3.ax22 = nan;
+        results(i).lag3.c = nan;
     else
         [r,p] = corrplot1(ca3,[data_1_dsds_int(1:end-lag03,1),data_2_dsds_int(lag03+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
         
         results(i).lag3.r = r;
         results(i).lag3.p = p;
+        results(i).lag3.c = polyfit(data_1_dsds_int(1:end-lag03,1),data_2_dsds_int(lag03+1:end,1),1);
         results(i).lag3.ax11.Data = h3.Children(1).Children.Data;
         results(i).lag3.ax11.BinEdges = h3.Children(1).Children.BinEdges;
         results(i).lag3.ax11.XLim = h3.Children(1).Children.Parent.XLim;
@@ -260,5 +266,7 @@ for i = 1: size(borders,1)
     % .PlotBoxAspectRatio = [1 0.7895 0.7895]
     
 end
+
+
 
 end

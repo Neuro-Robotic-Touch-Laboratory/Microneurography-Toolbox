@@ -21,6 +21,16 @@ switch answer
         return
 end
 
+answer = questdlg('print lag panel?', ...
+	'print lags', ...
+	'yes','no','yes');
+
+switch answer
+    case 'yes'
+        print_lag = true;
+    case 'no'
+        print_lag = false;
+end
 
 %path = uigetdir;
 path = app.settings.output_dir;
@@ -37,11 +47,25 @@ name = char(string(name));
 int_names = app.popup_int_spike.Items;
 
 if print_rate
+    printcell = cell([]);
+    hp = figure('Visible', 'off');
+    printax = gca;
+    printax.XTick = 1:length(app.lstbx_ints.Value);
+    printax.XTickLabel = app.lstbx_ints.Value;
+    printax.XTickLabelRotation = 30;
+    title(printax,'firing rates')
+    hold(printax,"on")
+
+    for i= 1: length(app.lstbx_ints.Value)
+        printcell{1,i+1} = app.lstbx_ints.Value{1,i};
+    end
+
     bin_step = app.edt_step.Value;
     nbins = app.edt_max.Value;
     cols = distinguishable_colors(max(app.spike_res.cluster),[1 1 1; 1 0 0; 0 0 1; 0.80 0.95 0.90]);
     for i= 1:max(app.spike_res.cluster)
-        
+        printcell{i+1,1} = ['Cluster ' num2str(i)];
+
         h = figure('Position', get(0, 'Screensize'),'Visible', 'off');
         
         subplot(1,2,1)
@@ -50,11 +74,12 @@ if print_rate
         for j = 1 :length(app.lstbx_ints.Value)
             tmp_idx = find(strcmp(app.lstbx_ints.Value{j},app.lstbx_ints.Items));
             mrate(j) = app.spike_res.spike(tmp_idx).m_fr(i);
+            printcell{i+1,j+1} = app.spike_res.spike(tmp_idx).m_fr(i);
         end
         ax = gca;
         
         plot (ax,mrate, 'LineWidth', 2, 'LineStyle','--', 'Color',cols(i,:),'Marker','diamond','MarkerSize',10,'MarkerFaceColor',cols(i,:))
-        
+        plot (printax,mrate, 'LineWidth', 2, 'LineStyle','--', 'Color',cols(i,:),'Marker','diamond','MarkerSize',10,'MarkerFaceColor',cols(i,:))
         ax.XTick = 1:size(mrate,1);
         ax.XTickLabel = app.lstbx_ints.Value;
         ax.XTickLabelRotation = 30;
@@ -85,9 +110,200 @@ if print_rate
         end
         close(h)
     end
+    writecell(printcell,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) 'spike_results.xls'], 'Sheet', 'rate panel')
+    legend(printax, printcell(2:end,1))
+    tmp = {'D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ'};
+    xlswritefig(hp, [path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) 'spike_results.xls'], 'rate panel', [tmp{length(app.lstbx_ints.Value)} '1'])
+    close(hp)
+    delete('h')
+    delete('hp')
+    clear printcell
 end        
-       
 
+if print_lag
+    
+    h_all = figure('Position', get(0, 'Screensize'),'Visible', 'off');
+    ax_all = gca;
+    cla(ax_all)
+    hold (ax_all, 'on')
+
+    h_all_n = figure('Position', get(0, 'Screensize'),'Visible', 'off');
+    ax_all_n = gca;
+    cla(ax_all_n)
+    hold (ax_all_n, 'on')
+
+    leg = {};
+    edges = -0.5 :0.005:3;
+    
+    spike_ts = app.spike_res.spike_ts/1000;
+    spike_clust = app.spike_res.cluster;
+    use_spike = app.spike_res.use_spikes;
+    all_hb_ts = app.hb_res.t_events;
+    beats_use = app.hb_res.use_beats;
+    cols = {'#0072BD','#D95319','#EDB120','#7E2F8E','#77AC30','#4DBEEE','#A2142F','#F00','#F80','#FF0','#0B0','#00F','#50F','#A0F'};
+    plts = [];
+    plts_n = [];
+    for i  = 1: length(int_idxs)
+        h = figure('Position', get(0, 'Screensize'),'Visible', 'off');
+        ax_int = gca;
+        int_idx = int_idxs(i);
+        
+       
+        spks = {};
+        spike_use = use_spike(:,int_idx);
+        hb_ts = all_hb_ts(beats_use(:,int_idx));
+        for j = 1 : length(hb_ts) 
+            spks{1,j} = spike_ts(spike_ts>=(hb_ts(j)-0.5) & spike_ts<=(hb_ts(j)+3) & spike_use');
+            spks{1,j} = spks{1,j}-hb_ts(j);
+            
+        end
+               
+        num_beats = app.edt_num_beat.Value;
+        mov_mean = app.edt_lag_movmean.Value;
+        
+        title(ax_int, app.popup_int_spike.Items{int_idxs(i)})
+        
+        res_sm= nan(length(edges)-1,length(spks)-num_beats+2);
+        peak = nan(1,length(spks)-num_beats+1);
+        int= [find(edges >= 0.7,1), find(edges >= 1.6,1) ];
+        tmp = [];
+        for j = 1: size(spks,2)
+            tmp = [tmp,spks{1,j}]; 
+        end
+
+        [N,~] = histcounts(tmp,edges);
+        res_sm(:,1) = movmean(N, mov_mean);
+
+        for j = num_beats: size(spks,2)
+            tmp = [];
+            for k = -num_beats+1: 0
+                tmp = [tmp,spks{1,j+k}];
+            end
+            [N,~] = histcounts(tmp,edges);
+            res_sm(:,j-num_beats+2) = movmean(N, mov_mean);
+            [~,idx] = max(res_sm(int(1):int(2),j-num_beats+1));
+            peak(j-num_beats+1)= edges(int(1)+idx);
+        
+        end
+
+
+        hb_ts = app.hb_res.t_events(app.hb_res.use_beats(:,int_idx));
+        p=pcolor(ax_int,hb_ts(num_beats:end), edges(2:end),res_sm(:,2:end));
+        p.EdgeColor = 'interp';
+        line (ax_int,[hb_ts(num_beats) hb_ts(end)], [0,0],'Color', 'r', 'LineWidth',2)
+        line (ax_int,hb_ts(num_beats:end), peak,'Color', 'g', 'LineWidth',2)
+        app.spike_res.spike_lag.line =line (app.ax_lag,[-1, -1], [edges(2), edges(end)], 'Color', 'r','LineStyle',':');
+        xlim (ax_int,[hb_ts(num_beats),hb_ts(end)])
+
+         col_idx =  rem(i,14);
+        plts(end+1) = plot (ax_all, edges(2:end), res_sm(:,1), 'Color', cols{col_idx});
+        xlim (ax_all, [edges(2),edges(end)])
+        [~,idx_max] = max(res_sm(int(1):int(2),1));
+        tmp = edges(int(1):int(2));
+        lag = mean([tmp(idx_max),tmp(idx_max+1)]);
+        yl = [min(res_sm(:,1)), max(res_sm(:,1))];
+        line (ax_all, [lag,lag],yl , 'Color', cols{col_idx})
+        leg{end+1} =  app.popup_int_spike.Items{int_idxs(i)};
+        if i == length(int_idxs)
+            legend(ax_all, plts,leg)
+        end
+        title (ax_all,'spike lag histogramms') 
+
+        plts_n(end+1) = plot (ax_all_n, edges(2:end), res_sm(:,1)./std(res_sm(:,1)), 'Color', cols{col_idx});
+        xlim (ax_all_n, [edges(2),edges(end)])
+        yl = [min(res_sm(:,1)./std(res_sm(:,1))), max(res_sm(:,1)./std(res_sm(:,1)))];
+        line (ax_all_n, [lag,lag],yl , 'Color', cols{col_idx})
+        
+        if i == length(int_idxs)
+            legend(ax_all_n, plts_n, leg)
+        end
+        title (ax_all_n, 'normalized spike lag histogramms')
+
+        title(ax_int,[leg{end} ' global lag: ' num2str(lag) ' [s]'  ])
+        
+        for k = 1 : length(form_idxs)
+            switch form_idxs(k)
+                case 1
+                    h.Visible = 'on';
+                    savefig(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_' app.popup_int_spike.Items{int_idx} '.fig'],'compact')
+                    %switch_vis([path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_rates_unit_' num2str(i) '.fig'])
+                case 2
+                    saveas(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_' app.popup_int_spike.Items{int_idx} '.jpeg'])
+                case 3
+                    saveas(h,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_' app.popup_int_spike.Items{int_idx} '.epsc'])
+            end
+        end
+        close(h)
+    end
+
+    
+    for k = 1 : length(form_idxs)
+            switch form_idxs(k)
+                case 1
+                    h_all.Visible = 'on';
+                    savefig(h_all,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_hist.fig'],'compact')
+                    %switch_vis([path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_rates_unit_' num2str(i) '.fig'])
+                case 2
+                    saveas(h_all,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_hist.jpeg'])
+                case 3
+                    saveas(h_all,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_hist.epsc'])
+            end
+    end
+    close(h_all)
+    
+    for k = 1 : length(form_idxs)
+            switch form_idxs(k)
+                case 1
+                    h_all_n.Visible = 'on';
+                    savefig(h_all_n,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_hist_norm.fig'],'compact')
+                    %switch_vis([path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_rates_unit_' num2str(i) '.fig'])
+                case 2
+                    saveas(h_all_n,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_hist_norm.jpeg'])
+                case 3
+                    saveas(h_all_n,[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) '_spike_lag_hist_norm.epsc'])
+            end
+    end
+    close(h_all_n)
+end
+
+printcell = cell([]);
+for i = 1: max(app.spike_res.cluster)
+    printcell{1,1,i} = ['Cluster ' num2str(i)];
+    printcell{3,1,i} = 'Mean spike rate [Hz]';
+    
+    printcell{4,1,i} = 'empty cardiac cycles [%]';
+    printcell{5,1,i} = 'PLV first';
+    printcell{6,1,i} = 'PLV average';
+    printcell{7,1,i} = 'PLV last';
+
+    printcell{8,1,i} = 'phase linear first [rad]';
+    printcell{9,1,i} = 'phase linear average [rad]';
+    printcell{10,1,i} = 'phase linear last [rad]';
+
+    printcell{11,1,i} = 'phase circular first [rad]';
+    printcell{12,1,i} = 'phase circular average [rad]';
+    printcell{13,1,i} = 'phase circular last [rad]';
+    for j = 1: length(int_idxs)
+        printcell{2,1+j,i} = simple_name(int_names{int_idxs(j)});
+    end
+    tmp = 1;
+    printcell{15,tmp,i} = 'first spike phase lin [rad]';
+    for j = 1: length(int_idxs)
+        printcell{16,tmp,i} = simple_name(int_names{int_idxs(j)});
+        tmp = tmp+1;
+    end
+    printcell{15,tmp,i} = 'mean spike phase lin [rad]';
+    for j = 1: length(int_idxs)
+        printcell{16,tmp,i} = simple_name(int_names{int_idxs(j)});
+        tmp = tmp+1;
+    end
+    printcell{15,tmp,i} = 'last spike phase lin [rad]';
+    for j = 1: length(int_idxs)
+        printcell{16,tmp,i} = simple_name(int_names{int_idxs(j)});
+        tmp = tmp+1;
+    end
+   
+end
 for i = 1: length(int_idxs)
 
     if int_idxs(i) ==1
@@ -292,8 +508,17 @@ m = downsample(movsum(spikemap, 5000),20);                          %% check
             plot([0 0],[-1 1],'--','Color',[0.2 0.2 0.2])                                      % 
             dummyh = line(nan, nan, 'Marker', 'none', 'Color', 'r');
             legend(dummyh, ['PLV= ' num2str(mean(r))], 'Location','best')
+            printcell{5,i+1,j} = plvFIRST;
+            printcell{3,i+1,j} = app.spike_res.spike(int_idxs(i)).m_fr(j);
+            printcell{4,i+1,j} = length(find(isnan(app.spike_res.spike(int_idxs(i)).first{1, j}(:,1))))/size(app.spike_res.spike(int_idxs(i)).first{1, j}(:,1),1)*100;
+
+            tmp =  num2cell(app.spike_res.spike(int_idxs(i)).totXrad_min{1, j}');
+
+            printcell(17:16+length(tmp),i,j) = tmp;
             title('FIRST Spike Phase:' );
             subtitle(['linear=' num2str(mean(app.spike_res.spike(int_idxs(i)).totXrad_min{j})) ' rad' '           circular= ' num2str(mean(phi)) ' rad'])
+            printcell{8,i+1,j} = mean(app.spike_res.spike(int_idxs(i)).totXrad_min{j});
+            printcell{11,i+1,j} = mean(phi);
             set(gca,'XColor', 'none','YColor','none')
             hold off
     
@@ -314,8 +539,13 @@ m = downsample(movsum(spikemap, 5000),20);                          %% check
             plot([0 0],[-1 1],'--','Color',[0.2 0.2 0.2])                                      % 
             dummyh = line(nan, nan, 'Marker', 'none', 'Color', 'g');
             legend(dummyh, ['PLV= ' num2str(mean(r))], 'Location','best')
-            title('FIRST Spike Phase:' );
-            subtitle(['linear=' num2str(mean(app.spike_res.spike(int_idxs(i)).totXrad_min{j})) ' rad' '           circular= ' num2str(mean(phi)) ' rad'])
+            printcell{6,i+1,j} = plvFIRST;
+            tmp =  num2cell(app.spike_res.spike(int_idxs(i)).totXrad_mean{1, j}');
+            printcell(17:16+length(tmp),i+length(int_idxs),j) = tmp;
+            title('AVERAGE Spike Phase:' );
+            subtitle(['linear=' num2str(mean(app.spike_res.spike(int_idxs(i)).totXrad_mean{j})) ' rad' '           circular= ' num2str(mean(phi)) ' rad'])
+            printcell{9,i+1,j} = mean(app.spike_res.spike(int_idxs(i)).totXrad_mean{j});
+            printcell{12,i+1,j} = mean(phi);
             set(gca, 'XColor', 'none','YColor','none')
             hold off
     
@@ -336,8 +566,14 @@ m = downsample(movsum(spikemap, 5000),20);                          %% check
             plot([0 0],[-1 1],'--','Color',[0.2 0.2 0.2])                                      % 
             dummyh = line(nan, nan, 'Marker', 'none', 'Color', 'b');
             legend(dummyh, ['PLV= ' num2str(mean(r))], 'Location','best')
-            title('FIRST Spike Phase:' );
-            subtitle(['linear=' num2str(mean(app.spike_res.spike(int_idxs(i)).totXrad_min{j})) ' rad' '           circular= ' num2str(mean(phi)) ' rad'])
+            printcell{7,i+1,j} = plvFIRST;
+            
+            tmp =  num2cell(app.spike_res.spike(int_idxs(i)).totXrad_max{1, j}');
+            printcell(17:16+length(tmp),i+2*length(int_idxs),j) = tmp;
+            title('LAST Spike Phase:' );
+            subtitle(['linear=' num2str(mean(app.spike_res.spike(int_idxs(i)).totXrad_max{j})) ' rad' '           circular= ' num2str(mean(phi)) ' rad'])
+            printcell{10,i+1,j} = mean(app.spike_res.spike(int_idxs(i)).totXrad_max{j});
+            printcell{13,i+1,j} = mean(phi);
             set(gca,'XColor', 'none','YColor','none')
             hold off
     
@@ -388,5 +624,8 @@ m = downsample(movsum(spikemap, 5000),20);                          %% check
     drawnow %pause(.01) %%%%
     end
 end
-
+for i =1: size(printcell,3)
+    writecell(printcell(:,:,i),[path '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) 'spike_results.xls'], 'Sheet', printcell{1,1,i})
+    
+end
 end

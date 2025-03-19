@@ -1058,10 +1058,10 @@ end
 %% PLOT the ERROR BARS and MODE
 % but only if it was requested
 if modeFlag && medianFlag % just a warning here
-  warning(['This will make a very messy plot, didn''t your mother '...
-           'warn you not to do silly things like this '...
-           'Next time please choose either to have mode or the median plotted.']);
-    fprintf('The mode is plotted as a dashed line\n');
+%   warning(['This will make a very messy plot, didn''t your mother '...
+%            'warn you not to do silly things like this '...
+%            'Next time please choose either to have mode or the median plotted.']);
+%     fprintf('The mode is plotted as a dashed line\n');
 end
 
 for k=1:num2Plot  

@@ -20,6 +20,7 @@ sigs_str = {[]};
 
 for i = 1:length(files)
     if ~isempty(strfind(files(i).name, '_burst_results.xls'))
+        %skip = false;%%
         tmp_sints = {[]};
         brst_files(strc_idx).filename = [files(i).folder '\' files(i).name];
         tmp_idx = strfind(files(i).name, '_burst_results.xls');
@@ -70,14 +71,20 @@ for i = 1:length(files)
         if isempty(sint_str{1})
             sint_str = tmp_sints(:,1);
         else
-            sint_str = unique(vertcat(sint_str, tmp_sints(:,1)),'stable');
+            %disp(num2str(i))
+            if ~isempty(tmp_sints{1,1})
+                sint_str = unique(vertcat(sint_str, tmp_sints(:,1)),'stable');
+                %skip = true;%%
+            end
         end
-        if isempty(sigs_str{1})
-            sigs_str = tmp_sig(:,1);
-        else
-            sigs_str = unique(vertcat(sigs_str, tmp_sig(:,1)),'stable');
-        end
-        strc_idx = strc_idx+1;
+        %if ~skip
+            if isempty(sigs_str{1})
+                sigs_str = tmp_sig(:,1);
+            else
+                sigs_str = unique(vertcat(sigs_str, tmp_sig(:,1)),'stable');
+            end
+            strc_idx = strc_idx+1;
+        %end
     end
 end
 

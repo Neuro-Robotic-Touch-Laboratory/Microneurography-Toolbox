@@ -1,131 +1,131 @@
 function spike_res = transduction_analysis (app, update)
 
-if nargin == 1
-    update = false;
-end
-MIN_CLUSTER=10;
-% MSNA = app.data(app.settings.channel_idx.msna).data;
-% data = app.data(app.settings.channel_idx.msna).data(app.settings.interval(1,1)/app.data(app.settings.channel_idx.msna).ts(1):app.settings.interval(1,2)/app.data(app.settings.channel_idx.msna).ts(1));
-
-calc_flag = true;
-
-% if ~isempty(app.spike_res)
-%     spike_res = app.spike_res;
-% 
-%     if (spike_res.analysis.sorting == app.chkbx_sorting_trans.Value) ...
-%         && isequal(spike_res.analysis.dips,  [app.edt_trans_dip1.Value, app.edt_trans_peak.Value, app.edt_trans_dip2.Value]) ...
-%         && (spike_res.analysis.waveclus == app.chkbx_trans_clustering.Value...
-%         && (spike_res.analysis.inverse == app.chbx_invert_trans.Value))
-%         calc_flag = false;
-%     end
-%     
-%     if calc_flag
-%          
-%         spike_res.analysis.sorting = app.chkbx_sorting_trans.Value;
-%         spike_res.analysis.waveclus = app.chkbx_trans_clustering.Value;
-%         spike_res.analysis.dips = [app.edt_trans_dip1.Value, app.edt_trans_peak.Value, app.edt_trans_dip2.Value];
-%         spike_res.analysis.inverse = app.chbx_invert_trans.Value;
-%         spike_res.analysis.spike = false;
-%         spike_res.analysis.trans = false;
-%         spike_res.spikes = [];
-%         spike_res.spike_idx = [];
-%         spike_res.spike_ts = [];
-%         spike_res.cluster = [];
-%         spike_res.extremes = [];
-%         spike_res.use_spikes = [];
-%         spike_res.spike = [];
-%         spike_res.rate_ylim = [];
-%     end
-% else
-    spike_res.analysis.sorting = app.chkbx_spike_sorting.Value;
-    spike_res.analysis.waveclus = app.chkbx_spike_clustering.Value;
-    spike_res.analysis.dips = [app.edt_dip1.Value, app.edt_peak.Value, app.edt_dip2.Value];
-    spike_res.analysis.spike = false;
-    spike_res.analysis.trans = false;
-    spike_res.spike_idx  = [];      %%
-    spike_res.spike_ts  = [];       %%
-    spike_res.cluster  = [];        %%
-    spike_res.extremes  = [];       %%
-    spike_res.use_spikes  = [];     %%
-    spike_res.spike  = [];          %%
-    spike_res.rate_ylim  = [];      %%
-%     spike_res.analysis.inverse = app.chbx_invert_spike.Value;
+% if nargin == 1
+%     update = false;
 % end
-
-if calc_flag
-   [data,ts,~,~] = current_signal(app, app.settings.channel_idx.msna);
-    
-    data = data'; 
-
-    sr = 1/ts(1); % rem
-
-    SimpleSpikesSorting = app.chkbx_spike_sorting.Value;
-    
-    if update
-        threshold = app.spike_res.det_res.threshold;
-        spikes = app.spike_res.det_res.spikes;
-        spk_pos = app.spike_res.det_res.spk_pos;
-        index = app.spike_res.det_res.index;
-        use_beats = app.spike_res.use_spikes(:,1);
-    else
-        [threshold, index, par, spikes, spk_pos] = detect_spikes(data, app.settings.par.sr, app.settings.par);
-    end
-
-    disp([num2str(length(index)) 'length index']) %
-    disp([num2str(size(spikes)) 'size spikes']) %
-    if app.chkbx_spike_clustering.Value
-        disp([num2str(length(index)) 'length index2']) %
-        disp([num2str(size(spikes)) 'size spikes2']) %
-        app.wc_app = cluster_app(app,index, spikes, par, threshold);
-        waitfor(app.wc_app)
-        cluster.cluster_class = app.settings.tempclus.cluster_class;
-        app.settings.tempclus = [];
-    end    
-    
-   
-    if app.chkbx_spike_clustering.Value 
-%         cluster=load([writable_folder '\times_temp.mat'],'cluster_class');
-        [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
-                =comBIN_wave_clus(cluster,data,sr);
-    else
-%         spikes=load([writable_folder '\temp_spikes.mat'],'spikes','index','threshold'); % rem
-        spks =  struct('spikes',spikes,'index',index,'threshold',threshold);
-        
-        if app.chkbx_spike_sorting.Value
-            %%speed up with vector operation
-%             [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ... % rem
-%                 =comBIN12_v03(spikes,[writable_folder '\temp.mat'],app.edt_dip1.Value,app.edt_peak.Value,app.edt_dip2.Value);                                           % rem
-            [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts, spike_res.cluster, spike_res.extremes(:,2),  spike_res.extremes(:,1), spike_res.extremes(:,3) ]...
-            =comBIN(spks,data,sr, spk_pos,app.edt_dip1.Value,app.edt_peak.Value,app.edt_dip2.Value);
-            %%
-        else
-%             [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
-%                 =comBIN12_v03(spikes,[writable_folder '\temp.mat'],1,1,1);
-            [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts, spike_res.cluster, spike_res.extremes(:,2),  spike_res.extremes(:,1), spike_res.extremes(:,3) ]...
-            =comBIN(spks,data,sr,spk_pos,1,1,1);
-        end
-    end
-    spike_res.analysis.sorting = app.chkbx_spike_sorting.Value;
-    spike_res.analysis.dips = [app.edt_dip1.Value, app.edt_peak.Value, app.edt_dip2.Value];
-    spike_res.analysis.spike = false;
-    spike_res.analysis.trans = false;
-    spike_res = sel_spikes(spike_res, app.data(app.settings.channel_idx.msna).ts, app.burst_ints);
-    if update 
-        spike_res.use_spikes(:,1) = app.spike_res.use_spikes(:,1);
-    end
-    spike_res.det_res.threshold = threshold;
-    spike_res.det_res.spk_pos = spk_pos;
-    spike_res.det_res.spikes = spikes;
-    spike_res.det_res.index = index;
-%     list = dir(writable_folder);
-%     list(1:2) = [];
-%     for i = 1: length(list)
-%         delete([list(i).folder '\' list(i).name])
+% MIN_CLUSTER=10;
+% % MSNA = app.data(app.settings.channel_idx.msna).data;
+% % data = app.data(app.settings.channel_idx.msna).data(app.settings.interval(1,1)/app.data(app.settings.channel_idx.msna).ts(1):app.settings.interval(1,2)/app.data(app.settings.channel_idx.msna).ts(1));
+% 
+% calc_flag = true;
+% 
+% % if ~isempty(app.spike_res)
+% %     spike_res = app.spike_res;
+% % 
+% %     if (spike_res.analysis.sorting == app.chkbx_sorting_trans.Value) ...
+% %         && isequal(spike_res.analysis.dips,  [app.edt_trans_dip1.Value, app.edt_trans_peak.Value, app.edt_trans_dip2.Value]) ...
+% %         && (spike_res.analysis.waveclus == app.chkbx_trans_clustering.Value...
+% %         && (spike_res.analysis.inverse == app.chbx_invert_trans.Value))
+% %         calc_flag = false;
+% %     end
+% %     
+% %     if calc_flag
+% %          
+% %         spike_res.analysis.sorting = app.chkbx_sorting_trans.Value;
+% %         spike_res.analysis.waveclus = app.chkbx_trans_clustering.Value;
+% %         spike_res.analysis.dips = [app.edt_trans_dip1.Value, app.edt_trans_peak.Value, app.edt_trans_dip2.Value];
+% %         spike_res.analysis.inverse = app.chbx_invert_trans.Value;
+% %         spike_res.analysis.spike = false;
+% %         spike_res.analysis.trans = false;
+% %         spike_res.spikes = [];
+% %         spike_res.spike_idx = [];
+% %         spike_res.spike_ts = [];
+% %         spike_res.cluster = [];
+% %         spike_res.extremes = [];
+% %         spike_res.use_spikes = [];
+% %         spike_res.spike = [];
+% %         spike_res.rate_ylim = [];
+% %     end
+% % else
+%     spike_res.analysis.sorting = app.chkbx_spike_sorting.Value;
+%     spike_res.analysis.waveclus = app.chkbx_spike_clustering.Value;
+%     spike_res.analysis.dips = [app.edt_dip1.Value, app.edt_peak.Value, app.edt_dip2.Value];
+%     spike_res.analysis.spike = false;
+%     spike_res.analysis.trans = false;
+%     spike_res.spike_idx  = [];      %%
+%     spike_res.spike_ts  = [];       %%
+%     spike_res.cluster  = [];        %%
+%     spike_res.extremes  = [];       %%
+%     spike_res.use_spikes  = [];     %%
+%     spike_res.spike  = [];          %%
+%     spike_res.rate_ylim  = [];      %%
+% %     spike_res.analysis.inverse = app.chbx_invert_spike.Value;
+% % end
+% 
+% if calc_flag
+%    [data,ts,~,~] = current_signal(app, app.settings.channel_idx.msna);
+%     
+%     data = data'; 
+% 
+%     sr = 1/ts(1); % rem
+% 
+%     SimpleSpikesSorting = app.chkbx_spike_sorting.Value;
+%     
+%     if update
+%         threshold = app.spike_res.det_res.threshold;
+%         spikes = app.spike_res.det_res.spikes;
+%         spk_pos = app.spike_res.det_res.spk_pos;
+%         index = app.spike_res.det_res.index;
+%         use_beats = app.spike_res.use_spikes(:,1);
+%     else
+%         [threshold, index, par, spikes, spk_pos] = detect_spikes(data, app.settings.par.sr, app.settings.par);
 %     end
-end
-%%
-
-if ~spike_res.analysis.trans
+% 
+%     disp([num2str(length(index)) 'length index']) %
+%     disp([num2str(size(spikes)) 'size spikes']) %
+%     if app.chkbx_spike_clustering.Value
+%         disp([num2str(length(index)) 'length index2']) %
+%         disp([num2str(size(spikes)) 'size spikes2']) %
+%         app.wc_app = cluster_app(app,index, spikes, par, threshold);
+%         waitfor(app.wc_app)
+%         cluster.cluster_class = app.settings.tempclus.cluster_class;
+%         app.settings.tempclus = [];
+%     end    
+%     
+%    
+%     if app.chkbx_spike_clustering.Value 
+% %         cluster=load([writable_folder '\times_temp.mat'],'cluster_class');
+%         [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
+%                 =comBIN_wave_clus(cluster,data,sr);
+%     else
+% %         spikes=load([writable_folder '\temp_spikes.mat'],'spikes','index','threshold'); % rem
+%         spks =  struct('spikes',spikes,'index',index,'threshold',threshold);
+%         
+%         if app.chkbx_spike_sorting.Value
+%             %%speed up with vector operation
+% %             [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ... % rem
+% %                 =comBIN12_v03(spikes,[writable_folder '\temp.mat'],app.edt_dip1.Value,app.edt_peak.Value,app.edt_dip2.Value);                                           % rem
+%             [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts, spike_res.cluster, spike_res.extremes(:,2),  spike_res.extremes(:,1), spike_res.extremes(:,3) ]...
+%             =comBIN(spks,data,sr, spk_pos,app.edt_dip1.Value,app.edt_peak.Value,app.edt_dip2.Value);
+%             %%
+%         else
+% %             [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
+% %                 =comBIN12_v03(spikes,[writable_folder '\temp.mat'],1,1,1);
+%             [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts, spike_res.cluster, spike_res.extremes(:,2),  spike_res.extremes(:,1), spike_res.extremes(:,3) ]...
+%             =comBIN(spks,data,sr,spk_pos,1,1,1);
+%         end
+%     end
+%     spike_res.analysis.sorting = app.chkbx_spike_sorting.Value;
+%     spike_res.analysis.dips = [app.edt_dip1.Value, app.edt_peak.Value, app.edt_dip2.Value];
+%     spike_res.analysis.spike = false;
+%     spike_res.analysis.trans = false;
+%     spike_res = sel_spikes(spike_res, app.data(app.settings.channel_idx.msna).ts, app.burst_ints);
+%     if update 
+%         spike_res.use_spikes(:,1) = app.spike_res.use_spikes(:,1);
+%     end
+%     spike_res.det_res.threshold = threshold;
+%     spike_res.det_res.spk_pos = spk_pos;
+%     spike_res.det_res.spikes = spikes;
+%     spike_res.det_res.index = index;
+% %     list = dir(writable_folder);
+% %     list(1:2) = [];
+% %     for i = 1: length(list)
+% %         delete([list(i).folder '\' list(i).name])
+% %     end
+% end
+% %%
+% 
+% if ~spike_res.analysis.trans
     
     int_names = app.popup_int_transduction.Items;
     ints_idxs =nan(size(int_names));
@@ -206,6 +206,6 @@ if ~spike_res.analysis.trans
         end
     end
     spike_res.analysis.trans = true;
-end
+% end
 
 end

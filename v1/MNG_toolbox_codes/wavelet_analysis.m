@@ -147,7 +147,7 @@ pause(.05)
     D02 = d2(1:end-lag01+1,:);
     % xwt(d1',d2','ms',16);
     end
-    xwt_ax(app.ax_xwt1,D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[100 100],'ArrowSize',1,'ArrowHeadSize',1);
+    xwt_ax(app.ax_xwt1,D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[30 30],'ArrowSize',1,'ArrowHeadSize',1);
 app.lbl_working.Text = '50 % done';
 pause(.05)
     % D01=[d1(1:end-lag01+1,1) d1(lag01:end,2)];
@@ -185,7 +185,7 @@ pause(.05)
     D01 = [d1(1:end-lag01+1,1) d1(lag01:end,2)];
     D02 = d2(1:end-lag01+1,:);
 
-    xwt_ax(app.ax_xwt2,D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[50 50],'ArrowSize',1,'ArrowHeadSize',1);
+    xwt_ax(app.ax_xwt2,D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[30 30],'ArrowSize',1,'ArrowHeadSize',1);
 app.lbl_working.Text = '70 % done';
 pause(.05)
 %     xlabel('time [s]')
@@ -209,7 +209,7 @@ pause(.05)
     lag01=lag3*1/.01;
     D01 = [d1(1:end-lag01+1,1) d1(lag01:end,2)];
     D02 = d2(1:end-lag01+1,:);
-    xwt_ax(app.ax_xwt3,D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[50 50],'ArrowSize',1,'ArrowHeadSize',1);
+    xwt_ax(app.ax_xwt3,D01,D02,'S0',yp1,'ms',yp2,'ArrowDensity',[30 30],'ArrowSize',1,'ArrowHeadSize',1);
 app.lbl_working.Text = '90 % done';
 pause(.05)
 %     xlabel('time [s]')
