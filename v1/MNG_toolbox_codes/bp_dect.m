@@ -186,8 +186,9 @@ function [ footIndex, systolicIndex, notchIndex, dicroticIndex, time, bpwaveform
         footIndex( (meanPressure < 30) | (meanPressure > 200) | (pulsePressure < 20) ) = [];
         systolicIndex( (meanPressure < 30) | (meanPressure > 200) | (pulsePressure < 20) ) = [];
     end
-    
+   
     [ dicroticIndex, notchIndex ] = getDicroticIndex( waveformDD, waveformD, bpwaveform, footIndex, systolicIndex );  
+    
     footIndex = footIndex(1:length(notchIndex));
     systolicIndex = systolicIndex(1:length(notchIndex));
     

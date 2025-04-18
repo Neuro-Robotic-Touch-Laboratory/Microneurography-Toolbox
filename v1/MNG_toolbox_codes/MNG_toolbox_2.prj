@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3798643052" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox_2" preferred-package-location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3798643052" file="C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2.prj" location="C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox_2" preferred-package-location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>MNG_toolbox</param.appname>
     <param.icon>${PROJECT_ROOT}\MNG_toolbox_2_resources\icon.ico</param.icon>
     <param.icons>
@@ -35,7 +35,7 @@
     <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
     <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
     <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
-    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.windows.command.prompt>false</param.windows.command.prompt>
     <param.create.log>false</param.create.log>
     <param.log.file />
     <param.native.matlab>false</param.native.matlab>
@@ -70,7 +70,6 @@
       <param.web.mcr.name />
       <param.package.mcr.name />
       <param.no.mcr.name />
-      <param.windows.command.prompt />
       <param.create.log />
       <param.log.file />
       <param.native.matlab />
@@ -216,6 +215,7 @@
       <file>${PROJECT_ROOT}\tableEq7.mat</file>
       <file>${PROJECT_ROOT}\temp_spikes.mat</file>
       <file>${PROJECT_ROOT}\template_app.mlapp</file>
+      <file>${PROJECT_ROOT}\test.m</file>
       <file>${PROJECT_ROOT}\tmp.pdf</file>
       <file>${PROJECT_ROOT}\transduction_analysis.m</file>
       <file>${PROJECT_ROOT}\transduction_calc.m</file>
@@ -249,6 +249,7 @@
     </fileset.resources>
     <fileset.package />
     <fileset.depfun>
+      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
       <file>${PROJECT_ROOT}\pics\biorobotics research et innovation engineering facilities.png</file>
       <file>${PROJECT_ROOT}\pics\IT Finanziato dall Unione europea_POS.jpg</file>
       <file>${PROJECT_ROOT}\pics\italia-domani-tracciato copia.jpg</file>
@@ -256,19 +257,19 @@
       <file>${PROJECT_ROOT}\pics\mnesys.png</file>
       <file>${PROJECT_ROOT}\pics\tuen Beam.png</file>
       <file>${PROJECT_ROOT}\pics\tuscany heaalth ecosystem.png</file>
-      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="MNG_toolbox.exe" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\MNG_toolbox.exe</file>
-      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="splash.png" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="readme.txt" optional="true">D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="splash.png" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="readme.txt" optional="true">C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="MNG_toolbox.exe" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\MNG_toolbox.exe</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>D:\Program Files\MATLAB\R2022b</root>
+      <root>C:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
+        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -280,6 +281,11 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

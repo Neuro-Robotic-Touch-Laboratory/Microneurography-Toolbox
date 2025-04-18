@@ -20,7 +20,7 @@ Ts_msna = app.data(app.settings.channel_idx.msna).ts(1);
 CalcolaBurst=1;
 app.lbl_working.Text = 'Working 10%'; drawnow
 if CalcolaBurst==1
-    sel=bandpass(sel,[300 5000],1e4);
+    sel=bandpass(sel,[500 5000],1e4);%sel=bandpass(sel,[300 5000],1e4);
 
 
     tmp = sqrt(movmean(sel.^2,2001));
@@ -95,6 +95,7 @@ app.lbl_working.Text = 'Working 30%'; drawnow
             sil_med = median(x2);
             sil_Std = std(x2);
             HThresholdOutlier = sil_med +app.edt_outlier_threshold.Value *Ksoglia *sil_Std;
+            HThreshold=  sil_med+ Ksoglia*sil_Std;
             clear x2
             toc%%
         else
@@ -208,6 +209,11 @@ app.lbl_working.Text = 'Working 60%'; drawnow
 
     tbursts=DD_t_I(:,1)';
     IpeakAreasLoc=DD_t_I(:,2:3);
+    %% test
+    tmp = find(diff(IpeakAreasLoc,1,2)<51);
+    IpeakAreasLoc(tmp,:) = [];
+    tbursts(tmp) = [];
+    %%
     assignin('base','DD_t_I',DD_t_I) 
 
 
@@ -235,7 +241,7 @@ app.lbl_working.Text = 'Working 60%'; drawnow
 
         end
    
-        [ffffrrr iirmOA]=rmoutliers(AUC_IpeakAreasLoc,'percentiles',[0 100]);
+        [ffffrrr, iirmOA]=rmoutliers(AUC_IpeakAreasLoc,'percentiles',[0 100]);
         iirmO=zeros(length(AUC_IpeakAreasLoc),1);
         iirmO(iirmOA)=1;
         
