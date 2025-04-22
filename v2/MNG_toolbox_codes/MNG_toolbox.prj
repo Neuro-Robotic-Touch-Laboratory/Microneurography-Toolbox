@@ -1,0 +1,280 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="1907338763" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+    <param.appname>MNG_toolbox</param.appname>
+    <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
+    <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
+    <param.company>Neuro Touch Lab - Sant Anna Pisa</param.company>
+    <param.icon>${PROJECT_ROOT}\MNG_toolbox_resources\icon_24.png</param.icon>
+    <param.icons>
+      <file>${PROJECT_ROOT}\MNG_toolbox_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\MNG_toolbox_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\MNG_toolbox_resources\icon_16.png</file>
+    </param.icons>
+    <param.summary />
+    <param.description />
+    <param.screenshot>${PROJECT_ROOT}\pics\Logo_w - Software_400x400px.png</param.screenshot>
+    <param.version>2.0</param.version>
+    <param.products.name>
+      <item>Curve Fitting Toolbox</item>
+      <item>Deep Learning Toolbox</item>
+      <item>Econometrics Toolbox</item>
+      <item>Image Processing Toolbox</item>
+      <item>Optimization Toolbox</item>
+      <item>Signal Processing Toolbox</item>
+      <item>Statistics and Machine Learning Toolbox</item>
+      <item>Wavelet Toolbox</item>
+    </param.products.name>
+    <param.products.id>
+      <item>60</item>
+      <item>12</item>
+      <item>125</item>
+      <item>17</item>
+      <item>6</item>
+      <item>8</item>
+      <item>19</item>
+      <item>35</item>
+    </param.products.id>
+    <param.products.version>
+      <item>3.8</item>
+      <item>14.5</item>
+      <item>6.1</item>
+      <item>11.6</item>
+      <item>9.4</item>
+      <item>9.1</item>
+      <item>12.4</item>
+      <item>6.2</item>
+    </param.products.version>
+    <param.platforms>
+      <item>win64</item>
+    </param.platforms>
+    <param.output>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_Matlab_app</param.output>
+    <param.guid>f6712898-5746-4d9a-8243-e0eade75ef9b</param.guid>
+    <unset>
+      <param.summary />
+      <param.description />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
+    </fileset.depfun>
+    <fileset.resources>
+      <file>${PROJECT_ROOT}\adapt_lms_spec.m</file>
+      <file>${PROJECT_ROOT}\adi.m</file>
+      <file>${PROJECT_ROOT}\amp_detect.m</file>
+      <file>${PROJECT_ROOT}\ar1nv.m</file>
+      <file>${PROJECT_ROOT}\ar1spectrum.m</file>
+      <file>${PROJECT_ROOT}\auto_bp.m</file>
+      <file>${PROJECT_ROOT}\auto_derived.m</file>
+      <file>${PROJECT_ROOT}\auto_etco2.m</file>
+      <file>${PROJECT_ROOT}\auto_hb.m</file>
+      <file>${PROJECT_ROOT}\auto_min_vent.m</file>
+      <file>${PROJECT_ROOT}\auto_resp.m</file>
+      <file>${PROJECT_ROOT}\BINfrequency.m</file>
+      <file>${PROJECT_ROOT}\BlandAltman.m</file>
+      <file>${PROJECT_ROOT}\BlandAltman_ax.m</file>
+      <file>${PROJECT_ROOT}\bp_dect.m</file>
+      <file>${PROJECT_ROOT}\burst_analysis.m</file>
+      <file>${PROJECT_ROOT}\burst_analysis2.m</file>
+      <file>${PROJECT_ROOT}\burst_app.mlapp</file>
+      <file>${PROJECT_ROOT}\burst_report.m</file>
+      <file>${PROJECT_ROOT}\calc_combine_stats.m</file>
+      <file>${PROJECT_ROOT}\chisquare_inv.m</file>
+      <file>${PROJECT_ROOT}\circ_mean.m</file>
+      <file>${PROJECT_ROOT}\circ_plot_ax.m</file>
+      <file>${PROJECT_ROOT}\circ_plot_GDA.m</file>
+      <file>${PROJECT_ROOT}\circ_r.m</file>
+      <file>${PROJECT_ROOT}\clear_axis.m</file>
+      <file>${PROJECT_ROOT}\cluster_app.mlapp</file>
+      <file>${PROJECT_ROOT}\cluster_spikes.m</file>
+      <file>${PROJECT_ROOT}\comBIN.m</file>
+      <file>${PROJECT_ROOT}\comBIN12_v03.m</file>
+      <file>${PROJECT_ROOT}\comBIN_wave_clus.m</file>
+      <file>${PROJECT_ROOT}\ComputeLatency.m</file>
+      <file>${PROJECT_ROOT}\ComputeLatencyCell.m</file>
+      <file>${PROJECT_ROOT}\computeRadFiring.m</file>
+      <file>${PROJECT_ROOT}\computeRadFiring_v02.m</file>
+      <file>${PROJECT_ROOT}\CondEn.m</file>
+      <file>${PROJECT_ROOT}\convert_mat_file.m</file>
+      <file>${PROJECT_ROOT}\corre_report.m</file>
+      <file>${PROJECT_ROOT}\correlation_analysis.m</file>
+      <file>${PROJECT_ROOT}\corrplot1.m</file>
+      <file>${PROJECT_ROOT}\covardlg.m</file>
+      <file>${PROJECT_ROOT}\create_report.m</file>
+      <file>${PROJECT_ROOT}\current_signal.m</file>
+      <file>${PROJECT_ROOT}\customcolormap.m</file>
+      <file>${PROJECT_ROOT}\derived_bp_signals.m</file>
+      <file>${PROJECT_ROOT}\derived_burst_signals.m</file>
+      <file>${PROJECT_ROOT}\derived_cardiac_signals.m</file>
+      <file>${PROJECT_ROOT}\derived_resp_signals.m</file>
+      <file>${PROJECT_ROOT}\det_params.mlapp</file>
+      <file>${PROJECT_ROOT}\detect_spikes.m</file>
+      <file>${PROJECT_ROOT}\distinguishable_colors.m</file>
+      <file>${PROJECT_ROOT}\edit_par.m</file>
+      <file>${PROJECT_ROOT}\edit_parameter.m</file>
+      <file>${PROJECT_ROOT}\edit_regressor_table.m</file>
+      <file>${PROJECT_ROOT}\entropy_analysis.m</file>
+      <file>${PROJECT_ROOT}\fileloader_app.mlapp</file>
+      <file>${PROJECT_ROOT}\find_outputfiles.m</file>
+      <file>${PROJECT_ROOT}\find_xls.m</file>
+      <file>${PROJECT_ROOT}\formatts.m</file>
+      <file>${PROJECT_ROOT}\get_spike_lag.m</file>
+      <file>${PROJECT_ROOT}\Get_spikes.m</file>
+      <file>${PROJECT_ROOT}\Get_spikes_folder.m</file>
+      <file>${PROJECT_ROOT}\getINDEXES.m</file>
+      <file>${PROJECT_ROOT}\GetWritableFolder.m</file>
+      <file>${PROJECT_ROOT}\hb_det_2.m</file>
+      <file>${PROJECT_ROOT}\hr_fix.mlapp</file>
+      <file>${PROJECT_ROOT}\hr_fix2.mlapp</file>
+      <file>${PROJECT_ROOT}\HRV.m</file>
+      <file>${PROJECT_ROOT}\int_selection.mlapp</file>
+      <file>${PROJECT_ROOT}\int_spikes.m</file>
+      <file>${PROJECT_ROOT}\mat_wc_reader.m</file>
+      <file>${PROJECT_ROOT}\mergePdfs.m</file>
+      <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
+      <file>${PROJECT_ROOT}\mynum2str.m</file>
+      <file>${PROJECT_ROOT}\nhist.m</file>
+      <file>${PROJECT_ROOT}\nhist_ax.m</file>
+      <file>${PROJECT_ROOT}\OPanalysis.m</file>
+      <file>${PROJECT_ROOT}\opdPE.m</file>
+      <file>${PROJECT_ROOT}\packages</file>
+      <file>${PROJECT_ROOT}\packages\+adi</file>
+      <file>${PROJECT_ROOT}\packages\+adi\private</file>
+      <file>${PROJECT_ROOT}\packages\WAVECLUS</file>
+      <file>${PROJECT_ROOT}\parseArgs.m</file>
+      <file>${PROJECT_ROOT}\PE.m</file>
+      <file>${PROJECT_ROOT}\phaseplot.m</file>
+      <file>${PROJECT_ROOT}\phaseplot_ax.m</file>
+      <file>${PROJECT_ROOT}\pics</file>
+      <file>${PROJECT_ROOT}\Plot_all_features_ad.m</file>
+      <file>${PROJECT_ROOT}\plot_spikes_ad.m</file>
+      <file>${PROJECT_ROOT}\pointer.m</file>
+      <file>${PROJECT_ROOT}\pointer_resp.m</file>
+      <file>${PROJECT_ROOT}\readInData.m</file>
+      <file>${PROJECT_ROOT}\realign_bp_ecg.m</file>
+      <file>${PROJECT_ROOT}\removed_entropy.m</file>
+      <file>${PROJECT_ROOT}\rePE.m</file>
+      <file>${PROJECT_ROOT}\reset_results.m</file>
+      <file>${PROJECT_ROOT}\resp_det2.m</file>
+      <file>${PROJECT_ROOT}\resp_fix.mlapp</file>
+      <file>${PROJECT_ROOT}\riallinea_BP_ECG_v08.m</file>
+      <file>${PROJECT_ROOT}\run_cluster_loc.m</file>
+      <file>${PROJECT_ROOT}\save_annotate_results.m</file>
+      <file>${PROJECT_ROOT}\save_entropy_res.m</file>
+      <file>${PROJECT_ROOT}\save_invisible_fig.m</file>
+      <file>${PROJECT_ROOT}\save_lag_fig.m</file>
+      <file>${PROJECT_ROOT}\save_regression_res.m</file>
+      <file>${PROJECT_ROOT}\save_session.m</file>
+      <file>${PROJECT_ROOT}\save_spec_res.m</file>
+      <file>${PROJECT_ROOT}\save_spike_results.m</file>
+      <file>${PROJECT_ROOT}\save_trans_results.m</file>
+      <file>${PROJECT_ROOT}\sel_beats.m</file>
+      <file>${PROJECT_ROOT}\sel_spikes.m</file>
+      <file>${PROJECT_ROOT}\set_parameters.m</file>
+      <file>${PROJECT_ROOT}\simple_name.m</file>
+      <file>${PROJECT_ROOT}\sortFirstLast_v01.m</file>
+      <file>${PROJECT_ROOT}\spectral_analysis.m</file>
+      <file>${PROJECT_ROOT}\spike_analysis.m</file>
+      <file>${PROJECT_ROOT}\spike_detection_filter.m</file>
+      <file>${PROJECT_ROOT}\spike_pointer.m</file>
+      <file>${PROJECT_ROOT}\spike_selection.mlapp</file>
+      <file>${PROJECT_ROOT}\stat_selection.mlapp</file>
+      <file>${PROJECT_ROOT}\stepwise_GDA_v06.m</file>
+      <file>${PROJECT_ROOT}\stepwise_regression.m</file>
+      <file>${PROJECT_ROOT}\switch_vis.m</file>
+      <file>${PROJECT_ROOT}\table1.mat</file>
+      <file>${PROJECT_ROOT}\table2.mat</file>
+      <file>${PROJECT_ROOT}\table3.mat</file>
+      <file>${PROJECT_ROOT}\table4.mat</file>
+      <file>${PROJECT_ROOT}\table5.mat</file>
+      <file>${PROJECT_ROOT}\table6.mat</file>
+      <file>${PROJECT_ROOT}\table7.mat</file>
+      <file>${PROJECT_ROOT}\table8.mat</file>
+      <file>${PROJECT_ROOT}\tableEq1.mat</file>
+      <file>${PROJECT_ROOT}\tableEq2.mat</file>
+      <file>${PROJECT_ROOT}\tableEq3.mat</file>
+      <file>${PROJECT_ROOT}\tableEq4.mat</file>
+      <file>${PROJECT_ROOT}\tableEq5.mat</file>
+      <file>${PROJECT_ROOT}\tableEq6.mat</file>
+      <file>${PROJECT_ROOT}\tableEq7.mat</file>
+      <file>${PROJECT_ROOT}\temp_spikes.mat</file>
+      <file>${PROJECT_ROOT}\template_app.mlapp</file>
+      <file>${PROJECT_ROOT}\test.m</file>
+      <file>${PROJECT_ROOT}\test2.m</file>
+      <file>${PROJECT_ROOT}\tmp.pdf</file>
+      <file>${PROJECT_ROOT}\transduction_analysis.m</file>
+      <file>${PROJECT_ROOT}\transduction_calc.m</file>
+      <file>${PROJECT_ROOT}\transduction_calc_v2.m</file>
+      <file>${PROJECT_ROOT}\update_annotate_axis.m</file>
+      <file>${PROJECT_ROOT}\update_burst_axis.m</file>
+      <file>${PROJECT_ROOT}\update_cluster_plots.m</file>
+      <file>${PROJECT_ROOT}\update_cluster_popup.m</file>
+      <file>${PROJECT_ROOT}\update_correlation_axis.m</file>
+      <file>${PROJECT_ROOT}\update_entropy_axis.m</file>
+      <file>${PROJECT_ROOT}\update_intervall_popup.m</file>
+      <file>${PROJECT_ROOT}\update_lag_axis.m</file>
+      <file>${PROJECT_ROOT}\update_parameters.m</file>
+      <file>${PROJECT_ROOT}\update_regression_axis.m</file>
+      <file>${PROJECT_ROOT}\update_signal_popup.m</file>
+      <file>${PROJECT_ROOT}\update_spectral_axis.m</file>
+      <file>${PROJECT_ROOT}\update_spike_axis.m</file>
+      <file>${PROJECT_ROOT}\update_spikelag_display.m</file>
+      <file>${PROJECT_ROOT}\update_transduction_axis.m</file>
+      <file>${PROJECT_ROOT}\update_wavelet_axis.m</file>
+      <file>${PROJECT_ROOT}\wave_bases.m</file>
+      <file>${PROJECT_ROOT}\wave_signif.m</file>
+      <file>${PROJECT_ROOT}\wavelet.m</file>
+      <file>${PROJECT_ROOT}\wavelet_analysis.m</file>
+      <file>${PROJECT_ROOT}\wavelet_report.m</file>
+      <file>${PROJECT_ROOT}\wt.m</file>
+      <file>${PROJECT_ROOT}\wt_ax.m</file>
+      <file>${PROJECT_ROOT}\xlswritefig.m</file>
+      <file>${PROJECT_ROOT}\xwt.m</file>
+      <file>${PROJECT_ROOT}\xwt_ax.m</file>
+    </fileset.resources>
+    <fileset.package />
+    <build-deliverables>
+      <file location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2" name="MNG_toolbox_Matlab_app" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_Matlab_app</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>D:\Program Files\MATLAB\R2022b</root>
+      <toolboxes>
+        <toolbox name="matlabcoder" />
+        <toolbox name="gpucoder" />
+        <toolbox name="neuralnetwork" />
+      </toolboxes>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+      <toolbox>
+        <gpucoder>
+          <enabled>true</enabled>
+        </gpucoder>
+      </toolbox>
+      <toolbox>
+        <neuralnetwork>
+          <enabled>true</enabled>
+        </neuralnetwork>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

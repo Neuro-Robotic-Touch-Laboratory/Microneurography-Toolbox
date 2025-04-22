@@ -1,0 +1,2 @@
+Path	Symbol	Reason
+MNG_toolbox\packages\+adi\sdk.m	mex	undeployable
