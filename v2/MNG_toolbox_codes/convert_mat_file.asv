@@ -7,9 +7,9 @@ file_meta.n_records = size(file_in.datastart,2);
 file_meta.n_channels = size(file_in.datastart,1);
 file_version = 1;
 for i = 1: file_meta.n_records
-    record_meta(i).tick_dt = 1/ file_in.tickrate;%record_meta(i).tick_dt = 1/ file_in.tickrate(i);
-    record_meta(i).record_start = file_in.blocktimes;%record_meta(i).record_start = file_in.blocktimes(i);
-    record_meta(i).data_start = file_in.blocktimes;%record_meta(i).data_start = file_in.blocktimes(i);
+    %record_meta(i).tick_dt = 1/ file_in.tickrate(i);
+    record_meta(i).record_start = file_in.blocktimes(i);
+    record_meta(i).data_start = file_in.blocktimes(i);
     record_meta(i).trigger_minus_rec_start_samples = 0;
 end
 record_version = 1;
