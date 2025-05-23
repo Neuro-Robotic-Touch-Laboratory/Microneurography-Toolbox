@@ -113,7 +113,7 @@ for i = 1 :length(temp_comm)
 end
 clear idx temp_data temp_comm i
 
-save(filename)
+save(filename,'-v7.3')
 disp([filename '.mat was successfully created'])
 disp(['Start time: ' num2str(record_meta.data_start) ' s, data length: ' num2str(record_meta.n_ticks*record_meta.tick_dt) ' s'])
 disp(['the file contains ' num2str(length(channel_meta)) ' channels:'])

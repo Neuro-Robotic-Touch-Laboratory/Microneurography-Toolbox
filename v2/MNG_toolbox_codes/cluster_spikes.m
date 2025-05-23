@@ -24,7 +24,7 @@ save(input, 'par','spikes','index','threshold')% save(input, 'par','spikes','ind
 
 filenames = {input}; 
 tic
-par_file = set_parameters();
+par_file = set_parameters(par.sr);
 
 
 initial_date = now;

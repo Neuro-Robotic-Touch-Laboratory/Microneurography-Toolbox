@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="1907338763" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="3481448774" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
@@ -13,7 +13,7 @@
     <param.summary />
     <param.description />
     <param.screenshot>${PROJECT_ROOT}\pics\Logo_w - Software_400x400px.png</param.screenshot>
-    <param.version>2.0</param.version>
+    <param.version>1.0</param.version>
     <param.products.name>
       <item>Curve Fitting Toolbox</item>
       <item>Deep Learning Toolbox</item>
@@ -52,6 +52,7 @@
     <unset>
       <param.summary />
       <param.description />
+      <param.version />
     </unset>
     <fileset.main>
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
@@ -71,6 +72,7 @@
       <file>${PROJECT_ROOT}\auto_hb.m</file>
       <file>${PROJECT_ROOT}\auto_min_vent.m</file>
       <file>${PROJECT_ROOT}\auto_resp.m</file>
+      <file>${PROJECT_ROOT}\batch_bursts.m</file>
       <file>${PROJECT_ROOT}\BINfrequency.m</file>
       <file>${PROJECT_ROOT}\BlandAltman.m</file>
       <file>${PROJECT_ROOT}\BlandAltman_ax.m</file>
@@ -171,6 +173,7 @@
       <file>${PROJECT_ROOT}\save_trans_results.m</file>
       <file>${PROJECT_ROOT}\sel_beats.m</file>
       <file>${PROJECT_ROOT}\sel_spikes.m</file>
+      <file>${PROJECT_ROOT}\set_burst_anal.m</file>
       <file>${PROJECT_ROOT}\set_parameters.m</file>
       <file>${PROJECT_ROOT}\simple_name.m</file>
       <file>${PROJECT_ROOT}\sortFirstLast_v01.m</file>

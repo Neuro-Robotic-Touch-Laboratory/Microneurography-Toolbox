@@ -70,18 +70,19 @@ app.data(idx).data(1:tmp_idx(1)-1) = app.data(idx).data(tmp_idx(1));
 app.data(idx).data(tmp_idx(2)+1:end) = app.data(idx).data(tmp_idx(2));
 app.data(idx).ts = [tmp(1),tmp(end)];
 app.data(idx).derived = true;
-
-idx = idx+1;
-
-app.data(idx).name = 'BURST LATENCY';
-app.data(idx).unit = 's';
-app.data(idx).tic_multipl = 0.01/min_ts;
-app.data(idx).data = interp1(app.burst_res.t_burst(use_idx),app.burst_res.burst_latency(use_idx),tmp)';
-tmp_idx = [find(~isnan(app.data(idx).data),1) ,  find(~isnan(app.data(idx).data),1,'last')];
-app.data(idx).data(1:tmp_idx(1)-1) = app.data(idx).data(tmp_idx(1));
-app.data(idx).data(tmp_idx(2)+1:end) = app.data(idx).data(tmp_idx(2));
-app.data(idx).ts = [tmp(1),tmp(end)];
-app.data(idx).derived = true;
+if ~isempty(app.burst_res.burst_latency)
+    idx = idx+1;
+     
+    app.data(idx).name = 'BURST LATENCY';
+    app.data(idx).unit = 's';
+    app.data(idx).tic_multipl = 0.01/min_ts;
+    app.data(idx).data = interp1(app.burst_res.t_burst(use_idx),app.burst_res.burst_latency(use_idx),tmp)';
+    tmp_idx = [find(~isnan(app.data(idx).data),1) ,  find(~isnan(app.data(idx).data),1,'last')];
+    app.data(idx).data(1:tmp_idx(1)-1) = app.data(idx).data(tmp_idx(1));
+    app.data(idx).data(tmp_idx(2)+1:end) = app.data(idx).data(tmp_idx(2));
+    app.data(idx).ts = [tmp(1),tmp(end)];
+    app.data(idx).derived = true;
+end
 
 update_signal_popup(app)
 end

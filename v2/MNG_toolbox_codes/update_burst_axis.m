@@ -198,9 +198,13 @@ EE.inter_burst_interval = diff(app.burst_res.t_burst(burst_idx));%app.burst_res.
 nhist_ax(EE,'text','box','median','mode','noerror','color',[.9 .8 .8],'separate','axis',app.ax_burst_interval_his);
 title(app.ax_burst_interval_his,'')
 
-GG.inter_burst_interval = app.burst_res.burst_latency(burst_idx);%app.burst_res.dt_burst(burst_idx(1:end-1));
-nhist_ax(GG,'text','box','median','mode','noerror','color',[.8 .8 .9],'separate','axis',app.ax_burst_latency_his);
-title(app.ax_burst_interval_his,'')
+if ~isempty(app.burst_res.burst_latency)
+    GG.inter_burst_interval = app.burst_res.burst_latency(burst_idx);%app.burst_res.dt_burst(burst_idx(1:end-1));
+    nhist_ax(GG,'text','box','median','mode','noerror','color',[.8 .8 .9],'separate','axis',app.ax_burst_latency_his);
+    title(app.ax_burst_latency_his,'')
+else 
+    cla(app.ax_burst_latency_his)
+end
 
 app.lbl_num_burst.Text = ['Number of Bursts: ' num2str(sum(burst_idx)) ];
 app.lbl_burst_rate.Text = ['Rate: ' num2str(sum(burst_idx)/dur) ' [Hz]'];

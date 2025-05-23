@@ -59,7 +59,7 @@ if calc_flag
     [data,ts,~,~] = current_signal(app, app.settings.channel_idx.msna);
     
     data = data'; 
-
+    
     sr = 1/ts(1); % rem
 
     SimpleSpikesSorting = app.chkbx_spike_sorting.Value;
@@ -83,15 +83,28 @@ if calc_flag
         disp([num2str(size(spikes)) 'size spikes2']) %
         app.wc_app = cluster_app(app,index, spikes, par, threshold);
         waitfor(app.wc_app)
+        rem_idx = find (app.settings.tempclus.cluster_class(:,1)==0);
+        app.settings.tempclus.cluster_class(rem_idx,:) = [];
+        app.settings.tempclus.spikes(rem_idx,:) = [];
+        app.settings.tempclus.forced(rem_idx) = [];
+        app.settings.tempclus.inspk(rem_idx,:) = [];
+        app.settings.tempclus.ipermut(rem_idx) = [];
+        index(rem_idx) = [];
+        spikes(rem_idx,:) = [];
+        spk_pos(rem_idx) = [];
         cluster.cluster_class = app.settings.tempclus.cluster_class;
         app.settings.tempclus = [];
     end    
     
+    %% new
+    [b,a] = ellip(app.settings.par.sort_order,0.1,40,[app.settings.par.sort_fmin app.settings.par.sort_fmax]*2/app.settings.par.sr);
+    data = filtfilt(b, a, data); 
+    %%
    
     if app.chkbx_spike_clustering.Value 
 %         cluster=load([writable_folder '\times_temp.mat'],'cluster_class');
         [spike_res.spikes, spike_res.spike_idx, spike_res.spike_ts,spike_res.cluster,spike_res.extremes(:,2), spike_res.extremes(:,1), spike_res.extremes(:,3)] ...
-                =comBIN_wave_clus(cluster,data,sr);
+                =comBIN_wave_clus(cluster,data,app.settings.par);
     else
 %         spikes=load([writable_folder '\temp_spikes.mat'],'spikes','index','threshold'); % rem
         spks =  struct('spikes',spikes,'index',index,'threshold',threshold);
@@ -115,9 +128,10 @@ if calc_flag
     spike_res.analysis.spike = false;
     spike_res.analysis.trans = false;
     spike_res = sel_spikes(spike_res, app.data(app.settings.channel_idx.msna).ts, app.burst_ints);
-    if update 
-        spike_res.use_spikes(:,1) = app.spike_res.use_spikes(:,1);
-    end
+%     if update 
+%         spike_res.use_spikes = [];
+%         spike_res.use_spikes(:,1) = app.spike_res.use_spikes(:,1);
+%     end
     spike_res.det_res.threshold = threshold;
     spike_res.det_res.spk_pos = spk_pos;
     spike_res.det_res.spikes = spikes;

@@ -1,4 +1,4 @@
-function par = set_parameters() 
+function par = set_parameters(fs) 
  
 % LOAD PARAMS 
 par.segments_length = 5;        % length (in minutes) of segments in which the data is cutted (default 5min). 
@@ -29,8 +29,8 @@ par.elbow_min  = 0.4;           % Thr_border parameter for regime border detecti
 par.tmax = 'all';               % maximum time to load 
 %par.tmax= 180;                 % maximum time to load (in sec) 
 par.tmin= 0;                    % starting time for loading (in sec) 
-par.w_pre = 20;                 % number of pre-event data points stored (default 20) 
-par.w_post = 20;                % number of post-event data points stored (default 44)) 
+par.w_pre = ceil(0.002*fs);%par.w_pre = 20;                 % number of pre-event data points stored (default 20) 
+par.w_post = ceil(0.002*fs);%par.w_post = 20;                % number of post-event data points stored (default 44)) 
 par.alignment_window = 10;      % number of points around the sample expected to be the maximum 
 par.stdmin =4;                  % minimum threshold for detection %3.5 
 par.stdmax =10;                 % maximum threshold for detection       %10 
