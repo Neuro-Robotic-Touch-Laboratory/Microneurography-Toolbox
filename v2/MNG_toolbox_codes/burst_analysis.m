@@ -1,9 +1,16 @@
 function burst_res = burst_analysis(app)
 %BURST_ANALYSIS Summary of this function goes here
 %   Detailed explanation goes here
-cla(app.ax_msna_raw), cla(app.ax_burst_interval_his), cla(app.ax_burst_duration_his),...
-cla(app.ax_burst_amplitude_his),cla(app.ax_burst_integral_his), cla(app.ax_burst_res),...
-cla(app.ax_msna_int)
+try 
+    plot_flag = isa(app.ax_msna_raw, 'matlab.ui.control.UIAxes');
+catch
+    plot_flag = false;
+end
+if plot_flag
+    cla(app.ax_msna_raw), cla(app.ax_burst_interval_his), cla(app.ax_burst_duration_his),...
+    cla(app.ax_burst_amplitude_his),cla(app.ax_burst_integral_his), cla(app.ax_burst_res), cla (app.ax_burst_latency_his),...
+    cla(app.ax_msna_int)
+end
 Soglia = app.edt_threshold.Value;
 Finestra = app.edt_window.Value;
 t_i = app.settings.interval(1,1);
@@ -18,7 +25,9 @@ units_msna = app.data(app.settings.channel_idx.msna).unit;
 t_msna = (1:length(sel))*app.data(app.settings.channel_idx.msna).ts(1);
 Ts_msna = app.data(app.settings.channel_idx.msna).ts(1);
 CalcolaBurst=1;
-app.lbl_working.Text = 'Working 10%'; drawnow
+if plot_flag
+    app.lbl_working.Text = 'Working 10%'; drawnow
+end
 if CalcolaBurst==1
     sel=bandpass(sel,[500 5000],1e4);%sel=bandpass(sel,[300 5000],1e4);
 
@@ -42,7 +51,9 @@ if CalcolaBurst==1
     Ksoglia= Soglia;
     PeakWidth = Finestra; % [seconds]
     PeakWidth = round(PeakWidth/Ts_msna);
-    app.lbl_working.Text = 'Working 20%';drawnow
+    if plot_flag
+        app.lbl_working.Text = 'Working 20%';drawnow
+    end
 
     basmean = zeros(1, sampleLength);
     basStd = zeros(1, sampleLength);
@@ -54,8 +65,9 @@ if CalcolaBurst==1
     
     debug=0;
 
-
-app.lbl_working.Text = 'Working 30%'; drawnow
+if plot_flag
+    app.lbl_working.Text = 'Working 30%'; drawnow
+end
 %     if debug==0
 %         x_windowValues = x(1:end);
 %         basmed = median(x_windowValues);
@@ -199,7 +211,9 @@ app.lbl_working.Text = 'Working 30%'; drawnow
     
         end
     end
-app.lbl_working.Text = 'Working 60%'; drawnow
+if plot_flag    
+    app.lbl_working.Text = 'Working 60%'; drawnow
+end
     index_remove=unique(index_remove);
     AA_t_I(index_remove,:)=[];
     DD_t_I= sortrows(AA_t_I,1);
@@ -223,7 +237,7 @@ app.lbl_working.Text = 'Working 60%'; drawnow
 
 
     burst_res = struct('ts',[],'x',[], 'burst_loc',[],'burst_int',[],...
-                       'burst_amp',[],'burst_dur',[],'htresh',[],'xshift',[],...
+                       'burst_amp',[],'burst_dur',[],'burst_latency',[],'htresh',[],'xshift',[],...
                        't_burst',[],'dt_burst',[]);
 
     for ttt=1
@@ -267,6 +281,7 @@ app.lbl_working.Text = 'Working 60%'; drawnow
         burst_res.htresh = HThreshold;
         burst_res.xshift = x_shift_corretto;
         burst_res.use_burst = ones(size(tbursts,2),2);
+        burst_res.type = 2;
 
 
 %% save msna results

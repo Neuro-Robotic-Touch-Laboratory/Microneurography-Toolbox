@@ -1,2 +1,3 @@
 Path	Symbol	Reason
+OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\packages\+adi\sdk.m	mex	undeployable
 MNG_toolbox\packages\+adi\sdk.m	mex	undeployable

@@ -1,10 +1,10 @@
-function [spikeMatrix, peak_idxs, peakTimes_ms, classes, peak_vals,  dip1, dip2 ]=comBIN_wave_clus(cluster,data,sr)
+function [spikeMatrix, peak_idxs, peakTimes_ms, classes, peak_vals,  dip1, dip2 ]=comBIN_wave_clus(cluster,data,par)
+sr =  par.sr;
+npointsbeforepeak=par.w_pre;
+npointsafterpeak=par.w_post;
 
-npointsbeforepeak=20;
-npointsafterpeak=20;
-
-peakTimes_ms=cluster.cluster_class(:,2)';
-peak_idxs=uint32(cluster.cluster_class(:,2)'*sr/1000);
+peakTimes_ms=cluster.cluster_class(:,2)'/par.sr*1000;
+peak_idxs=uint32(cluster.cluster_class(:,2)');
 
 clear index clear spikes
 classes = (cluster.cluster_class(:,1))';
@@ -22,10 +22,12 @@ clear i idx spike
 %% necessary ??
 %% find for each spike the 2 dips and delta-t between them (5 features). With respect to zero defined as average of ending and starting point?
 peak_vals=data(peak_idxs);
+orientation = ones(size(peak_vals));
+orientation(peak_vals > 0) = -1;
 rmv=[];
 discardedSpikesMatrix=[];
 for i=1:numSpikes
-    [minPks,minLocs]=findpeaks(gnegate(-spikeMatrix(:,i)));%find all local minima
+    [minPks,minLocs]=findpeaks(orientation(i)*spikeMatrix(:,i));%find all local minima
     if numel(minPks)<2
         rmv=[rmv i];
         continue

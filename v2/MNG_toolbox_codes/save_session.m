@@ -32,6 +32,20 @@ end
 
 if app.settings.done.burst
     savestruct.burst.detrend =  app.chkbx_detrent_rms.Value;
+    savestruct.burst.type = app.burst_res.type;
+    switch savestruct.burst.type
+        case 1
+            savestruct.burst.window = app.burst_res.window;
+            savestruct.burst.delay = app.burst_res.delay;
+            savestruct.burst.use_burst = app.burst_res.use_burst;
+            savestruct.burst.window_org = app.settings.burst_rem_int;
+        case 2
+            savestruct.burst.window = app.burst_res.window;
+            savestruct.burst.delay = app.burst_res.delay;
+            savestruct.burst.use_burst = app.burst_res.use_burst;
+            savestruct.burst.rem_int = app.settings.burst_rem_int; 
+
+    end
 
 %     savestruct.burst.outlier_thresh =  app.edt_outlier_threshold.Value;
 %     savestruct.burst.window =  app.edt_window.Value;
@@ -51,6 +65,10 @@ if ~isempty(app.spike_res)
     savestruct.spike.analysis = app.spike_res.analysis  ;
     savestruct.spike.par = app.settings.par;
     savestruct.spike.spike = app.spike_res.spike;
+    savestruct.spike.spike_pos = app.spike_res.det_res.spk_pos;
+    savestruct.spike.index = app.spike_res.det_res.index;
+    savestruct.spike.spikes = app.spike_res.det_res.spikes;
+    savestruct.spike.threshold = app.spike_res.det_res.threshold;
 end
 
 save( [path  file],'savestruct','-mat')

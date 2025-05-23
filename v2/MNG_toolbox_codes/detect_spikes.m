@@ -24,7 +24,7 @@ for n = 1:num_seg
     x = data(idx(n,1):idx(n,2));
         %<----  Add here extra processing of the signal (x)
     [new_spikes, aux_th, new_index, new_spk_pos]  = amp_detect(x, par);
-    index = [index, ((new_index)+idx(n,1)-1)/sr*1000];%/sr*1000 + (idx-1)];
+    index = [index, ((new_index)+idx(n,1)-1)];%/sr*1000];%/sr*1000 + (idx-1)];
     
     %new_index to ms
     spikes = [spikes; new_spikes];

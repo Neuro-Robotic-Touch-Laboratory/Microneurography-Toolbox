@@ -9,8 +9,8 @@ end
 data=data';
 
 templateMatchedSpikes=aaa.spikes;
-peakTimes_ms=aaa.index;
-peak_idxs=uint32(aaa.index*sr/1000);
+peakTimes_ms=aaa.index/sr*1000;%peakTimes_ms=aaa.index;
+peak_idxs=uint32(aaa.index);%peak_idxs=uint32(aaa.index*sr/1000);
 
 clear index clear spikes
 

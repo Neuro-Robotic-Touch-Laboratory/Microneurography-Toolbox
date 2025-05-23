@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3798643052" file="C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2.prj" location="C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox_2" preferred-package-location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3798643052" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes" name="MNG_toolbox_2" preferred-package-location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>MNG_toolbox</param.appname>
     <param.icon>${PROJECT_ROOT}\MNG_toolbox_2_resources\icon.ico</param.icon>
     <param.icons>
@@ -96,6 +96,7 @@
       <file>${PROJECT_ROOT}\BlandAltman_ax.m</file>
       <file>${PROJECT_ROOT}\bp_dect.m</file>
       <file>${PROJECT_ROOT}\burst_analysis.m</file>
+      <file>${PROJECT_ROOT}\burst_analysis2.m</file>
       <file>${PROJECT_ROOT}\burst_report.m</file>
       <file>${PROJECT_ROOT}\calc_combine_stats.m</file>
       <file>${PROJECT_ROOT}\chisquare_inv.m</file>
@@ -216,6 +217,7 @@
       <file>${PROJECT_ROOT}\temp_spikes.mat</file>
       <file>${PROJECT_ROOT}\template_app.mlapp</file>
       <file>${PROJECT_ROOT}\test.m</file>
+      <file>${PROJECT_ROOT}\test2.m</file>
       <file>${PROJECT_ROOT}\tmp.pdf</file>
       <file>${PROJECT_ROOT}\transduction_analysis.m</file>
       <file>${PROJECT_ROOT}\transduction_calc.m</file>
@@ -249,7 +251,6 @@
     </fileset.resources>
     <fileset.package />
     <fileset.depfun>
-      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
       <file>${PROJECT_ROOT}\pics\biorobotics research et innovation engineering facilities.png</file>
       <file>${PROJECT_ROOT}\pics\IT Finanziato dall Unione europea_POS.jpg</file>
       <file>${PROJECT_ROOT}\pics\italia-domani-tracciato copia.jpg</file>
@@ -257,19 +258,156 @@
       <file>${PROJECT_ROOT}\pics\mnesys.png</file>
       <file>${PROJECT_ROOT}\pics\tuen Beam.png</file>
       <file>${PROJECT_ROOT}\pics\tuscany heaalth ecosystem.png</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\adapt_lms_spec.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\adi.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\amp_detect.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\ar1nv.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\ar1spectrum.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\auto_bp.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\auto_derived.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\auto_etco2.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\auto_hb.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\auto_min_vent.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\auto_resp.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\BINfrequency.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\BlandAltman.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\BlandAltman_ax.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\bp_dect.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\burst_analysis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\burst_report.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\calc_combine_stats.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\chisquare_inv.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\circ_mean.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\circ_plot_ax.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\circ_plot_GDA.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\circ_r.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\clear_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\cluster_app.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\cluster_spikes.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\comBIN.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\comBIN_wave_clus.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\ComputeLatency.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\ComputeLatencyCell.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\computeRadFiring.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\computeRadFiring_v02.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\CondEn.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\convert_mat_file.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\corre_report.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\correlation_analysis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\corrplot1.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\covardlg.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\create_report.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\current_signal.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\customcolormap.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\derived_bp_signals.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\derived_burst_signals.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\derived_cardiac_signals.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\derived_resp_signals.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\det_params.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\detect_spikes.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\distinguishable_colors.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\edit_parameter.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\edit_regressor_table.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\fileloader_app.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\find_outputfiles.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\find_xls.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\formatts.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\get_spike_lag.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\GetWritableFolder.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\hb_det_2.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\hr_fix2.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\int_selection.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\int_spikes.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\mergePdfs.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\mynum2str.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\nhist.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\nhist_ax.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\OPanalysis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\opdPE.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\packages\+adi\+file_comparison\@comments_comparison\comments_comparison.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\packages\+adi\+w\@sample_count_manager\sample_count_manager.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\packages\+adi\@channel\channel.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\packages\+adi\@channel\exportToHDF5File.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\packages\+adi\@comment\comment.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\packages\+adi\@file_viewer\file_viewer.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\parseArgs.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\PE.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\phaseplot.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\phaseplot_ax.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\Plot_all_features_ad.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\plot_spikes_ad.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\pointer.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\pointer_resp.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\readInData.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\realign_bp_ecg.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\removed_entropy.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\rePE.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\reset_results.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\resp_det2.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\resp_fix.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\riallinea_BP_ECG_v08.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\run_cluster_loc.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\save_annotate_results.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\save_lag_fig.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\save_regression_res.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\save_session.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\save_spec_res.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\save_spike_results.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\save_trans_results.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\sel_beats.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\sel_spikes.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\set_parameters.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\simple_name.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\sortFirstLast_v01.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\spectral_analysis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\spike_analysis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\spike_detection_filter.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\spike_pointer.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\spike_selection.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\stat_selection.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\stepwise_GDA_v06.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\stepwise_regression.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\template_app.mlapp</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\transduction_analysis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\transduction_calc.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_annotate_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_burst_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_cluster_plots.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_cluster_popup.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_correlation_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_intervall_popup.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_lag_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_parameters.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_regression_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_signal_popup.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_spectral_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_spike_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_spikelag_display.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_transduction_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\update_wavelet_axis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\wave_bases.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\wave_signif.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\wavelet.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\wavelet_analysis.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\wavelet_report.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\wt.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\wt_ax.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\xlswritefig.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\xwt.m</file>
+      <file>D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\xwt_ax.m</file>
+      <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="splash.png" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="readme.txt" optional="true">C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="MNG_toolbox.exe" optional="false">C:\work\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\MNG_toolbox.exe</file>
+      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="MNG_toolbox.exe" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\MNG_toolbox.exe</file>
+      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="splash.png" optional="false">D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\MNG_toolbox_2\for_testing" name="readme.txt" optional="true">D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v1\MNG_toolbox_codes\MNG_toolbox_2\for_testing\readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2022b</root>
+      <root>D:\Program Files\MATLAB\R2022b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
@@ -281,11 +419,6 @@
         <gpucoder>
           <enabled>true</enabled>
         </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
       </toolbox>
       <toolbox>
         <neuralnetwork>

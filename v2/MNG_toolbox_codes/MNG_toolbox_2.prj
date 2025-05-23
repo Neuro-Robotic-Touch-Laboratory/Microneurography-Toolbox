@@ -8,7 +8,7 @@
       <file>${PROJECT_ROOT}\MNG_toolbox_2_resources\icon_24.png</file>
       <file>${PROJECT_ROOT}\MNG_toolbox_2_resources\icon_16.png</file>
     </param.icons>
-    <param.version>2.0</param.version>
+    <param.version>1.0</param.version>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
     <param.company>Neuro Touch Lab - Sant Anna Pisa</param.company>
@@ -48,6 +48,7 @@
 	 -?  print help on how to use the application 
 	 input arguments</param.help.text>
     <unset>
+      <param.version />
       <param.summary />
       <param.description />
       <param.guid />
@@ -89,11 +90,13 @@
       <file>${PROJECT_ROOT}\auto_hb.m</file>
       <file>${PROJECT_ROOT}\auto_min_vent.m</file>
       <file>${PROJECT_ROOT}\auto_resp.m</file>
+      <file>${PROJECT_ROOT}\batch_bursts.m</file>
       <file>${PROJECT_ROOT}\BINfrequency.m</file>
       <file>${PROJECT_ROOT}\BlandAltman.m</file>
       <file>${PROJECT_ROOT}\BlandAltman_ax.m</file>
       <file>${PROJECT_ROOT}\bp_dect.m</file>
       <file>${PROJECT_ROOT}\burst_analysis.m</file>
+      <file>${PROJECT_ROOT}\burst_analysis2.m</file>
       <file>${PROJECT_ROOT}\burst_app.mlapp</file>
       <file>${PROJECT_ROOT}\burst_report.m</file>
       <file>${PROJECT_ROOT}\calc_combine_stats.m</file>
@@ -150,6 +153,8 @@
       <file>${PROJECT_ROOT}\mat_wc_reader.m</file>
       <file>${PROJECT_ROOT}\mergePdfs.m</file>
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
+      <file>${PROJECT_ROOT}\MNG_toolbox1.mlapp</file>
+      <file>${PROJECT_ROOT}\MNG_toolbox2.mlapp</file>
       <file>${PROJECT_ROOT}\mynum2str.m</file>
       <file>${PROJECT_ROOT}\nhist.m</file>
       <file>${PROJECT_ROOT}\nhist_ax.m</file>
@@ -185,6 +190,7 @@
       <file>${PROJECT_ROOT}\save_trans_results.m</file>
       <file>${PROJECT_ROOT}\sel_beats.m</file>
       <file>${PROJECT_ROOT}\sel_spikes.m</file>
+      <file>${PROJECT_ROOT}\set_burst_anal.m</file>
       <file>${PROJECT_ROOT}\set_parameters.m</file>
       <file>${PROJECT_ROOT}\simple_name.m</file>
       <file>${PROJECT_ROOT}\sortFirstLast_v01.m</file>
@@ -215,6 +221,7 @@
       <file>${PROJECT_ROOT}\temp_spikes.mat</file>
       <file>${PROJECT_ROOT}\template_app.mlapp</file>
       <file>${PROJECT_ROOT}\test.m</file>
+      <file>${PROJECT_ROOT}\test2.m</file>
       <file>${PROJECT_ROOT}\tmp.pdf</file>
       <file>${PROJECT_ROOT}\transduction_analysis.m</file>
       <file>${PROJECT_ROOT}\transduction_calc.m</file>
