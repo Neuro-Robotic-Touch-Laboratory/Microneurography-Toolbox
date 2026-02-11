@@ -33,7 +33,7 @@ else
 end
 
 lags = [app.edt_corre_lag1.Value, app.edt_corre_lag2.Value, app.edt_corre_lag3.Value];
-ds = app.edt_downsampling.Value;
+fs = app.edt_downsampling.Value;
 
 ch1_idx = find(strcmp(app.popup_coorelation_signal1.Value, app.popup_coorelation_signal1.Items));
 [data_1,ts_1,name_1, unit_1] = current_signal(app, ch1_idx);
@@ -45,41 +45,97 @@ ch2_idx = find(strcmp(app.popup_coorelation_signal2.Value, app.popup_coorelation
 data_2(:,2) = ts_2(1):ts_2(1):ts_2(2);
 name_2 = char(string(name_2));
 
-if ts_1(1) > ts_2(1)
-    idx = find(data_2(:,2) == data_1(1,2));
-    data_2(1:idx-1,:) = [];
+if (fs/2)/((1/ts_1(1))/2) <= 1
+    [b1,a1] = butter(3,(fs/2)/((1/ts_1(1))/2));
 else
-    idx = find(data_1(:,2) == data_2(1,2));
-    data_1(1:idx-1,:) = [];
+    [b1,a1] = butter(3,0.999999);
 end
 
-data_1_ds = [downsample(data_1(:,1), .01/ts_1(1)),downsample(data_1(:,2), .01/ts_1(1))];
+if (fs/2)/((1/ts_2(1))/2) <= 1
+    [b2,a2] = butter(3,(fs/2)/((1/ts_2(1))/2));
+else
+    [b2,a2] = butter(3,0.999999);
+end
 
-data_2_ds = [downsample(data_2(:,1), .01/ts_2(1)),downsample(data_2(:,2), .01/ts_2(1))];
+data_1_f = filtfilt(b1,a1,data_1(:,1));
+data_2_f = filtfilt(b2,a2,data_2(:,1));
 
-% data_2_ds(:,2) = data_1_ds(:,2);
+tsds_1 =  (data_1(1,2):1/fs:data_1(end,2))';
+tsds_2 =  (data_2(1,2):1/fs:data_2(end,2))';
+data_1_ds = interp1(data_1(:,2),data_1_f,tsds_1,'linear');
+data_2_ds = interp1(data_2(:,2),data_2_f,tsds_2,'linear');
+% [data_1_ds, tsds_1] = resample(data_1_f(:,1),data_1(:,2),fs,'linear');
+% [data_2_ds, tsds_2] = resample(data_2_f(:,1),data_2(:,2),fs,'linear');
 
-data_1_dsds = [downsample(data_1_ds(:,1), ds), downsample(data_1_ds(:,2), ds)];
-data_2_dsds = [downsample(data_2_ds(:,1), ds), downsample(data_2_ds(:,2), ds)];
+data_1_ds(:,2) = tsds_1;
+data_2_ds(:,2) = tsds_2;
+data_1_ds(isnan(data_1_ds(:,1)),:) = [];
+data_2_ds(isnan(data_2_ds(:,1)),:) = [];
+if size(data_1_ds,1) ~= size(data_2_ds,1)
+    if data_1_ds(1,2) > data_2_ds(1,2)
+        idx = find(data_2_ds(:,2) < data_1_ds(1,2));
+        data_2_ds(idx,:) = [];
+        data_2_ds(size(data_1_ds,1)+1:end,:) = [];
+    else
+        idx = find(data_1_ds(:,2) < data_2_ds(1,2));
+        data_1_ds(idx,:) = [];
+        data_1_ds(size(data_2_ds,1)+1:end,:) = [];
+    end
+end
+
+
+% if ts_1(1) > ts_2(1)
+%     idx = find(data_2(:,2) == data_1(1,2));
+%     data_2(1:idx-1,:) = [];
+% else
+%     idx = find(data_1(:,2) == data_2(1,2));
+%     data_1(1:idx-1,:) = [];
+% end
+% 
+% data_1_ds = [downsample(data_1(:,1), .01/ts_1(1)),downsample(data_1(:,2), .01/ts_1(1))];
+% 
+% data_2_ds = [downsample(data_2(:,1), .01/ts_2(1)),downsample(data_2(:,2), .01/ts_2(1))];
+% 
+% % data_2_ds(:,2) = data_1_ds(:,2);
+% 
+% data_1_dsds = [downsample(data_1_ds(:,1), ds), downsample(data_1_ds(:,2), ds)];
+% data_2_dsds = [downsample(data_2_ds(:,1), ds), downsample(data_2_ds(:,2), ds)];
 
 if app.chkbx_movmean.Value
-    data_1_dsds(:,1) = movmean(data_1_dsds(:,1),app.edt_movmean.Value /(.01*ds));
-    data_2_dsds(:,1) = movmean(data_2_dsds(:,1),app.edt_movmean.Value /(.01*ds));
+    data_1_ds(:,1) = movmean(data_1_ds(:,1),app.edt_movmean.Value *fs);
+    data_2_ds(:,1) = movmean(data_2_ds(:,1),app.edt_movmean.Value *fs);
 end
 
 
 for i = 1:length(int_idxs)
     
-    if int_idxs(i) == 1
-        data_1_dsds_int = data_1_dsds;
-        data_2_dsds_int = data_2_dsds;
+%     if int_idxs(i) == 1
+%         data_1_dsds_int = data_1_dsds;
+%         data_2_dsds_int = data_2_dsds;
+%     else
+%         tmp_idx = int32(borders(int_idxs(i),1)*1/(.01*ds));
+%         if tmp_idx < 1
+%             tmp_idx = 1;
+%         end
+%         data_1_dsds_int = data_1_dsds(tmp_idx:int32(borders(int_idxs(i),2)*1/(.01*ds)),:);
+%         data_2_dsds_int = data_2_dsds(tmp_idx:int32(borders(int_idxs(i),2)*1/(.01*ds)),:);
+%     end
+
+    if i == 1
+        data_1_dsds_int = data_1_ds;
+        data_2_dsds_int = data_2_ds;
     else
-        tmp_idx = int32(borders(int_idxs(i),1)*1/(.01*ds));
-        if tmp_idx < 1
-            tmp_idx = 1;
+        tmp_strt = find(data_1_ds(:,2)>= borders(i,1),1,'first');
+        tmp_stp  = find(data_1_ds(:,2)<= borders(i,2),1,'last');
+        data_1_dsds_int = data_1_ds(tmp_strt:tmp_stp,:);
+        tmp_strt = find(data_2_ds(:,2)>= borders(i,1),1,'first');
+        tmp_stp  = find(data_2_ds(:,2)<= borders(i,2),1,'last');
+        data_2_dsds_int = data_2_ds(tmp_strt:tmp_stp,:);
+        if size(data_1_dsds_int,1) ~= size(data_2_dsds_int,1)
+            len = min(size(data_1_dsds_int,1), size(data_2_dsds_int,1));
+            data_1_dsds_int =data_1_dsds_int(1: len,:); 
+            data_2_dsds_int =data_2_dsds_int(1: len,:);
         end
-        data_1_dsds_int = data_1_dsds(tmp_idx:int32(borders(int_idxs(i),2)*1/(.01*ds)),:);
-        data_2_dsds_int = data_2_dsds(tmp_idx:int32(borders(int_idxs(i),2)*1/(.01*ds)),:);
     end
 
     h = figure('Position', get(0, 'Screensize'),'Visible','off');
@@ -125,31 +181,44 @@ for i = 1:length(int_idxs)
     ylabel(unit_2)
 
     subplot(3,2,2)
-    lag01=lags(1)*1/(.01*ds);
+    lag01=lags(1)*fs;
     [~,~] = corrplot1([data_1_dsds_int(1:end-lag01,1),data_2_dsds_int(lag01+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
     title(['Lag 1: ' num2str(app.edt_corre_lag1.Value) 's - F(x) = ',num2str(app.corre_res(int_idxs(i)).lag1.c(1)),'*x + ','(',num2str(app.corre_res(int_idxs(i)).lag1.c(2)),')']) 
    
     
     subplot(3,2,4)
-    lag02=lags(2)*1/(.01*ds);
+    lag02=lags(2)*fs;
     [~,~] = corrplot1([data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
     title(['Lag 2: ' num2str(app.edt_corre_lag2.Value) 's - F(x) = ',num2str(app.corre_res(int_idxs(i)).lag2.c(1)),'*x + ','(',num2str(app.corre_res(int_idxs(i)).lag2.c(2)),')']) 
 
     subplot(3,2,6)
-    lag03=lags(3)*1/(.01*ds);
+    lag03=lags(3)*fs;
     [~,~] = corrplot1([data_1_dsds_int(1:end-lag03,1),data_2_dsds_int(lag03+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
     title(['Lag 3: ' num2str(app.edt_corre_lag3.Value) 's - F(x) = ',num2str(app.corre_res(int_idxs(i)).lag3.c(1)),'*x + ','(',num2str(app.corre_res(int_idxs(i)).lag3.c(2)),')']) 
-
+%     disp([file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 ])
     for j = 1 : length(form_idxs)
+        tmp_name = [file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 ];
+        idx = find(ismember(tmp_name,['/','/','>','<']));   
+        
+        switch tmp_name(idx(i))
+            case '/'
+                tmp_name(idx(i)) = '-';
+            case '>'
+                tmp_name = [tmp_name(1:idx(i)-1) '[more_than]' tmp_name(idx(i)+1: end)];
+    
+            case '<'
+                tmp_name = [tmp_name(1:idx(i)-1) '[less_than]' tmp_name(idx(i)+1: end)];
+        end
+        
         switch form_idxs(j)
             case 1
                 h.Visible = 'on';
-                savefig(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 '.fig'],'compact')
+                savefig(h,[path '\' tmp_name '.fig'],'compact')
                 %switch_vis([path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 '.fig'])
             case 2
-                saveas(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 '.jpeg'])
+                saveas(h,[path '\' tmp_name '.jpeg'])
             case 3
-                saveas(h,[path '\' file '_INT_' num2str(app.settings.interval(1,1)) '-' num2str(app.settings.interval(1,2)) '_correlation_' simple_name(int_names{int_idxs(i)}) '_SIG_' name_1 '+' name_2 '.epsc'])
+                saveas(h,[path '\' tmp_name '.epsc'])
         end
     end
     close(h)

@@ -32,6 +32,8 @@ if ~isempty(app.burst_ints)
     app.popup_int_corre.Value = app.popup_int_corre.Items{1};
     app.popup_lag_int.Items = names;
     app.popup_lag_int.Value = app.popup_lag_int.Items{1};
+    app.popup_baseline_int.Items = names;
+    app.popup_baseline_int.Value = app.popup_baseline_int.Items{1};
     
     names = {'full'};
     for i = 1 : length(app.burst_ints)
@@ -62,6 +64,8 @@ else
     app.popup_int_corre.Value = app.popup_int_corre.Items{1};
     app.popup_int_transduction.Items = names;
     app.popup_int_transduction.Value = app.popup_int_transduction.Items{1};
+    app.popup_baseline_int.Items = names;
+    app.popup_baseline_int.Value = app.popup_baseline_int.Items{1};
 end
 
 end

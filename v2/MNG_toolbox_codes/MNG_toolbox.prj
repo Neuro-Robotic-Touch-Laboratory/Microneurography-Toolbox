@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="3481448774" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="100779867" file="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes\MNG_toolbox.prj" location="D:\OneDrive - Scuola Superiore Sant'Anna\Documents\GitHub\Microneurography-Toolbox\v2\MNG_toolbox_codes" name="MNG_toolbox" target="target.mlapps" target-name="Package App">
     <param.appname>MNG_toolbox</param.appname>
     <param.authnamewatermark>G. D'Alesio, L.I. Stumpp, C.M. Oddo</param.authnamewatermark>
     <param.email>giacomo.dalesio@santannapisa.it, larsingmar.stumpp@santannpisa.it, calogero.oddo@santannapisa.it</param.email>
@@ -58,6 +58,14 @@
       <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
     </fileset.main>
     <fileset.depfun>
+      <file>${PROJECT_ROOT}\pics\biorobotics research et innovation engineering facilities.png</file>
+      <file>${PROJECT_ROOT}\pics\IT Finanziato dall Unione europea_POS.jpg</file>
+      <file>${PROJECT_ROOT}\pics\italia-domani-tracciato copia.jpg</file>
+      <file>${PROJECT_ROOT}\pics\LOGO_UniversitaaRicerca Nolineare_TRACCIATO_s copia.jpg</file>
+      <file>${PROJECT_ROOT}\pics\mnesys.png</file>
+      <file>${PROJECT_ROOT}\pics\scheme.png</file>
+      <file>${PROJECT_ROOT}\pics\tuen Beam.png</file>
+      <file>${PROJECT_ROOT}\pics\tuscany heaalth ecosystem.png</file>
       <file>${MATLAB_ROOT}\examples\rptgen\data\Logo.Png</file>
     </fileset.depfun>
     <fileset.resources>
@@ -78,8 +86,10 @@
       <file>${PROJECT_ROOT}\BlandAltman_ax.m</file>
       <file>${PROJECT_ROOT}\bp_dect.m</file>
       <file>${PROJECT_ROOT}\burst_analysis.m</file>
+      <file>${PROJECT_ROOT}\burst_analysis1.m</file>
       <file>${PROJECT_ROOT}\burst_analysis2.m</file>
       <file>${PROJECT_ROOT}\burst_app.mlapp</file>
+      <file>${PROJECT_ROOT}\burst_app1.mlapp</file>
       <file>${PROJECT_ROOT}\burst_report.m</file>
       <file>${PROJECT_ROOT}\calc_combine_stats.m</file>
       <file>${PROJECT_ROOT}\chisquare_inv.m</file>
@@ -100,7 +110,10 @@
       <file>${PROJECT_ROOT}\CondEn.m</file>
       <file>${PROJECT_ROOT}\convert_mat_file.m</file>
       <file>${PROJECT_ROOT}\corre_report.m</file>
+      <file>${PROJECT_ROOT}\corre_report_old.m</file>
       <file>${PROJECT_ROOT}\correlation_analysis.m</file>
+      <file>${PROJECT_ROOT}\correlation_analysis_old.m</file>
+      <file>${PROJECT_ROOT}\correlation_analysis_old2.m</file>
       <file>${PROJECT_ROOT}\corrplot1.m</file>
       <file>${PROJECT_ROOT}\covardlg.m</file>
       <file>${PROJECT_ROOT}\create_report.m</file>
@@ -134,21 +147,19 @@
       <file>${PROJECT_ROOT}\int_spikes.m</file>
       <file>${PROJECT_ROOT}\mat_wc_reader.m</file>
       <file>${PROJECT_ROOT}\mergePdfs.m</file>
-      <file>${PROJECT_ROOT}\MNG_toolbox.mlapp</file>
       <file>${PROJECT_ROOT}\mynum2str.m</file>
       <file>${PROJECT_ROOT}\nhist.m</file>
       <file>${PROJECT_ROOT}\nhist_ax.m</file>
+      <file>${PROJECT_ROOT}\normalize_bursts.m</file>
       <file>${PROJECT_ROOT}\OPanalysis.m</file>
       <file>${PROJECT_ROOT}\opdPE.m</file>
       <file>${PROJECT_ROOT}\packages</file>
       <file>${PROJECT_ROOT}\packages\+adi</file>
-      <file>${PROJECT_ROOT}\packages\+adi\private</file>
       <file>${PROJECT_ROOT}\packages\WAVECLUS</file>
       <file>${PROJECT_ROOT}\parseArgs.m</file>
       <file>${PROJECT_ROOT}\PE.m</file>
       <file>${PROJECT_ROOT}\phaseplot.m</file>
       <file>${PROJECT_ROOT}\phaseplot_ax.m</file>
-      <file>${PROJECT_ROOT}\pics</file>
       <file>${PROJECT_ROOT}\Plot_all_features_ad.m</file>
       <file>${PROJECT_ROOT}\plot_spikes_ad.m</file>
       <file>${PROJECT_ROOT}\pointer.m</file>
@@ -210,10 +221,13 @@
       <file>${PROJECT_ROOT}\transduction_calc.m</file>
       <file>${PROJECT_ROOT}\transduction_calc_v2.m</file>
       <file>${PROJECT_ROOT}\update_annotate_axis.m</file>
+      <file>${PROJECT_ROOT}\update_burst_axi_old.m</file>
       <file>${PROJECT_ROOT}\update_burst_axis.m</file>
       <file>${PROJECT_ROOT}\update_cluster_plots.m</file>
       <file>${PROJECT_ROOT}\update_cluster_popup.m</file>
       <file>${PROJECT_ROOT}\update_correlation_axis.m</file>
+      <file>${PROJECT_ROOT}\update_correlation_axis_old.m</file>
+      <file>${PROJECT_ROOT}\update_correlation_axis_old2.m</file>
       <file>${PROJECT_ROOT}\update_entropy_axis.m</file>
       <file>${PROJECT_ROOT}\update_intervall_popup.m</file>
       <file>${PROJECT_ROOT}\update_lag_axis.m</file>

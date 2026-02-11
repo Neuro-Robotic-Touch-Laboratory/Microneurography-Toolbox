@@ -1,6 +1,12 @@
 function derived_burst_signals(app)
 %DERIVED_CARDIAC_SIGNALS interpolates the hb_res.dt_instantaneous
 %   Detailed explanation goes here
+
+
+%new
+normalize_bursts(app)
+%new
+
 tmp = nan(1,length(app.data));
 idx=0;
 for i = 1: length(app.data)

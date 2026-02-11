@@ -1,11 +1,7 @@
 function update_burst_axis(app, keep_xl)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-cla(app.ax_msna_int), cla(app.ax_burst_res)  
-cla(app.ax_burst_interval_his), cla(app.ax_burst_duration_his)
-cla(app.ax_burst_amplitude_his), cla(app.ax_burst_integral_his)
-cla(app.ax_burst_res), cla(app.ax_msna_int)
-cla(app.ax_burst_latency_his)
+
 
 t_msna = app.burst_res.ts(1) : app.burst_res.ts(2) : app.burst_res.ts(3);
 t_i = app.settings.interval(1,1);
@@ -13,6 +9,9 @@ t_f = app.settings.interval(1,2);
 int_idx = find(strcmp(app.popup_int.Value, app.popup_int.Items));
 if keep_xl
     xl = xlim(app.ax_msna_int);
+    yl_int = ylim(app.ax_msna_int);
+    xl_res = xlim(app.ax_burst_res);
+    yl_res = ylim(app.ax_burst_res);
 else
     if int_idx ==1
     xl = [app.burst_res.ts(1), app.burst_res.ts(3)];
@@ -20,7 +19,14 @@ else
         xl = [min(min(app.burst_ints(int_idx-1).borders)), max(max(app.burst_ints(int_idx-1).borders))];
     end
 end
-yl = ylim(app.ax_msna_raw);
+
+cla(app.ax_msna_int), cla(app.ax_burst_res)  
+cla(app.ax_burst_interval_his), cla(app.ax_burst_duration_his)
+cla(app.ax_burst_amplitude_his), cla(app.ax_burst_integral_his)
+cla(app.ax_burst_res), cla(app.ax_msna_int)
+cla(app.ax_burst_latency_his)
+
+%yl = ylim(app.ax_msna_raw);
 
 hold(app.ax_msna_raw,'off')
 for i = 1: size(app.settings.burst_rem_int,1)
@@ -55,8 +61,9 @@ if int_idx ==1
 else
     dur = sum(diff(app.burst_ints(int_idx-1).borders,1,2));
 end
-
-yl = [min(app.burst_res.x(2001:end)) max(app.burst_res.x(2001:end))];
+tmp_mn = min(app.burst_res.x(2001:end));
+tmp_mx = max(app.burst_res.x(2001:end));
+yl = [tmp_mn-((tmp_mx-tmp_mn)*0.05), tmp_mx+((tmp_mx-tmp_mn)*0.05)];
 hold(app.ax_msna_int,'off')
 for i = 1: size(app.settings.burst_rem_int,1)
     tmp = app.settings.burst_rem_int(i,:);
@@ -65,7 +72,7 @@ for i = 1: size(app.settings.burst_rem_int,1)
 end
 
 plot(app.ax_msna_int, t_msna(2001:end), app.burst_res.x(2001:end),'LineWidth',1.2,'HitTest','off')  
-ylim(app.ax_msna_int, yl)  
+  
 hold(app.ax_msna_int, 'on')
 
 
@@ -75,13 +82,18 @@ if ~isempty(app.hb_res)
     tmp_idx = 1:3:length(app.hb_res.t_events(hb_idx))*3;
     hb(tmp_idx,1)= app.hb_res.t_events(hb_idx);
     hb(tmp_idx+1,1)= app.hb_res.t_events(hb_idx);
-    yl = ylim(app.ax_msna_int);
+%     yl = ylim(app.ax_msna_int);
     hb(tmp_idx,2)= yl(1);
     hb(tmp_idx+1,2)= yl(2);
     plot (app.ax_msna_int,hb(:,1),hb(:,2),'LineWidth',1.5,'Color',[0 0.5 0.2],'HitTest','off')
 end
-xlim(app.ax_msna_int,xl)
-
+if keep_xl
+    xlim(app.ax_msna_int,xl);
+    ylim(app.ax_msna_int,yl_int);
+else
+    xlim(app.ax_msna_int,xl)
+    ylim(app.ax_msna_int, yl)
+end
 %% check
 % yl = ylim(app.ax_burst_res);
 % hold(app.ax_burst_res,'off')
@@ -182,6 +194,12 @@ hold(app.ax_burst_res, 'off')
 
 xlim(app.ax_burst_res, xl)
 
+if keep_xl
+    xlim(app.ax_burst_res, xl_res);
+    ylim(app.ax_burst_res, yl_res);
+else
+
+end
 CC.burst_integral = app.burst_res.burst_int(burst_idx);
 nhist_ax(CC,'text','box','median','mode','noerror','color',[.8 .9 .8],'separate','axis',app.ax_burst_integral_his);
 title(app.ax_burst_integral_his,'')

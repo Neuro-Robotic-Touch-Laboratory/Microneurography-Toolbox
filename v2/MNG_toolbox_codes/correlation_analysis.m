@@ -18,7 +18,7 @@ end
 
 
 lags = [app.edt_corre_lag1.Value, app.edt_corre_lag2.Value, app.edt_corre_lag3.Value];
-ds = app.edt_downsampling.Value;
+fs = app.edt_downsampling.Value;
 
 ch1_idx = find(strcmp(app.popup_coorelation_signal1.Value, app.popup_coorelation_signal1.Items));
 [data_1,ts_1,name_1, unit_1] = current_signal(app, ch1_idx);
@@ -30,14 +30,64 @@ ch2_idx = find(strcmp(app.popup_coorelation_signal2.Value, app.popup_coorelation
 data_2(:,2) = ts_2(1):ts_2(1):ts_2(2);
 name_2 = char(string(name_2));
 
-if ts_1(1) > ts_2(1)
-    idx = find(data_2(:,2) == data_1(1,2));
-    data_2(1:idx-1,:) = [];
+if (fs/2)/((1/ts_1(1))/2) <= 1
+    [b1,a1] = butter(3,(fs/2)/((1/ts_1(1))/2));
 else
-    idx = find(data_1(:,2) == data_2(1,2));
-    data_1(1:idx-1,:) = [];
+    [b1,a1] = butter(3,0.999999);
 end
 
+if (fs/2)/((1/ts_2(1))/2) <= 1
+    [b2,a2] = butter(3,(fs/2)/((1/ts_2(1))/2));
+else
+    [b2,a2] = butter(3,0.999999);
+end
+
+
+data_1_f = filtfilt(b1,a1,data_1(:,1));
+data_2_f = filtfilt(b2,a2,data_2(:,1));
+
+tsds_1 =  (data_1(1,2):1/fs:data_1(end,2))';
+tsds_2 =  (data_2(1,2):1/fs:data_2(end,2))';
+data_1_ds = interp1(data_1(:,2),data_1_f,tsds_1,'linear');
+data_2_ds = interp1(data_2(:,2),data_2_f,tsds_2,'linear');
+% [data_1_ds, tsds_1] = resample(data_1_f(:,1),data_1(:,2),fs,'linear');
+% [data_2_ds, tsds_2] = resample(data_2_f(:,1),data_2(:,2),fs,'linear');
+
+data_1_ds(:,2) = tsds_1;
+data_2_ds(:,2) = tsds_2;
+data_1_ds(isnan(data_1_ds(:,1)),:) = [];
+data_2_ds(isnan(data_2_ds(:,1)),:) = [];
+if size(data_1_ds,1) ~= size(data_2_ds,1)
+    if data_1_ds(1,2) > data_2_ds(1,2)
+        idx = find(data_2_ds(:,2) < data_1_ds(1,2));
+        data_2_ds(idx,:) = [];
+        data_2_ds(size(data_1_ds,1)+1:end,:) = [];
+    else
+        idx = find(data_1_ds(:,2) < data_2_ds(1,2));
+        data_1_ds(idx,:) = [];
+        data_1_ds(size(data_2_ds,1)+1:end,:) = [];
+    end
+end
+
+
+
+
+
+% if ts_1(1) > ts_2(1)
+%     idx = find(data_2(:,2) == data_1(1,2));
+%     data_2(1:idx-1,:) = [];
+% else
+%     idx = find(data_1(:,2) == data_2(1,2));
+%     data_1(1:idx-1,:) = [];
+% end
+% 
+% if data_1_ds(end,2) < data_2_ds(end,2)
+%     idx = find(data_2(:,2) == data_1(end,2));
+%     data_2(idx+1:end,:) = [];
+% else
+%     idx = find(data_1(:,2) == data_2(end,2));
+%     data_1(idx+1: end,:) = [];
+% end
 
 % go = true;
 % fkt_1 = 1;
@@ -60,26 +110,20 @@ end
 %         go = false;
 %     end
 % end
-[data_1_ds, tsds_1] = resample(data_1(:,1),data_1(:,2),100,'linear');
-[data_2_ds, tsds_2] = resample(data_2(:,1),data_2(:,2),100,'linear');
 
-data_1_ds(:,2) = tsds_1;
-data_2_ds(:,2) = tsds_2;
+
+
 % data_1_ds = [downsample(data_1(:,1), .01/ts_1(1)),downsample(data_1(:,2), .01/ts_1(1))];
 % 
 % data_2_ds = [downsample(data_2(:,1), .01/ts_2(1)),downsample(data_2(:,2), .01/ts_2(1))];
 
 
-
-data_1_dsds = [downsample(data_1_ds(:,1), ds), downsample(data_1_ds(:,2), ds)];
-data_2_dsds = [downsample(data_2_ds(:,1), ds), downsample(data_2_ds(:,2), ds)];
-
 borders(borders(:,1) < 1 ,1) = 1;
-borders(borders(:,2) > floor(min([data_1_dsds(end,2), data_2_dsds(end,2)])),2) = floor(min([data_1_dsds(end,2), data_2_dsds(end,2)]));
+borders(borders(:,2) > floor(min([data_1_ds(end,2), data_2_ds(end,2)])),2) = floor(min([data_1_ds(end,2), data_2_ds(end,2)]));
 
 if app.chkbx_movmean.Value
-    data_1_dsds(:,1) = movmean(data_1_dsds(:,1),app.edt_movmean.Value /(.01*ds));
-    data_2_dsds(:,1) = movmean(data_2_dsds(:,1),app.edt_movmean.Value /(.01*ds));
+    data_1_ds(:,1) = movmean(data_1_ds(:,1),app.edt_movmean.Value /(fs));
+    data_2_ds(:,1) = movmean(data_2_ds(:,1),app.edt_movmean.Value /(fs));
 end
 
 
@@ -104,14 +148,23 @@ results = struct('lag1', struct('ax11',struct('Data',[],'Values',[],'NumBins',[]
 for i = 1: size(borders,1)
     
     if i == 1
-        data_1_dsds_int = data_1_dsds;
-        data_2_dsds_int = data_2_dsds;
+        data_1_dsds_int = data_1_ds;
+        data_2_dsds_int = data_2_ds;
     else
-        data_1_dsds_int = data_1_dsds(int32(borders(i,1)*1/(.01*ds)):int32(borders(i,2)*1/(.01*ds)),:);
-        data_2_dsds_int = data_2_dsds(int32(borders(i,1)*1/(.01*ds)):int32(borders(i,2)*1/(.01*ds)),:);
+        tmp_strt = find(data_1_ds(:,2)>= borders(i,1),1,'first');
+        tmp_stp  = find(data_1_ds(:,2)<= borders(i,2),1,'last');
+        data_1_dsds_int = data_1_ds(tmp_strt:tmp_stp,:);
+        tmp_strt = find(data_2_ds(:,2)>= borders(i,1),1,'first');
+        tmp_stp  = find(data_2_ds(:,2)<= borders(i,2),1,'last');
+        data_2_dsds_int = data_2_ds(tmp_strt:tmp_stp,:);
+        if size(data_1_dsds_int,1) ~= size(data_2_dsds_int,1)
+            len = min(size(data_1_dsds_int,1), size(data_2_dsds_int,1));
+            data_1_dsds_int =data_1_dsds_int(1: len,:); 
+            data_2_dsds_int =data_2_dsds_int(1: len,:);
+        end
     end
 
-    lag01=lags(1)*1/(.01*ds);
+    lag01=lags(1)*(fs);
   
 
     clear h1
@@ -161,7 +214,7 @@ for i = 1: size(borders,1)
     end
     close(h1)
 
-     lag02=lags(2)*1/(.01*ds);
+     lag02=lags(2)*(fs);
   
 
     clear h2
@@ -213,7 +266,7 @@ for i = 1: size(borders,1)
     end
     close(h2)
 
-    lag03=lags(3)*1/(.01*ds);
+    lag03=lags(3)*(fs);
   
     clear h3
     h3 = figure('Visible','on');

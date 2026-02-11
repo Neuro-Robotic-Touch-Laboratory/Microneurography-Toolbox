@@ -35,23 +35,17 @@ if app.settings.done.burst
     savestruct.burst.type = app.burst_res.type;
     switch savestruct.burst.type
         case 1
-            savestruct.burst.window = app.burst_res.window;
             savestruct.burst.delay = app.burst_res.delay;
-            savestruct.burst.use_burst = app.burst_res.use_burst;
-            savestruct.burst.window_org = app.settings.burst_rem_int;
+            savestruct.burst.window_org = app.settings.burst_rem_int; %%%%%% edit
+            
         case 2
-            savestruct.burst.window = app.burst_res.window;
-            savestruct.burst.delay = app.burst_res.delay;
-            savestruct.burst.use_burst = app.burst_res.use_burst;
-            savestruct.burst.rem_int = app.settings.burst_rem_int; 
-
+            savestruct.burst.thresh = app.burst_res.thresh;
+            savestruct.burst.outlier = app.burst_res.outlier;
+            savestruct.burst.onsilent = app.burst_res.onsilent;
+            savestruct.burst.man = app.burst_res.man;
     end
 
-%     savestruct.burst.outlier_thresh =  app.edt_outlier_threshold.Value;
-%     savestruct.burst.window =  app.edt_window.Value;
-%     savestruct.burst.thresh =  app.edt_threshold.Value;
     savestruct.burst.window = app.burst_res.window;
-    savestruct.burst.delay = app.burst_res.delay;
     savestruct.burst.use_burst =  app.burst_res.use_burst;
     savestruct.burst.rem_int =  app.settings.burst_rem_int;  
 end

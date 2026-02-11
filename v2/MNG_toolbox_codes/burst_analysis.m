@@ -82,9 +82,10 @@ end
         basStd=std(x_windowValues);
     
         if app.chkbx_manual.Value %gggggggggg
-            HThreshold=app.edt_threshold_abs.Value;
+            HThreshold = app.edt_threshold_abs.Value;
         else
-            HThreshold=  basmed+ Ksoglia*basStd; 
+            HThreshold = basmed+ Ksoglia*basStd; 
+            app.edt_threshold_abs.Value = HThreshold; 
         end
         %HThreshold=  basmed+ Ksoglia*basStd;  
         
@@ -282,7 +283,16 @@ end
         burst_res.xshift = x_shift_corretto;
         burst_res.use_burst = ones(size(tbursts,2),2);
         burst_res.type = 2;
-
+        burst_res.thresh = app.edt_threshold.Value;
+        burst_res.window = app.edt_window.Value;
+        burst_res.detrent = app.chkbx_detrent_rms.Value;
+        if app.chkbx_manual.Value
+            burst_res.man = app.edt_threshold_abs.Value;
+        else
+            burst_res.man = nan;
+        end
+        burst_res.onsilent = app.chkbx_th_on_silent.Value;
+        burst_res.outlier = app.edt_outlier_threshold.Value;
 
 %% save msna results
 

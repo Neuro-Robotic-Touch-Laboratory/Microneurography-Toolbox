@@ -31,7 +31,7 @@ else
         int_names = {'full interval'};
     end
     
-    ds = app.edt_downsampling.Value;
+    fs = app.edt_downsampling.Value;
     
     ch1_idx = find(strcmp(app.popup_coorelation_signal1.Value, app.popup_coorelation_signal1.Items));
     [data_1,ts_1,name_1, unit_1] = current_signal(app, ch1_idx);
@@ -40,41 +40,80 @@ else
     ch2_idx = find(strcmp(app.popup_coorelation_signal2.Value, app.popup_coorelation_signal2.Items));
     [data_2,ts_2,name_2, unit_2] = current_signal(app, ch2_idx);
     data_2(:,2) = ts_2(1):ts_2(1):ts_2(2);
-    
-    if ts_1(1) > ts_2(1)
-        idx = find(data_2(:,2) == data_1(1,2));
-        data_2(1:idx-1,:) = [];
+
+    if (fs/2)/((1/ts_1(1))/2) <= 1
+        [b1,a1] = butter(3,(fs/2)/((1/ts_1(1))/2));
     else
-        idx = find(data_1(:,2) == data_2(1,2));
-        data_1(1:idx-1,:) = [];
+        [b1,a1] = butter(3,0.999999);
     end
     
-    go = true;
-    fkt_1 = 1;
-    tmp1 = ts_1(1);
-    tmp2 = 0.01;
-    while go
-        fkt_1 = fkt_1*10;
-        if isequal(double(tmp1*fkt_1),int32(tmp1*fkt_1)) && isequal(double(tmp2*fkt_1),int32(tmp2*fkt_1))
-            go = false;
-        end
+    if (fs/2)/((1/ts_2(1))/2) <= 1
+        [b2,a2] = butter(3,(fs/2)/((1/ts_2(1))/2));
+    else
+        [b2,a2] = butter(3,0.999999);
     end
-    go = true;
-    fkt_2 = 1;
-    tmp1 = ts_2(1);
-    tmp2 = 0.01;
-    while go
-        fkt_2 = fkt_2*10;
-        
-        if isequal(double(tmp1*fkt_2),int32(tmp1*fkt_2)) && isequal(double(tmp2*fkt_2),int32(tmp2*fkt_2))
-            go = false;
-        end
-    end
-    [data_1_ds, tsds_1] = resample(data_1(:,1),data_1(:,2),100,'linear');
-    [data_2_ds, tsds_2] = resample(data_2(:,1),data_2(:,2),100,'linear');
+    
+    data_1_f = filtfilt(b1,a1,data_1(:,1));
+    data_2_f = filtfilt(b2,a2,data_2(:,1));
+    
+    tsds_1 =  (data_1(1,2):1/fs:data_1(end,2))';
+    tsds_2 =  (data_2(1,2):1/fs:data_2(end,2))';
+    data_1_ds = interp1(data_1(:,2),data_1_f,tsds_1,'linear');
+    data_2_ds = interp1(data_2(:,2),data_2_f,tsds_2,'linear');
+    % [data_1_ds, tsds_1] = resample(data_1_f(:,1),data_1(:,2),fs,'linear');
+    % [data_2_ds, tsds_2] = resample(data_2_f(:,1),data_2(:,2),fs,'linear');
     
     data_1_ds(:,2) = tsds_1;
     data_2_ds(:,2) = tsds_2;
+    data_1_ds(isnan(data_1_ds(:,1)),:) = [];
+    data_2_ds(isnan(data_2_ds(:,1)),:) = [];
+    if size(data_1_ds,1) ~= size(data_2_ds,1)
+        if data_1_ds(1,2) > data_2_ds(1,2)
+            idx = find(data_2_ds(:,2) < data_1_ds(1,2));
+            data_2_ds(idx,:) = [];
+            data_2_ds(size(data_1_ds,1)+1:end,:) = [];
+        else
+            idx = find(data_1_ds(:,2) < data_2_ds(1,2));
+            data_1_ds(idx,:) = [];
+            data_1_ds(size(data_2_ds,1)+1:end,:) = [];
+        end
+    end
+
+
+%     if ts_1(1) > ts_2(1)
+%         idx = find(data_2(:,2) == data_1(1,2));
+%         data_2(1:idx-1,:) = [];
+%     else
+%         idx = find(data_1(:,2) == data_2(1,2));
+%         data_1(1:idx-1,:) = [];
+%     end
+    
+%     go = true;
+%     fkt_1 = 1;
+%     tmp1 = ts_1(1);
+%     tmp2 = 0.01;
+%     while go
+%         fkt_1 = fkt_1*10;
+%         if isequal(double(tmp1*fkt_1),int32(tmp1*fkt_1)) && isequal(double(tmp2*fkt_1),int32(tmp2*fkt_1))
+%             go = false;
+%         end
+%     end
+%     go = true;
+%     fkt_2 = 1;
+%     tmp1 = ts_2(1);
+%     tmp2 = 0.01;
+%     while go
+%         fkt_2 = fkt_2*10;
+%         
+%         if isequal(double(tmp1*fkt_2),int32(tmp1*fkt_2)) && isequal(double(tmp2*fkt_2),int32(tmp2*fkt_2))
+%             go = false;
+%         end
+%     end
+%     [data_1_ds, tsds_1] = resample(data_1(:,1),data_1(:,2),100,'linear');
+%     [data_2_ds, tsds_2] = resample(data_2(:,1),data_2(:,2),100,'linear');
+%     
+%     data_1_ds(:,2) = tsds_1;
+%     data_2_ds(:,2) = tsds_2;
 
 
 %     data_1_ds = [downsample(data_1(:,1), .01/ts_1(1)),downsample(data_1(:,2), .01/ts_1(1))];
@@ -82,24 +121,41 @@ else
 %     data_2_ds = [downsample(data_2(:,1), .01/ts_2(1)),downsample(data_2(:,2), .01/ts_2(1))];
     
     % data_2_ds(:,2) = data_1_ds(:,2);
-    
-    data_1_dsds = [downsample(data_1_ds(:,1), ds), downsample(data_1_ds(:,2), ds)];
-    data_2_dsds = [downsample(data_2_ds(:,1), ds), downsample(data_2_ds(:,2), ds)];
+%     
+%     data_1_dsds = [downsample(data_1_ds(:,1), ds), downsample(data_1_ds(:,2), ds)];
+%     data_2_dsds = [downsample(data_2_ds(:,1), ds), downsample(data_2_ds(:,2), ds)];
 
     if app.chkbx_movmean.Value
-        data_1_dsds(:,1) = movmean(data_1_dsds(:,1),app.edt_movmean.Value /(.01*ds));
-        data_2_dsds(:,1) = movmean(data_2_dsds(:,1),app.edt_movmean.Value /(.01*ds));
+        data_1_ds(:,1) = movmean(data_1_ds(:,1),app.edt_movmean.Value *fs);
+        data_2_ds(:,1) = movmean(data_2_ds(:,1),app.edt_movmean.Value *fs);
     end
 
     border(border(:,1) < 1 ,1) = 1;
-    border(border(:,2) > floor(min([data_1_dsds(end,2), data_2_dsds(end,2)])),2) = floor(min([data_1_dsds(end,2), data_2_dsds(end,2)]));
+    border(border(:,2) > floor(min([data_1_ds(end,2), data_2_ds(end,2)])),2) = floor(min([data_1_ds(end,2), data_2_ds(end,2)]));
     
+%     if int_idx == 1
+%         data_1_ds_int = data_1_ds;
+%         data_2_ds_int = data_2_ds;
+%     else
+%         data_1_dsds_int = data_1_ds(int32(border(1)*fs):int32(border(2)*fs),:);
+%         data_2_dsds_int = data_2_ds(int32(border(1)*fs):int32(border(2)*f),:);
+%     end
+
     if int_idx == 1
-        data_1_dsds_int = data_1_dsds;
-        data_2_dsds_int = data_2_dsds;
+        data_1_dsds_int = data_1_ds;
+        data_2_dsds_int = data_2_ds;
     else
-        data_1_dsds_int = data_1_dsds(int32(border(1)*1/(.01*ds)):int32(border(2)*1/(.01*ds)),:);
-        data_2_dsds_int = data_2_dsds(int32(border(1)*1/(.01*ds)):int32(border(2)*1/(.01*ds)),:);
+        tmp_strt = find(data_1_ds(:,2)>= border(1),1,'first');
+        tmp_stp  = find(data_1_ds(:,2)<= border(2),1,'last');
+        data_1_dsds_int = data_1_ds(tmp_strt:tmp_stp,:);
+        tmp_strt = find(data_2_ds(:,2)>= border(1),1,'first');
+        tmp_stp  = find(data_2_ds(:,2)<= border(2),1,'last');
+        data_2_dsds_int = data_2_ds(tmp_strt:tmp_stp,:);
+        if size(data_1_dsds_int,1) ~= size(data_2_dsds_int,1)
+            len = min(size(data_1_dsds_int,1), size(data_2_dsds_int,1));
+            data_1_dsds_int =data_1_dsds_int(1: len,:); 
+            data_2_dsds_int =data_2_dsds_int(1: len,:);
+        end
     end
 
     yyaxis(app.ax_signals_corre,'left')

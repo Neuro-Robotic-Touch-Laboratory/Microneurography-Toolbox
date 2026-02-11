@@ -29,6 +29,10 @@ if ~isnan(app.settings.channel_idx.res_flow)
         app.data(end+1).name = 'min. vent.';
         app.data(end).unit = 'l/min';
         app.data(end).tic_multipl = app.data(app.settings.channel_idx.res_flow).tic_multipl;
+        
+        if size(min_vent,2)> size(min_vent,1)
+            min_vent = min_vent';
+        end
         app.data(end).data = min_vent;
         app.data(end).derived = true;
         app.data(end).ts = ts;

@@ -18,5 +18,6 @@ tmp_idx = strfind(input_str, '$§');
 if ~isempty(tmp_idx)
     input_str(tmp_idx-2:tmp_idx+1) = [];
 end
+
 output_str = input_str;
 end

@@ -63,7 +63,11 @@ for i = 1 : length(app.burst_ints)
     plot_data(i).integral = app.burst_res.burst_int(tmp_idx_burst);
     plot_data(i).amplitude = app.burst_res.burst_amp(tmp_idx_burst);
     plot_data(i).duration = app.burst_res.burst_dur(tmp_idx_burst);
-    plot_data(i).latency =app.burst_res.burst_latency(tmp_idx_burst);
+    try
+        plot_data(i).latency =app.burst_res.burst_latency(tmp_idx_burst);
+    catch
+        plot_data(i).latency = [];
+    end
     plot_data(i).n_bursts = sum(tmp_idx_burst);
     plot_data(i).burstrate = sum(tmp_idx_burst)/dur;
     plot_data(i).dur = dur;
@@ -144,8 +148,17 @@ end
 
 if ~isempty(app.bp_res) 
     sys_ch_idx = find(contains(vertcat(app.data.name),'systolic BP'));
+    if isempty(sys_ch_idx)
+        sys_ch_idx = find(contains(vertcat(app.data.name),'systolic'));
+    end
     mea_ch_idx = find(contains(vertcat(app.data.name),'mean BP'));
+    if isempty(mea_ch_idx)
+        mea_ch_idx = find(contains(vertcat(app.data.name),'mean'));
+    end
     dia_ch_idx = find(contains(vertcat(app.data.name),'diastolic BP'));
+    if isempty(dia_ch_idx)
+        dia_ch_idx = find(contains(vertcat(app.data.name),'diastolic'));
+    end
 else
     sys_ch_idx = nan;
     mea_ch_idx = nan;
@@ -383,7 +396,9 @@ end
 additional_sig(rem_idx) = [];
 
 for i =1:length(plot_data)
-    plot_data(i).add_sig(rem_idx) = [];  
+    if ~isempty(plot_data(i).add_sig) %% try
+        plot_data(i).add_sig(rem_idx) = [];  
+    end %% try
 end
 
 if ~isempty(app.stat_group)
