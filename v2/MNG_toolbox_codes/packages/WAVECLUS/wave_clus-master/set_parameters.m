@@ -1,8 +1,12 @@
-function par = set_parameters() 
+function par = set_parameters(fs) 
  
 % LOAD PARAMS 
 par.segments_length = 5;             % length (in minutes) of segments in which the data is cutted (default 5min). 
-par.sr = 10000;                      % sampling rate (in Hz). This parameter will be only used if the data file don't have a sr. 
+if isempty(fs)
+    par.sr = 10000;                      % sampling rate (in Hz). This parameter will be only used if the data file don't have a sr. 
+else
+    par.sr = fs;
+end
  
  
 % PLOTTING PARAMETERS 

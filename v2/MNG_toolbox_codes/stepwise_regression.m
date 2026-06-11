@@ -95,6 +95,7 @@ for i = 1: size(borders,1)
     results(i).int_name = int_name{i};
     results(i).pred_name = name_p;
     results(i).reg_name = reg_name;
+%     results(i).tbl_beta = {'X','X'};
 
 end
 

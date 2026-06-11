@@ -75,7 +75,11 @@ for i = 1:length(int_idxs)
     h = figure('Position', get(0, 'Screensize'),'Visible', 'off');
     BlandAltman(h, app.stepwise_res(int_idxs(i)).data.par,  app.stepwise_res(int_idxs(i)).data.y_estimates)
   
-    sgtitle([' Y-predicted: ' '____________' app.stepwise_res(int_idxs(i)).pred_name ' ' ' ' ' ' ' Regressors: ' '____________' app.stepwise_res(int_idxs(i)).data.sel_reg])
+    beta_regs ={};
+    for j = 1 :length(app.stepwise_res(int_idxs(i)).data.sel_reg)
+        beta_regs{j} = [ app.stepwise_res(int_idxs(i)).data.sel_reg{1,j} ': ' num2str(app.stepwise_res(int_idxs(i)).data.beta(j))];
+    end
+    sgtitle([' Y-predicted: ' '____________' app.stepwise_res(int_idxs(i)).pred_name ' ' ' ' ' ' ' Regressors: ' '____________' beta_regs])%app.stepwise_res(int_idxs(i)).data.sel_reg])
     
     for j = 1 : length(form_idxs)
         switch form_idxs(j)

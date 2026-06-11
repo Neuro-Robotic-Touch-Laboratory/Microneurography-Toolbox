@@ -57,7 +57,7 @@ tmp(1) = find(app.settings.file_path == '\',1,'last');
 tmp(2) = find(app.settings.file_path == '.',1,'last');
 file = app.settings.file_path(tmp(1)+1:tmp(2)-1);
 file(file == '.') = '-';
-writecell(print_cell,[app.settings.output_dir '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) 'spike_results.xls'])
+writecell(print_cell,[app.settings.output_dir '\' file '_INT_' num2str(round(app.settings.interval(1,1),1)) '-' num2str(round(app.settings.interval(1,2),1)) 'lag_results.xls'])
 
 end
 
@@ -158,13 +158,20 @@ sig2 = app.settings.lagsig2(tmp(1):tmp(2))-mean(app.settings.lagsig2(tmp(1):tmp(
 sig2 = sig2/max(abs(sig2)); 
 if idx>=0
     sig1(1:idx) = [];
-    sig2(end-idx+2:end) = [];
+    sig2(end-idx+1:end) = [];
 else
     sig2(1:abs(idx)) = [];
-    sig1(end-abs(idx)+2:end) = [];
+    sig1(end-abs(idx)+1:end) = [];
 end
 rk=999;pk =999;
 %     [rk,pk ]  = corr(sig1,sig2,'Type','Kendall');
+if length(sig1)~= length(sig2)
+    if length(sig1) > length(sig2)
+        sig1(length(sig2)+1:end)=[];
+    else
+        sig2(length(sig1)+1:end)=[];
+    end
+end
 [rs,ps ]  = corr(sig1,sig2,'Type','Spearman');
 
 title(['Spearmans r: ' num2str(rs) ', p: ' num2str(rs)])
@@ -185,7 +192,7 @@ else
     mm2  = '';
 end
 
-fn = [app.settings.output_dir '\' app.settings.file_path(bs+1:dt-1) '-' app.popup_lag_int.Value '-' app.popup_lag_sig1.Value mm1 '-' app.popup_lag_sig2.Value mm2];
+fn = [app.settings.output_dir '\' app.settings.file_path(bs+1:dt-1) '-' simple_name(app.popup_lag_int.Value) '-' app.popup_lag_sig1.Value mm1 '-' app.popup_lag_sig2.Value mm2];
 savefig(h,fn)
 close(h)
 end

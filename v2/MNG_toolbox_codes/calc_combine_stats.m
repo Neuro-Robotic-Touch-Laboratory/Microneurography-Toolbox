@@ -96,7 +96,7 @@ print_cell{1,1} = 'number of values';
 print_cell(1,2:end) = intervals;
 for i = 1:size(collect_cell,1)
     for j = 1:size(collect_cell,2)
-        print_cell{i+1,j+1} = length(~isnan(collect_cell{i,j}));
+        print_cell{i+1,j+1} = sum(~isnan(collect_cell{i,j}));
     end
 end
 
@@ -150,6 +150,7 @@ if ~isempty(app.comb_stat)
                 res{end,2} = h;
                 res{end,3} = p;
                 stat_plot_cell = {collect_cell{sig_idx,int_idx(1)}, collect_cell{sig_idx,int_idx(2)}};
+%                 disp(['i:' num2str(i) ', j:' num2str(j) ', k:' num2str(k) ', l:' num2str(l)])
                 combplot_boxplot_xls(stat_plot_cell, {res{1,2}, res{1,4}}, app.comb_stat(i).signals{j}, ...
                                  [app.settings.collect_path  app.edt_filename.Value '.xls' ],...
                                  ['statistics group ' num2str(i) ], h, p, plot_pos)

@@ -33,13 +33,21 @@ switch action
         [app.settings.lagxcts, app.settings.lagxc, lag] = calc_lac(sig1,sig2,app);
         
         plot(app.ax_lag_xcorr,app.settings.lagxcts, app.settings.lagxc,'HitTest','off')
-
+        mn = min(app.settings.lagxc);
+        mx = max(app.settings.lagxc);
+        ylim (app.ax_lag_xcorr, [mn-(mx-mn)*0.05 mx+(mx-mn)*0.05])
         line(app.ax_lag_xcorr,[app.settings.lagxcts(1) app.settings.lagxcts(end)], [0,0], 'Color', 'k','LineStyle',':','HitTest','off')
         line(app.ax_lag_xcorr,[lag lag], ylim(app.ax_lag_xcorr), 'Color', 'r','HitTest','off')
+
+        line(app.ax_lag_xcorr,[app.edt_max_lag.Value app.edt_max_lag.Value], ylim(app.ax_lag_xcorr), 'Color', [0.7,0.7,0.7],'HitTest','off')
+        line(app.ax_lag_xcorr,[app.edt_max_lag.Value*(-1) app.edt_max_lag.Value*(-1)], ylim(app.ax_lag_xcorr), 'Color', [0.7,0.7,0.7],'HitTest','off')
 %         lag = (idx-length(app.settings.lagsig1(tmp(1):tmp(2))))*mean(diff(app.settings.lagts));
         app.lbl_lag_lag.Text = ['Lag: ' num2str(lag) ' s'];
 %         idx = idx-length(app.settings.lagsig1(tmp(1):tmp(2)));
         xlim (app.ax_lag_xcorr, [app.settings.lagxcts(1), app.settings.lagxcts(end)])
+        mn = min(app.settings.lagxc);
+        mx = max(app.settings.lagxc);
+        ylim (app.ax_lag_xcorr, [mn-(mx-mn)*0.05 mx+(mx-mn)*0.05])
         update_ov = true;
         calc_corr = true;
         app.settings.lag = lag;
@@ -349,6 +357,10 @@ else
 %     app.settings.lagxcts = ((-1)*(length(app.settings.lagts(tmp(1):tmp(2)))-1):(length(app.settings.lagts(tmp(1):tmp(2)))-1))*(mean (diff(app.settings.lagts)));
     xc_ts = xc_ts/fs;
     [pks,lcs] = findpeaks(abs(xc_d));
+    lcs2 = (lcs-length(sig1))/fs;
+    use = find(lcs2>=app.edt_max_lag.Value*(-1) &lcs2<=app.edt_max_lag.Value);
+    pks = pks(use);
+    lcs = lcs(use);
     [pks2,tmp_idx] = sort(pks,1,'descend');
     lcs = lcs(tmp_idx);
     pks =xc_d(lcs);
@@ -356,8 +368,11 @@ else
     pp = nan(size(lcs));
     rs = nan(size(lcs));
     ps = nan(size(lcs));
+    app.lbl_working.Text = '10 % done';
     for i = 1 :length(lcs)
        [rp(i),pp(i),rs(i), ps(i)] = get_corrs (app,lcs(i));
+       app.lbl_working.Text = [num2str(round(10+i/length(lcs)*80)) ' % done'];
+       drawnow
     end
     
     cordif = mean(abs(rp - rs)) <0.1;

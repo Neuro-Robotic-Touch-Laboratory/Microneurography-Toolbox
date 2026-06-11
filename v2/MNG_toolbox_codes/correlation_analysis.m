@@ -164,7 +164,7 @@ for i = 1: size(borders,1)
         end
     end
 
-    lag01=lags(1)*(fs);
+    lag01=round(lags(1)*(fs));
   
 
     clear h1
@@ -214,13 +214,15 @@ for i = 1: size(borders,1)
     end
     close(h1)
 
-     lag02=lags(2)*(fs);
+     lag02=round(lags(2)*(fs));
   
 
     clear h2
     h2 = figure('Visible','on');
     ca2 = gca;
-    if isempty(data_1_dsds_int(1:end-lag02,1)) || isempty(data_2_dsds_int(lag02+1:end,1))
+    ld1 = length(data_1_dsds_int);
+    ld2 = length(data_2_dsds_int);
+    if isempty(data_1_dsds_int(1:end-lag02,1)) || isempty(data_2_dsds_int(lag02+1:end,1))%isempty(data_1_dsds_int(int64(1:ld1-lag02),1)) || isempty(data_2_dsds_int(int64(lag02+1:ld2),1))  %
         results(i).lag2.r = nan;
         results(i).lag2.p = nan;
         results(i).lag2.ax11 = nan;
@@ -231,11 +233,12 @@ for i = 1: size(borders,1)
     else
 
         [r,p] = corrplot1(ca2,[data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
+        %[r,p] = corrplot1(ca2,[data_1_dsds_int(int64(1:ld1-lag02),1),data_2_dsds_int(int64(lag02+1:ld2),1)],'varNames',{name_1,name_2} ,'type','Pearson','testR','on','alpha',0.05);
         
      
         results(i).lag2.r = r;
         results(i).lag2.p = p;
-        results(i).lag2.c = polyfit(data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1),1);
+        results(i).lag2.c = polyfit(data_1_dsds_int(int64(1:ld1-lag02),1),data_2_dsds_int(int64(lag02+1:ld2),1),1);%polyfit(data_1_dsds_int(1:end-lag02,1),data_2_dsds_int(lag02+1:end,1),1);
         results(i).lag2.ax11.Data = h2.Children(1).Children.Data;
         results(i).lag2.ax11.BinEdges = h2.Children(1).Children.BinEdges;
         results(i).lag2.ax11.XLim = h2.Children(1).Children.Parent.XLim;
@@ -266,7 +269,7 @@ for i = 1: size(borders,1)
     end
     close(h2)
 
-    lag03=lags(3)*(fs);
+    lag03=round(lags(3)*(fs));
   
     clear h3
     h3 = figure('Visible','on');

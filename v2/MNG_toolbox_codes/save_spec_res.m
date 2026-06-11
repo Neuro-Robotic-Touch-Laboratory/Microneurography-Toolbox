@@ -25,6 +25,10 @@ channel_idx = find(strcmp(app.popup_signal_spect.Value,app.popup_signal_spect.It
 [data,ts,name, unit] = current_signal(app, channel_idx);
 data(:,2) = ts(1):ts(1):ts(2);
 
+if iscell(name)
+    name = name{1,1};
+end
+
 int_names = {'full interval'};
 borders = nan(length(tmp)+1,2);
 borders(1,:) = [1 size(data,1)];
